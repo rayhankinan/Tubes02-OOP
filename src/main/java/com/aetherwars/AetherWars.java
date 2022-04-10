@@ -12,7 +12,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import com.aetherwars.model.Type;
-import com.aetherwars.model.Character;
+import com.aetherwars.model.card.Character;
 import com.aetherwars.util.CSVReader;
 
 public class AetherWars extends Application {

@@ -1,4 +1,6 @@
-package com.aetherwars.model;
+package com.aetherwars.model.card;
+
+import com.aetherwars.model.Type;
 
 public class Character {
     private String name;
