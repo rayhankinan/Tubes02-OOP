@@ -1,21 +1,29 @@
-package com.aetherwars.model.card;
+package com.aetherwars.model.card.spell;
 
-public class Swap extends Spell implements Temporal {
+import com.aetherwars.model.card.character.SummonedCharacter;
+
+public class Potion extends Spell implements Temporal {
+    private final int attack;
+    private final int health;
     private int duration;
 
-    public Swap(int id, String name, String description, String imagepath, int duration, int mana) {
+    public Potion(int id, String name, String description, String imagepath, int attack, int health, int mana, int duration) {
         super(id, name, description, imagepath, mana);
+        this.attack = attack;
+        this.health = health;
         this.duration = duration;
     }
 
     @Override
     public void action(SummonedCharacter c) {
-        c.swapAttackHealth();
+        c.addAttack(this.attack);
+        c.addHealth(this.health);
     }
 
     @Override
     public void counteraction(SummonedCharacter c) {
-        c.swapAttackHealth();
+        c.subtractAttack(this.attack);
+        c.subtractHealth(this.health);
     }
 
     @Override
@@ -43,6 +51,6 @@ public class Swap extends Spell implements Temporal {
 
     @Override
     public String toString() {
-        return String.format("Id: %d\nName: %s\nDescription: %s\nImagepath: %s\nMana: %d\nDuration: %d\n", this.id, this.name, this.description, this.imagepath, this.mana, this.duration);
+        return String.format("Id: %d\nName: %s\nDescription: %s\nImagepath: %s\nAttack: %d\nHealth: %d\nMana: %d\nDuration: %d", this.id, this.name, this.description, this.imagepath, this.attack, this.health, this.mana, this.duration);
     }
 }

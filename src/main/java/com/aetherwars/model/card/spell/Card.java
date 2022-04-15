@@ -1,4 +1,4 @@
-package com.aetherwars.model.card;
+package com.aetherwars.model.card.spell;
 
 public class Card {
     protected int id;

@@ -1,4 +1,4 @@
-package com.aetherwars.model.card;
+package com.aetherwars.model.card.spell;
 
 public interface Temporal extends Effect {
     int getDuration();

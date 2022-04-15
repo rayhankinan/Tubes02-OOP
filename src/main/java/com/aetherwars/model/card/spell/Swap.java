@@ -1,27 +1,23 @@
-package com.aetherwars.model.card;
+package com.aetherwars.model.card.spell;
 
-public class Potion extends Spell implements Temporal {
-    private final int attack;
-    private final int health;
+import com.aetherwars.model.card.character.SummonedCharacter;
+
+public class Swap extends Spell implements Temporal {
     private int duration;
 
-    public Potion(int id, String name, String description, String imagepath, int attack, int health, int mana, int duration) {
+    public Swap(int id, String name, String description, String imagepath, int duration, int mana) {
         super(id, name, description, imagepath, mana);
-        this.attack = attack;
-        this.health = health;
         this.duration = duration;
     }
 
     @Override
     public void action(SummonedCharacter c) {
-        c.addAttack(this.attack);
-        c.addHealth(this.health);
+        c.swapAttackHealth();
     }
 
     @Override
     public void counteraction(SummonedCharacter c) {
-        c.subtractAttack(this.attack);
-        c.subtractHealth(this.health);
+        c.swapAttackHealth();
     }
 
     @Override
@@ -40,8 +36,8 @@ public class Potion extends Spell implements Temporal {
 
     @Override
     public void stackDuration(Card C) throws Exception {
-        if (C instanceof Potion) {
-            this.duration += ((Potion) C).getDuration();
+        if (C instanceof Swap) {
+            this.duration += ((Swap) C).getDuration();
         } else {
             throw new Exception(String.format("Invalid operation between %s and %s!", this.getClass().getSimpleName(), C.getClass().getSimpleName()));
         }
@@ -49,6 +45,6 @@ public class Potion extends Spell implements Temporal {
 
     @Override
     public String toString() {
-        return String.format("Id: %d\nName: %s\nDescription: %s\nImagepath: %s\nAttack: %d\nHealth: %d\nMana: %d\nDuration: %d", this.id, this.name, this.description, this.imagepath, this.attack, this.health, this.mana, this.duration);
+        return String.format("Id: %d\nName: %s\nDescription: %s\nImagepath: %s\nMana: %d\nDuration: %d\n", this.id, this.name, this.description, this.imagepath, this.mana, this.duration);
     }
 }

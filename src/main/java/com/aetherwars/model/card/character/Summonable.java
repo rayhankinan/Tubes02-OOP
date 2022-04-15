@@ -1,4 +1,6 @@
-package com.aetherwars.model.card;
+package com.aetherwars.model.card.character;
+
+import com.aetherwars.model.card.spell.ActivatedSpell;
 
 import java.util.List;
 

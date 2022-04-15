@@ -1,4 +1,6 @@
-package com.aetherwars.model.card;
+package com.aetherwars.model.card.spell;
+
+import com.aetherwars.model.card.character.SummonedCharacter;
 
 public class Level extends Spell {
     private final int level;

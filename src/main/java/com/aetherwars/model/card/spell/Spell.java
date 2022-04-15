@@ -1,4 +1,6 @@
-package com.aetherwars.model.card;
+package com.aetherwars.model.card.spell;
+
+import com.aetherwars.model.card.character.SummonedCharacter;
 
 public class Spell extends Card implements Effect {
     public Spell(int id, String name, String description, String imagepath, int mana) {

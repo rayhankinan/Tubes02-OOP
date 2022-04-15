@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import com.aetherwars.model.card.*;
-import com.aetherwars.model.card.Character;
+import com.aetherwars.model.card.character.Character;
+import com.aetherwars.model.card.character.Type;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
