@@ -15,8 +15,7 @@ public class Player {
     // private hand
 
     // methods
-    Player()
-    {
+    public Player() {
         Player.numOfPlayer++;
         this.id = Player.numOfPlayer;
         this.name = "No name";
@@ -24,7 +23,7 @@ public class Player {
         this.mana = 1;
     }
 
-    Player(String name) {
+    public Player(String name) {
         Player.numOfPlayer++;
         this.id = Player.numOfPlayer;
         this.name = name;
@@ -60,34 +59,21 @@ public class Player {
     }
 
     public boolean isValidHP(int health) {
-        int res = this.health + health;
-        if (res < MIN_HP || res > MAX_HP) {
-            return false;
-        }
-        else {
-            return true;
-        }
+        return this.health + health >= MIN_HP && this.health + health <= MAX_HP;
     }
 
     public boolean isValidMana(int mana) {
-        int res = this.mana + mana;
-        if (res < MIN_MANA || res > MAX_MANA) {
-            return false;
-        }
-        else {
-            return true;
-        }
+        return this.mana + mana >= MIN_MANA && this.mana + mana <= MAX_MANA;
     }
 
-    public void damage(int dmg){
+    public void damage(int dmg) {
         if (this.isValidHP((-1)*dmg)) {
             this.setHealth(this.getHealth() - dmg);
         }
         // EXCEPTION
     }
 
-    public void display()
-    {
+    public void display() {
         System.out.printf("Player %d:\n", this.getId());
         System.out.printf("Name: %s\n", this.getName());
         System.out.printf("Mana: %d\n", this.getMana());

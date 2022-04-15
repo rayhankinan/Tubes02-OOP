@@ -11,12 +11,15 @@ import javafx.scene.Scene;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import com.aetherwars.model.Type;
+import com.aetherwars.model.card.Type;
 import com.aetherwars.model.card.Character;
 import com.aetherwars.util.CSVReader;
 
 public class AetherWars extends Application {
     private static final String CHARACTER_CSV_FILE_PATH = "card/data/character.csv";
+    private static final String SPELL_MORPH_FILE_PATH = "card/data/spell_morph.csv";
+    private static final String SPELL_PTN_FILE_PATH = "card/data/spell_ptn.csv";
+    private static final String SPELL_SWAP_FILE_PATH = "card/data/spell_swap.csv";
 
     public void loadCards() throws IOException, URISyntaxException {
         File characterCSVFile = new File(getClass().getResource(CHARACTER_CSV_FILE_PATH).toURI());
@@ -24,9 +27,13 @@ public class AetherWars extends Application {
         characterReader.setSkipHeader(true);
         List<String[]> characterRows = characterReader.read();
         for (String[] row : characterRows) {
-            Character c = new Character(row[1], row[3], Type.valueOf(row[2]));
+            Character c = new Character(Integer.parseInt(row[0]), row[1], Type.valueOf(row[2]), row[3], row[4], Integer.parseInt(row[5]), Integer.parseInt(row[6]), Integer.parseInt(row[7]), Integer.parseInt(row[8]), Integer.parseInt(row[9]));
             System.out.println(c);
         }
+
+        File spellMorphCSVFile = new File(getClass().getResource(SPELL_MORPH_FILE_PATH).toURI());
+        CSVReader spellMorphReader = new CSVReader(spellMorphCSVFile, "\t");
+
     }
 
     @Override
