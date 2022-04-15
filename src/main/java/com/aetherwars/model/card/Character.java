@@ -24,8 +24,46 @@ public class Character extends Card {
         return this.attack;
     }
 
+    public void addAttack(int attack) {
+        if (this.attack + attack >= 0) {
+            this.attack += attack;
+        } else {
+            this.attack = 0;
+        }
+    }
+
+    public void subtractAttack(int attack) {
+        if (this.attack - attack >= 0) {
+            this.attack -= attack;
+        } else {
+            this.attack = 0;
+        }
+    }
+
     public int getHealth() {
         return this.health;
+    }
+
+    public void addHealth(int health) {
+        if (this.health + health >= 0) {
+            this.health += health;
+        } else {
+            this.health = 0;
+        }
+    }
+
+    public void subtractHealth(int health) {
+        if (this.health - health >= 0) {
+            this.health -= health;
+        } else {
+            this.health = 0;
+        }
+    }
+
+    public void swapAttackHealth() {
+        int temp = this.health;
+        this.health = this.attack;
+        this.attack = temp;
     }
 
     public int getAttackup() {
