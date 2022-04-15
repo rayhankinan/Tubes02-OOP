@@ -46,14 +46,4 @@ public class SummonedCharacter extends Character implements Summonable {
             this.attack += this.attackup;
         }
     }
-
-    @Override
-    public void levelDown() {
-        if (level > 0) {
-            this.level--;
-            this.exp = 0;
-            this.health -= this.healthup;
-            this.attack -= this.attackup;
-        }
-    }
 }

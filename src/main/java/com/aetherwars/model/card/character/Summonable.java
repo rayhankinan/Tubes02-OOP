@@ -10,5 +10,4 @@ public interface Summonable {
     void addSpell(ActivatedSpell s);
     List<ActivatedSpell> getActiveSpells();
     void levelUp();
-    void levelDown();
 }
