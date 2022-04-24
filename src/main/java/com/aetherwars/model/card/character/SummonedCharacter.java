@@ -1,7 +1,9 @@
 package com.aetherwars.model.card.character;
 
+import com.aetherwars.model.Player;
 import com.aetherwars.model.card.spell.Activable;
 import com.aetherwars.model.card.CardDatabase;
+import com.aetherwars.model.card.spell.Temporary;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -53,6 +55,26 @@ public class SummonedCharacter extends Character implements Summonable {
     @Override
     public List<Activable> getActivable() {
         return this.activeSpells;
+    }
+
+    @Override
+    public void activateEffects() {
+        for (Activable s : this.activeSpells) {
+            if (s instanceof Temporary) {
+                /* TODO */
+            } else {
+                /* TODO */
+            }
+        }
+    }
+    @Override
+    public void attackCharacter(SummonedCharacter c) {
+        /* TODO */
+    }
+
+    @Override
+    public void attackPlayer(Player p) {
+        /* TODO */
     }
 
     @Override

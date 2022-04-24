@@ -9,6 +9,15 @@ public class Deck {
     private final List<Card> buffer;
 
     public Deck() {
-        this.buffer = new ArrayList<>(); // GANTI INI DENGAN RANDOMIZER
+        /* TODO */
+        this.buffer = new ArrayList<>();
+    }
+
+    public void addCard(Card c) {
+        /* TODO */
+    }
+
+    public Card getCard() {
+        return this.buffer.remove(0);
     }
 }

@@ -1,7 +1,15 @@
 package com.aetherwars.model;
 
 public class Board {
-    private Player player1;
-    private Player player2;
+    private final Player player1;
+    private final Player player2;
+    private final Deck deck1;
+    private final Deck deck2;
 
+    public Board(String namaPlayer1, String namaPlayer2) {
+        this.player1 = new Player(namaPlayer1);
+        this.player2 = new Player(namaPlayer2);
+        this.deck1 = new Deck();
+        this.deck2 = new Deck();
+    }
 }
