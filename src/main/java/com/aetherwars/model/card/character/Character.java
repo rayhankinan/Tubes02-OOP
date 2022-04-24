@@ -1,6 +1,6 @@
 package com.aetherwars.model.card.character;
 
-import com.aetherwars.model.card.spell.Card;
+import com.aetherwars.model.card.Card;
 
 public class Character extends Card {
     protected Type type;
@@ -8,6 +8,15 @@ public class Character extends Card {
     protected int attack;
     protected int attackup;
     protected int healthup;
+
+    public Character(int id) {
+        super(id);
+        this.type = Type.OVERWORLD;
+        this.attack = 0;
+        this.health = 0;
+        this.attackup = 0;
+        this.healthup = 0;
+    }
 
     public Character(int id, String name, Type type, String description, String imagepath, int attack, int health, int mana, int attackup, int healthup) {
         super(id, name, description, imagepath, mana);

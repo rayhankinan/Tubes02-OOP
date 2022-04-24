@@ -1,19 +1,13 @@
 package com.aetherwars.model.card.spell;
 
-import com.aetherwars.model.card.character.SummonedCharacter;
+import com.aetherwars.model.card.Card;
 
-public class Spell extends Card implements Effect {
+public abstract class Spell extends Card implements Permanently {
+    public Spell(int id) {
+        super(id);
+    }
+
     public Spell(int id, String name, String description, String imagepath, int mana) {
         super(id, name, description, imagepath, mana);
-    }
-
-    @Override
-    public void action(SummonedCharacter c) {
-        /* EMPTY */
-    }
-
-    @Override
-    public void counteraction(SummonedCharacter c) {
-        /* EMPTY */
     }
 }

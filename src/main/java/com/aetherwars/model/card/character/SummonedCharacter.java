@@ -1,6 +1,6 @@
 package com.aetherwars.model.card.character;
 
-import com.aetherwars.model.card.spell.ActivatedSpell;
+import com.aetherwars.model.card.spell.Spell;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class SummonedCharacter extends Character implements Summonable {
     private int level;
     private int exp;
-    private final List<ActivatedSpell> activeSpells;
+    private final List<Spell> activeSpells;
 
     public SummonedCharacter(int id, String name, Type type, String description, String imagepath, int attack, int health, int mana, int attackup, int healthup, int level, int exp) {
         super(id, name, type, description, imagepath, attack, health, mana, attackup, healthup);
@@ -28,12 +28,12 @@ public class SummonedCharacter extends Character implements Summonable {
     }
 
     @Override
-    public void addSpell(ActivatedSpell s) {
+    public void addSpell(Spell s) {
         this.activeSpells.add(s);
     }
 
     @Override
-    public List<ActivatedSpell> getActiveSpells() {
+    public List<Spell> getActiveSpells() {
         return this.activeSpells;
     }
 

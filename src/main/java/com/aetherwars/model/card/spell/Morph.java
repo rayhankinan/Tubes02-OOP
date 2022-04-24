@@ -2,22 +2,35 @@ package com.aetherwars.model.card.spell;
 
 import com.aetherwars.model.card.character.SummonedCharacter;
 
-public class Morph extends ActivatedSpell {
+public class Morph extends Spell {
     private final int targetid;
+    private boolean active;
+
+    public Morph(int id) {
+        super(id);
+        this.targetid = 0;
+        this.active = false;
+    }
 
     public Morph(int id, String name, String description, String imagepath, int targetid, int mana) {
         super(id, name, description, imagepath, mana);
         this.targetid = targetid;
+        this.active = false;
     }
 
     @Override
-    public void action(SummonedCharacter c) {
-        /* IMPLEMENTASIKAN NANTI */
+    public boolean isActive() {
+        return this.active;
     }
 
     @Override
-    public void counteraction(SummonedCharacter c) {
-        /* IMPLEMENTASIKAN NANTI */
+    public void apply(SummonedCharacter c) throws Exception {
+        if (this.active) {
+            throw new Exception("Spell is already activated!");
+        } else {
+            /* IMPLEMENTASIKAN NANTI*/
+            this.active = true;
+        }
     }
 
     @Override

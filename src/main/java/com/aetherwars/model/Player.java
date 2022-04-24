@@ -6,34 +6,23 @@ public class Player {
     private static final int MIN_HP = 0;
     private static final int MIN_MANA = 0;
     // attribute
-    private static int numOfPlayer = 0;
-    private int id;
     private String name;
     private int health;
     private int mana;
-    // private deck
-    // private hand
 
     // methods
     public Player() {
-        Player.numOfPlayer++;
-        this.id = Player.numOfPlayer;
         this.name = "No name";
         this.health = MAX_HP;
         this.mana = 1;
     }
 
     public Player(String name) {
-        Player.numOfPlayer++;
-        this.id = Player.numOfPlayer;
         this.name = name;
         this.health = MAX_HP;
         this.mana = 1;
     }
 
-    public int getId(){
-        return this.id;
-    }
     public String getName() {
         return this.name;
     }
@@ -74,12 +63,10 @@ public class Player {
     }
 
     public void display() {
-        System.out.printf("Player %d:\n", this.getId());
         System.out.printf("Name: %s\n", this.getName());
         System.out.printf("Mana: %d\n", this.getMana());
         System.out.printf("Health: %d\n\n", this.getHealth());
     }
-
 
     public static void main(String[] args)
     {
@@ -92,5 +79,4 @@ public class Player {
         System.out.println("ANCHA ABIS DIGEBOK ASKA, SKRG ANCHA STATSNYA BEGINI...");
         Player1.display();
     }
-//    public useCard
 }

@@ -1,23 +1,47 @@
 package com.aetherwars.model.card.spell;
 
+import com.aetherwars.model.card.Card;
 import com.aetherwars.model.card.character.SummonedCharacter;
 
-public class Swap extends Spell implements Temporal {
+public class Swap extends Spell implements Temporary {
     private int duration;
+    private boolean active;
+
+    public Swap(int id) {
+        super(id);
+        this.duration = 0;
+        this.active = false;
+    }
 
     public Swap(int id, String name, String description, String imagepath, int duration, int mana) {
         super(id, name, description, imagepath, mana);
         this.duration = duration;
+        this.active = false;
     }
 
     @Override
-    public void action(SummonedCharacter c) {
-        c.swapAttackHealth();
+    public boolean isActive() {
+        return this.active;
     }
 
     @Override
-    public void counteraction(SummonedCharacter c) {
-        c.swapAttackHealth();
+    public void apply(SummonedCharacter c) throws Exception {
+        if (this.active) {
+            throw new Exception("Spell is already activated!");
+        } else {
+            c.swapAttackHealth();
+            this.active = true;
+        }
+    }
+
+    @Override
+    public void revert(SummonedCharacter c) throws Exception {
+        if (!this.active) {
+            throw new Exception("Spell is already inactivated!");
+        } else {
+            c.swapAttackHealth();
+            this.active = false;
+        }
     }
 
     @Override

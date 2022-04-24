@@ -1,11 +1,20 @@
 package com.aetherwars.model.card.spell;
 
+import com.aetherwars.model.card.Card;
 import com.aetherwars.model.card.character.SummonedCharacter;
 
-public class Potion extends Spell implements Temporal {
+public class Potion extends Spell implements Temporary {
     private final int attack;
     private final int health;
     private int duration;
+    private boolean active;
+
+    public Potion(int id) {
+        super(id);
+        this.attack = 0;
+        this.health = 0;
+        this.duration = 0;
+    }
 
     public Potion(int id, String name, String description, String imagepath, int attack, int health, int mana, int duration) {
         super(id, name, description, imagepath, mana);
@@ -15,15 +24,30 @@ public class Potion extends Spell implements Temporal {
     }
 
     @Override
-    public void action(SummonedCharacter c) {
-        c.addAttack(this.attack);
-        c.addHealth(this.health);
+    public boolean isActive() {
+        return this.active;
     }
 
     @Override
-    public void counteraction(SummonedCharacter c) {
-        c.subtractAttack(this.attack);
-        c.subtractHealth(this.health);
+    public void apply(SummonedCharacter c) throws Exception {
+        if (this.active) {
+            throw new Exception("Spell is already activated!");
+        } else {
+            c.addAttack(this.attack);
+            c.addHealth(this.health);
+            this.active = true;
+        }
+    }
+
+    @Override
+    public void revert(SummonedCharacter c) throws Exception {
+        if (!this.active) {
+            throw new Exception("Spell is already inactivated!");
+        } else {
+            c.subtractAttack(this.attack);
+            c.subtractHealth(this.health);
+            this.active = false;
+        }
     }
 
     @Override
