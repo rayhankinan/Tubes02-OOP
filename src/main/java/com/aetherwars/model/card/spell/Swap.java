@@ -69,6 +69,6 @@ public class Swap extends Spell implements Temporary {
 
     @Override
     public String toString() {
-        return String.format("Id: %d\nName: %s\nDescription: %s\nImagepath: %s\nMana: %d\nDuration: %d\n", this.id, this.name, this.description, this.imagepath, this.mana, this.duration);
+        return String.format("Id: %d\nName: %s\nDescription: %s\nImagepath: %s\nMana: %d\nDuration: %d", this.id, this.name, this.description, this.imagepath, this.mana, this.duration);
     }
 }

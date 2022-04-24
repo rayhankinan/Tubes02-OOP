@@ -1,6 +1,7 @@
 package com.aetherwars.model.card.character;
 
 import com.aetherwars.model.card.spell.Spell;
+import com.aetherwars.model.card.CardDatabase;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -15,6 +16,23 @@ public class SummonedCharacter extends Character implements Summonable {
         this.level = level;
         this.exp = exp;
         this.activeSpells = new ArrayList<>();
+    }
+
+    public void morph(int id) {
+        Character newCharacter = CardDatabase.getCharacter(id);
+        this.id = newCharacter.getId();
+        this.name = newCharacter.getName();
+        this.type = newCharacter.getType();
+        this.description = newCharacter.getDescription();
+        this.imagepath = newCharacter.getImagepath();
+        this.attack = newCharacter.getAttack();
+        this.health = newCharacter.getHealth();
+        this.mana = newCharacter.getMana();
+        this.attackup = newCharacter.getAttackup();
+        this.healthup = newCharacter.getHealthup();
+        this.level = 0;
+        this.exp = 0;
+        this.activeSpells.clear();
     }
 
     @Override

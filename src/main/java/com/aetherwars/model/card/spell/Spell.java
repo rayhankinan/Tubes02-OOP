@@ -2,7 +2,7 @@ package com.aetherwars.model.card.spell;
 
 import com.aetherwars.model.card.Card;
 
-public abstract class Spell extends Card implements Permanently {
+public class Spell extends Card  {
     public Spell(int id) {
         super(id);
     }

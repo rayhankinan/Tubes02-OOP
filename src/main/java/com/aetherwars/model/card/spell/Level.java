@@ -2,7 +2,7 @@ package com.aetherwars.model.card.spell;
 
 import com.aetherwars.model.card.character.SummonedCharacter;
 
-public class Level extends Spell {
+public class Level extends Spell implements Permanently {
     private final int level;
     private boolean active;
 

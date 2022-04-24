@@ -2,7 +2,7 @@ package com.aetherwars.model.card.spell;
 
 import com.aetherwars.model.card.character.SummonedCharacter;
 
-public class Morph extends Spell {
+public class Morph extends Spell implements Permanently {
     private final int targetid;
     private boolean active;
 
@@ -28,7 +28,7 @@ public class Morph extends Spell {
         if (this.active) {
             throw new Exception("Spell is already activated!");
         } else {
-            /* IMPLEMENTASIKAN NANTI*/
+            c.morph(this.targetid);
             this.active = true;
         }
     }
