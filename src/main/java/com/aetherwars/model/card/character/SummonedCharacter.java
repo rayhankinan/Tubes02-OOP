@@ -64,8 +64,34 @@ public class SummonedCharacter extends Character implements Summonable {
         for (Activable s : this.activeSpells) {
             if (s instanceof Temporary) {
                 /* TODO */
+                try {
+                    ((Temporary) s).apply(this);
+                } catch (CardException ce) { //dia sudah teraktivasi
+                    try {
+                        ((Temporary) s).decrementDuration();
+                        if (((Temporary) s).getDuration() == 0) {
+                            // try revert
+                            try {
+                                ((Temporary) s).revert(this);
+                                this.activeSpells.remove(s);
+
+                            }
+                            catch (CardException ce2) {
+                                ce2.printStackTrace();
+                            }
+                        }
+                    } catch (CardException ce2) { //durasi dia sudah 0
+                        ce2.printStackTrace();
+                    }
+                }
             } else {
                 /* TODO */
+                try {
+                    s.apply(this);
+                    this.activeSpells.remove(s);
+                } catch (CardException ce) {    //dia sudah teraktivasi
+                    ce.printStackTrace();
+                }
             }
         }
     }
