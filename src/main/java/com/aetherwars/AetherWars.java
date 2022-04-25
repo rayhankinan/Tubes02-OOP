@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.aetherwars.model.card.CardDatabase;
+import com.aetherwars.model.card.CardException;
 import com.aetherwars.model.card.character.Character;
 import com.aetherwars.model.card.character.Type;
 import com.aetherwars.model.card.spell.Level;
@@ -28,7 +29,7 @@ public class AetherWars extends Application {
     private static final String SPELL_MORPH_FILE_PATH = "card/data/spell_morph.csv";
     private static final String SPELL_SWAP_FILE_PATH = "card/data/spell_swap.csv";
 
-    public void loadCards() throws IOException, URISyntaxException {
+    public void loadCards() throws IOException, URISyntaxException, CardException {
         File characterCSVFile = new File(getClass().getResource(CHARACTER_CSV_FILE_PATH).toURI());
         CSVReader characterReader = new CSVReader(characterCSVFile, "\t");
         characterReader.setSkipHeader(true);

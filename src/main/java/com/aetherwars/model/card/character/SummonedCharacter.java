@@ -1,6 +1,7 @@
 package com.aetherwars.model.card.character;
 
 import com.aetherwars.model.Player;
+import com.aetherwars.model.card.CardException;
 import com.aetherwars.model.card.spell.Activable;
 import com.aetherwars.model.card.CardDatabase;
 import com.aetherwars.model.card.spell.Temporary;
@@ -20,7 +21,7 @@ public class SummonedCharacter extends Character implements Summonable {
         this.activeSpells = new ArrayList<>();
     }
 
-    public void morph(int id) {
+    public void morph(int id) throws CardException {
         Character newCharacter = CardDatabase.getCharacter(id);
 
         this.id = newCharacter.getId();

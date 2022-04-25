@@ -16,18 +16,34 @@ public class CardDatabase {
     private static final List<Morph> morphList = new ArrayList<>();
     private static final List<Swap> swapList = new ArrayList<>();
 
-    public static Character getCharacter(int id) {
+    public static Character getCharacter(int id) throws CardException {
         int index = CardDatabase.characterList.indexOf(new Character(id));
-        return CardDatabase.characterList.get(index);
+
+        if (index == -1) {
+            throw new CardException("Character not found!");
+        } else {
+            return CardDatabase.characterList.get(index);
+        }
     }
 
-    public static void addCharacter(Character c) {
-        CardDatabase.characterList.add(c);
+    public static void addCharacter(Character c) throws CardException {
+        int index = CardDatabase.characterList.indexOf(c);
+
+        if (index == -1) {
+            CardDatabase.characterList.add(c);
+        } else {
+            throw new CardException("Character already added!");
+        }
     }
 
-    public static Potion getPotion(int id) {
+    public static Potion getPotion(int id) throws CardException {
         int index = CardDatabase.potionList.indexOf(new Potion(id));
-        return CardDatabase.potionList.get(index);
+
+        if (index == -1) {
+            throw new CardException("Potion spell not found!");
+        } else {
+            return CardDatabase.potionList.get(index);
+        }
     }
 
     public static void addPotion(Potion p) {

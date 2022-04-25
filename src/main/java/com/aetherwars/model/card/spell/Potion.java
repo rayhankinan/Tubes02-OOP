@@ -2,6 +2,7 @@ package com.aetherwars.model.card.spell;
 
 import com.aetherwars.model.card.Card;
 import com.aetherwars.model.card.character.SummonedCharacter;
+import com.aetherwars.model.card.CardException;
 
 public class Potion extends Spell implements Temporary {
     private final int attack;
@@ -29,9 +30,9 @@ public class Potion extends Spell implements Temporary {
     }
 
     @Override
-    public void apply(SummonedCharacter c) throws Exception {
+    public void apply(SummonedCharacter c) throws CardException {
         if (this.active) {
-            throw new Exception("Spell is already activated!");
+            throw new CardException("Spell is already activated!");
         } else {
             c.addAttack(this.attack);
             c.addHealth(this.health);
@@ -40,9 +41,9 @@ public class Potion extends Spell implements Temporary {
     }
 
     @Override
-    public void revert(SummonedCharacter c) throws Exception {
+    public void revert(SummonedCharacter c) throws CardException {
         if (!this.active) {
-            throw new Exception("Spell is already inactivated!");
+            throw new CardException("Spell is already inactivated!");
         } else {
             c.subtractAttack(this.attack);
             c.subtractHealth(this.health);
@@ -56,20 +57,20 @@ public class Potion extends Spell implements Temporary {
     }
 
     @Override
-    public void decrementDuration() throws Exception {
+    public void decrementDuration() throws CardException {
         if (this.duration > 0) {
             this.duration--;
         } else {
-            throw new Exception("Duration can't be less than 0!");
+            throw new CardException("Duration can't be less than 0!");
         }
     }
 
     @Override
-    public void stackDuration(Card C) throws Exception {
+    public void stackDuration(Card C) throws CardException {
         if (C instanceof Potion) {
             this.duration += ((Potion) C).getDuration();
         } else {
-            throw new Exception(String.format("Invalid operation between %s and %s!", this.getClass().getSimpleName(), C.getClass().getSimpleName()));
+            throw new CardException(String.format("Invalid operation between %s and %s!", this.getClass().getSimpleName(), C.getClass().getSimpleName()));
         }
     }
 

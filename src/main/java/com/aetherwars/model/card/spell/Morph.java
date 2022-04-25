@@ -1,6 +1,7 @@
 package com.aetherwars.model.card.spell;
 
 import com.aetherwars.model.card.character.SummonedCharacter;
+import com.aetherwars.model.card.CardException;
 
 public class Morph extends Spell implements Activable {
     private final int targetid;
@@ -24,9 +25,9 @@ public class Morph extends Spell implements Activable {
     }
 
     @Override
-    public void apply(SummonedCharacter c) throws Exception {
+    public void apply(SummonedCharacter c) throws CardException {
         if (this.active) {
-            throw new Exception("Spell is already activated!");
+            throw new CardException("Spell is already activated!");
         } else {
             c.morph(this.targetid);
             this.active = true;
