@@ -63,9 +63,8 @@ public class SummonedCharacter extends Character implements Summonable {
     public void activateEffects() {
         for (Activable s : this.activeSpells) {
             if (s instanceof Temporary) {
-                /* TODO */
                 try {
-                    ((Temporary) s).apply(this);
+                    s.apply(this);
                 } catch (CardException ce) { //dia sudah teraktivasi
                     try {
                         ((Temporary) s).decrementDuration();
@@ -85,7 +84,6 @@ public class SummonedCharacter extends Character implements Summonable {
                     }
                 }
             } else {
-                /* TODO */
                 try {
                     s.apply(this);
                     this.activeSpells.remove(s);
@@ -98,7 +96,30 @@ public class SummonedCharacter extends Character implements Summonable {
 
     @Override
     public void attackCharacter(SummonedCharacter c) {
-        c.takeDamage(this.attack);
+        if (this.type == Type.NETHER) {
+            if (c.getType() == Type.OVERWORLD) {
+                c.takeDamage(this.attack*2);
+            }
+            else if (c.getType() == Type.END) {
+                c.takeDamage(this.attack/2);
+            }
+        }
+        else if (this.type == Type.OVERWORLD) {
+            if (c.getType() == Type.END) {
+                c.takeDamage(this.attack*2);
+            }
+            else if (c.getType() == Type.NETHER) {
+                c.takeDamage(this.attack/2);
+            }
+        }
+        else if (this.type == Type.END) {
+            if (c.getType() == Type.NETHER) {
+                c.takeDamage(this.attack*2);
+            }
+            else if (c.getType() == Type.OVERWORLD) {
+                c.takeDamage(this.attack/2);
+            }
+        }
     }
 
     @Override
