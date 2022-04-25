@@ -52,7 +52,7 @@ public class SummonedCharacter extends Character implements Summonable {
     @Override
     public void addActivable(Activable s) {
         this.activeSpells.add(s);
-        //TODO: stack duration
+        /* TODO: stack duration */
     }
 
     @Override

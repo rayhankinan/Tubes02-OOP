@@ -4,8 +4,8 @@ import com.aetherwars.model.card.Card;
 import com.aetherwars.model.card.CardException;
 
 public class Character extends Card {
-    private static final int MIN_ID = 1;
-    private static final int MAX_ID = 99;
+    public static final int MIN_ID = 1;
+    public static final int MAX_ID = 99;
 
     protected Type type;
     protected int health;

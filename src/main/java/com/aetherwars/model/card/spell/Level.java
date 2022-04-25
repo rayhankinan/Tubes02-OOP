@@ -5,8 +5,8 @@ import com.aetherwars.model.card.character.SummonedCharacter;
 import com.aetherwars.model.card.CardException;
 
 public class Level extends Spell implements Activable {
-    private static final int MIN_ID = 401;
-    private static final int MAX_ID = 499;
+    public static final int MIN_ID = 401;
+    public static final int MAX_ID = 499;
 
     private final int level;
     private boolean active;

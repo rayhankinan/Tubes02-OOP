@@ -5,24 +5,37 @@ import com.aetherwars.model.card.character.SummonedCharacter;
 import com.aetherwars.model.card.CardException;
 
 public class Potion extends Spell implements Temporary {
-    //TODO: implement temporary health and temporary attack
+    /* TODO: implement temporary health and temporary attack */
+    public static final int MIN_ID = 101;
+    public static final int MAX_ID = 199;
+
     private final int attack;
     private final int health;
     private int duration;
     private boolean active;
 
-    public Potion(int id) {
+    public Potion(int id) throws CardException {
         super(id);
-        this.attack = 0;
-        this.health = 0;
-        this.duration = 0;
+
+        if (id < Potion.MIN_ID || id > Potion.MAX_ID) {
+            throw new CardException("Id is invalid");
+        } else {
+            this.attack = 0;
+            this.health = 0;
+            this.duration = 0;
+        }
     }
 
-    public Potion(int id, String name, String description, String imagepath, int attack, int health, int mana, int duration) {
+    public Potion(int id, String name, String description, String imagepath, int attack, int health, int mana, int duration) throws CardException {
         super(id, name, description, imagepath, mana);
-        this.attack = attack;
-        this.health = health;
-        this.duration = duration;
+
+        if (id < Potion.MIN_ID || id > Potion.MAX_ID) {
+            throw new CardException("Id is invalid");
+        } else {
+            this.attack = attack;
+            this.health = health;
+            this.duration = duration;
+        }
     }
 
     @Override

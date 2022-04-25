@@ -5,8 +5,8 @@ import com.aetherwars.model.card.character.SummonedCharacter;
 import com.aetherwars.model.card.CardException;
 
 public class Swap extends Spell implements Temporary {
-    private static final int MIN_ID = 201;
-    private static final int MAX_ID = 299;
+    public static final int MIN_ID = 201;
+    public static final int MAX_ID = 299;
 
     private int duration;
     private boolean active;

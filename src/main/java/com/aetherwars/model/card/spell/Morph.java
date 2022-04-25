@@ -4,8 +4,8 @@ import com.aetherwars.model.card.character.SummonedCharacter;
 import com.aetherwars.model.card.CardException;
 
 public class Morph extends Spell implements Activable {
-    private static final int MIN_ID = 301;
-    private static final int MAX_ID = 399;
+    public static final int MIN_ID = 301;
+    public static final int MAX_ID = 399;
 
     private final int targetid;
     private boolean active;

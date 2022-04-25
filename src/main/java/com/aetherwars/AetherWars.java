@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import com.aetherwars.model.Deck;
 import com.aetherwars.model.card.CardDatabase;
 import com.aetherwars.model.card.CardException;
 import com.aetherwars.model.card.character.Character;
@@ -81,6 +82,19 @@ public class AetherWars extends Application {
         CardDatabase.printAll();
     }
 
+    public void loadDecks(String deckName) throws IOException, URISyntaxException, CardException {
+        Deck deck = new Deck();
+
+        String deckPath = String.format("deck/%s", deckName);
+        File deckCSVFile = new File(Objects.requireNonNull(getClass().getResource(deckPath)).toURI());
+        CSVReader deckReader = new CSVReader(deckCSVFile, "\t");
+        deckReader.setSkipHeader(true);
+        List<String[]> deckRows = deckReader.read();
+        for (String[] row : deckRows) {
+            int id = Integer.parseInt(row[0]);
+        }
+    }
+
     @Override
     public void start(Stage stage) {
         Text text = new Text();
@@ -99,6 +113,7 @@ public class AetherWars extends Application {
 
         try {
             this.loadCards();
+            /*this.loadDecks("deck_1.csv");*/
             text.setText("Minecraft: Aether Wars!");
         } catch (Exception e) {
             text.setText("Failed to load cards: " + e);

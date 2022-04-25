@@ -116,6 +116,26 @@ public class CardDatabase {
         }
     }
 
+    /*public static Card getCard(int id) throws CardException {
+
+    }*/
+
+    public static void addCard(Card c) throws CardException {
+        if (c instanceof Character) {
+            CardDatabase.addCharacter((Character) c);
+        } else if (c instanceof Level) {
+            CardDatabase.addLevel((Level) c);
+        } else if (c instanceof Morph) {
+            CardDatabase.addMorph((Morph) c);
+        } else if (c instanceof Potion) {
+            CardDatabase.addPotion((Potion) c);
+        } else if (c instanceof Swap) {
+            CardDatabase.addSwap((Swap) c);
+        } else {
+            throw new CardException("Type is not recognized!");
+        }
+    }
+
     public static void printAll() {
         for (Character c : CardDatabase.characterList) {
             System.out.println(c);
