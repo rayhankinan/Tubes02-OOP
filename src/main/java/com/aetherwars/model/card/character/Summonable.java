@@ -13,5 +13,6 @@ public interface Summonable {
     void activateEffects();
     void attackCharacter(SummonedCharacter c);
     void attackPlayer(Player p);
+    void takeDamage(int damage);
     void levelUp();
 }

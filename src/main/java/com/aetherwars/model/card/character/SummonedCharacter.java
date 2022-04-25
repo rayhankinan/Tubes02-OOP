@@ -22,6 +22,7 @@ public class SummonedCharacter extends Character implements Summonable {
 
     public void morph(int id) {
         Character newCharacter = CardDatabase.getCharacter(id);
+
         this.id = newCharacter.getId();
         this.name = newCharacter.getName();
         this.type = newCharacter.getType();
@@ -32,7 +33,7 @@ public class SummonedCharacter extends Character implements Summonable {
         this.mana = newCharacter.getMana();
         this.attackup = newCharacter.getAttackup();
         this.healthup = newCharacter.getHealthup();
-        this.level = 0;
+        this.level = 1;
         this.exp = 0;
         this.activeSpells.clear();
     }
@@ -67,14 +68,24 @@ public class SummonedCharacter extends Character implements Summonable {
             }
         }
     }
+
     @Override
     public void attackCharacter(SummonedCharacter c) {
-        /* TODO */
+        c.takeDamage(this.attack);
     }
 
     @Override
     public void attackPlayer(Player p) {
-        /* TODO */
+        p.takeDamage(this.attack);
+    }
+
+    @Override
+    public void takeDamage(int damage) {
+        if (this.health - damage < 0) {
+            this.health = 0;
+        } else {
+            this.health -= damage;
+        }
     }
 
     @Override
