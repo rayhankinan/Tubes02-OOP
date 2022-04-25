@@ -5,6 +5,7 @@ import com.aetherwars.model.card.character.SummonedCharacter;
 import com.aetherwars.model.card.CardException;
 
 public class Potion extends Spell implements Temporary {
+    //TODO: implement temporary health and temporary attack
     private final int attack;
     private final int health;
     private int duration;
