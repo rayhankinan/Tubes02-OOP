@@ -46,35 +46,74 @@ public class CardDatabase {
         }
     }
 
-    public static void addPotion(Potion p) {
-        CardDatabase.potionList.add(p);
+    public static void addPotion(Potion p) throws CardException {
+        int index = CardDatabase.potionList.indexOf(p);
+
+        if (index == -1) {
+            CardDatabase.potionList.add(p);
+        } else {
+            throw new CardException("Potion spell already added!");
+        }
     }
 
-    public static Level getLevel(int id) {
+    public static Level getLevel(int id) throws CardException {
         int index = CardDatabase.levelList.indexOf(new Level(id));
-        return CardDatabase.levelList.get(index);
+
+        if (index == -1) {
+            throw new CardException("Level spell not found!");
+        } else {
+            return CardDatabase.levelList.get(index);
+        }
     }
 
-    public static void addLevel(Level l) {
-        CardDatabase.levelList.add(l);
+    public static void addLevel(Level l) throws CardException {
+        int index = CardDatabase.levelList.indexOf(l);
+
+        if (index == -1) {
+            CardDatabase.levelList.add(l);
+        } else {
+            throw new CardException("Level spell already added!");
+        }
     }
 
-    public static Morph getMorph(int id) {
+    public static Morph getMorph(int id) throws CardException {
         int index = CardDatabase.morphList.indexOf(new Morph(id));
-        return CardDatabase.morphList.get(index);
+
+        if (index == -1) {
+            throw new CardException("Morph spell not found!");
+        } else {
+            return CardDatabase.morphList.get(index);
+        }
     }
 
-    public static void addMorph(Morph m) {
-        CardDatabase.morphList.add(m);
+    public static void addMorph(Morph m) throws CardException {
+        int index = CardDatabase.morphList.indexOf(m);
+
+        if (index == -1) {
+            CardDatabase.morphList.add(m);
+        } else {
+            throw new CardException("Morph spell already added!");
+        }
     }
 
-    public static Swap getSwap(int id) {
+    public static Swap getSwap(int id) throws CardException {
         int index = CardDatabase.swapList.indexOf(new Swap(id));
-        return CardDatabase.swapList.get(index);
+
+        if (index == -1) {
+            throw new CardException("Swap spell not found!");
+        } else {
+            return CardDatabase.swapList.get(index);
+        }
     }
 
-    public static void addSwap(Swap s) {
-        CardDatabase.swapList.add(s);
+    public static void addSwap(Swap s) throws CardException {
+        int index = CardDatabase.swapList.indexOf(s);
+
+        if (index == -1) {
+            CardDatabase.swapList.add(s);
+        } else {
+            throw new CardException("Swap spell already added!");
+        }
     }
 
     public static void printAll() {

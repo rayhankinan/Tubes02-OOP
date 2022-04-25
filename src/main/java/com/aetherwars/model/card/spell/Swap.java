@@ -5,19 +5,32 @@ import com.aetherwars.model.card.character.SummonedCharacter;
 import com.aetherwars.model.card.CardException;
 
 public class Swap extends Spell implements Temporary {
+    private static final int MIN_ID = 201;
+    private static final int MAX_ID = 299;
+
     private int duration;
     private boolean active;
 
-    public Swap(int id) {
+    public Swap(int id) throws CardException {
         super(id);
-        this.duration = 0;
-        this.active = false;
+
+        if (id < Swap.MIN_ID || id > Swap.MAX_ID) {
+            throw new CardException("Id is invalid");
+        } else {
+            this.duration = 0;
+            this.active = false;
+        }
     }
 
-    public Swap(int id, String name, String description, String imagepath, int duration, int mana) {
+    public Swap(int id, String name, String description, String imagepath, int duration, int mana) throws CardException {
         super(id, name, description, imagepath, mana);
-        this.duration = duration;
-        this.active = false;
+
+        if (id < Swap.MIN_ID || id > Swap.MAX_ID) {
+            throw new CardException("Id is invalid");
+        } else {
+            this.duration = duration;
+            this.active = false;
+        }
     }
 
     @Override

@@ -1,30 +1,44 @@
 package com.aetherwars.model.card.character;
 
 import com.aetherwars.model.card.Card;
+import com.aetherwars.model.card.CardException;
 
 public class Character extends Card {
+    private static final int MIN_ID = 1;
+    private static final int MAX_ID = 99;
+
     protected Type type;
     protected int health;
     protected int attack;
     protected int attackup;
     protected int healthup;
 
-    public Character(int id) {
+    public Character(int id) throws CardException {
         super(id);
-        this.type = Type.OVERWORLD;
-        this.attack = 0;
-        this.health = 0;
-        this.attackup = 0;
-        this.healthup = 0;
+
+        if (id < Character.MIN_ID || id > Character.MAX_ID) {
+            throw new CardException("Id is invalid!");
+        } else {
+            this.type = Type.OVERWORLD;
+            this.attack = 0;
+            this.health = 0;
+            this.attackup = 0;
+            this.healthup = 0;
+        }
     }
 
-    public Character(int id, String name, Type type, String description, String imagepath, int attack, int health, int mana, int attackup, int healthup) {
+    public Character(int id, String name, Type type, String description, String imagepath, int attack, int health, int mana, int attackup, int healthup) throws CardException {
         super(id, name, description, imagepath, mana);
-        this.type = type;
-        this.attack = attack;
-        this.health = health;
-        this.attackup = attackup;
-        this.healthup = healthup;
+
+        if (id < Character.MIN_ID || id > Character.MAX_ID) {
+            throw new CardException("Id is invalid!");
+        } else {
+            this.type = type;
+            this.attack = attack;
+            this.health = health;
+            this.attackup = attackup;
+            this.healthup = healthup;
+        }
     }
 
     public Type getType() {

@@ -1,22 +1,36 @@
 package com.aetherwars.model.card.spell;
 
+import com.aetherwars.model.card.character.Character;
 import com.aetherwars.model.card.character.SummonedCharacter;
 import com.aetherwars.model.card.CardException;
 
 public class Level extends Spell implements Activable {
+    private static final int MIN_ID = 401;
+    private static final int MAX_ID = 499;
+
     private final int level;
     private boolean active;
 
-    public Level(int id) {
+    public Level(int id) throws CardException {
         super(id);
-        this.level = 0;
-        this.active = false;
+
+        if (id < Level.MIN_ID || id > Level.MAX_ID) {
+            throw new CardException("Id is invalid");
+        } else {
+            this.level = 0;
+            this.active = false;
+        }
     }
 
-    public Level(int id, String name, String description, String imagepath, int mana, int level) {
+    public Level(int id, String name, String description, String imagepath, int mana, int level) throws CardException {
         super(id, name, description, imagepath, mana);
-        this.level = level;
-        this.active = false;
+
+        if (id < Level.MIN_ID || id > Level.MAX_ID) {
+            throw new CardException("Id is invalid");
+        } else {
+            this.level = level;
+            this.active = false;
+        }
     }
 
     @Override

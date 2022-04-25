@@ -14,7 +14,7 @@ public class SummonedCharacter extends Character implements Summonable {
     private int exp;
     private final List<Activable> activeSpells;
 
-    public SummonedCharacter(int id, String name, Type type, String description, String imagepath, int attack, int health, int mana, int attackup, int healthup, int level, int exp) {
+    public SummonedCharacter(int id, String name, Type type, String description, String imagepath, int attack, int health, int mana, int attackup, int healthup, int level, int exp) throws CardException {
         super(id, name, type, description, imagepath, attack, health, mana, attackup, healthup);
         this.level = level;
         this.exp = exp;

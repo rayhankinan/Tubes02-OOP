@@ -4,19 +4,32 @@ import com.aetherwars.model.card.character.SummonedCharacter;
 import com.aetherwars.model.card.CardException;
 
 public class Morph extends Spell implements Activable {
+    private static final int MIN_ID = 301;
+    private static final int MAX_ID = 399;
+
     private final int targetid;
     private boolean active;
 
-    public Morph(int id) {
+    public Morph(int id) throws CardException {
         super(id);
-        this.targetid = 0;
-        this.active = false;
+
+        if (id < Morph.MIN_ID || id > Morph.MAX_ID) {
+            throw new CardException("Id is invalid");
+        } else {
+            this.targetid = 0;
+            this.active = false;
+        }
     }
 
-    public Morph(int id, String name, String description, String imagepath, int targetid, int mana) {
+    public Morph(int id, String name, String description, String imagepath, int targetid, int mana) throws CardException {
         super(id, name, description, imagepath, mana);
-        this.targetid = targetid;
-        this.active = false;
+
+        if (id < Morph.MIN_ID || id > Morph.MAX_ID) {
+            throw new CardException("Id is invalid");
+        } else {
+            this.targetid = targetid;
+            this.active = false;
+        }
     }
 
     @Override

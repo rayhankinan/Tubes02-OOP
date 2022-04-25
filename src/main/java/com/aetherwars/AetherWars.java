@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import com.aetherwars.model.card.CardDatabase;
 import com.aetherwars.model.card.CardException;
@@ -14,6 +15,7 @@ import com.aetherwars.model.card.spell.Level;
 import com.aetherwars.model.card.spell.Morph;
 import com.aetherwars.model.card.spell.Potion;
 import com.aetherwars.model.card.spell.Swap;
+
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -30,7 +32,7 @@ public class AetherWars extends Application {
     private static final String SPELL_SWAP_FILE_PATH = "card/data/spell_swap.csv";
 
     public void loadCards() throws IOException, URISyntaxException, CardException {
-        File characterCSVFile = new File(getClass().getResource(CHARACTER_CSV_FILE_PATH).toURI());
+        File characterCSVFile = new File(Objects.requireNonNull(getClass().getResource(CHARACTER_CSV_FILE_PATH)).toURI());
         CSVReader characterReader = new CSVReader(characterCSVFile, "\t");
         characterReader.setSkipHeader(true);
         List<String[]> characterRows = characterReader.read();
@@ -39,7 +41,7 @@ public class AetherWars extends Application {
             CardDatabase.addCharacter(c);
         }
 
-        File potionCSVFile = new File(getClass().getResource(SPELL_POTION_FILE_PATH).toURI());
+        File potionCSVFile = new File(Objects.requireNonNull(getClass().getResource(SPELL_POTION_FILE_PATH)).toURI());
         CSVReader potionReader = new CSVReader(potionCSVFile, "\t");
         potionReader.setSkipHeader(true);
         List<String[]> potionRows = potionReader.read();
@@ -48,7 +50,7 @@ public class AetherWars extends Application {
             CardDatabase.addPotion(p);
         }
 
-        File levelCSVFile = new File(getClass().getResource(SPELL_LEVEL_FILE_PATH).toURI());
+        File levelCSVFile = new File(Objects.requireNonNull(getClass().getResource(SPELL_LEVEL_FILE_PATH)).toURI());
         CSVReader levelReader = new CSVReader(levelCSVFile, "\t");
         levelReader.setSkipHeader(true);
         List<String[]> levelRows = levelReader.read();
@@ -58,7 +60,7 @@ public class AetherWars extends Application {
             CardDatabase.addLevel(l);
         }
 
-        File morphCSVFile = new File(getClass().getResource(SPELL_MORPH_FILE_PATH).toURI());
+        File morphCSVFile = new File(Objects.requireNonNull(getClass().getResource(SPELL_MORPH_FILE_PATH)).toURI());
         CSVReader morphReader = new CSVReader(morphCSVFile, "\t");
         morphReader.setSkipHeader(true);
         List<String[]> morphRows = morphReader.read();
@@ -67,7 +69,7 @@ public class AetherWars extends Application {
             CardDatabase.addMorph(m);
         }
 
-        File swapCSVFile = new File(getClass().getResource(SPELL_SWAP_FILE_PATH).toURI());
+        File swapCSVFile = new File(Objects.requireNonNull(getClass().getResource(SPELL_SWAP_FILE_PATH)).toURI());
         CSVReader swapReader = new CSVReader(swapCSVFile, "\t");
         swapReader.setSkipHeader(true);
         List<String[]> swapRows = swapReader.read();
