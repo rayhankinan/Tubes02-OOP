@@ -79,7 +79,7 @@ public class AetherWars extends Application {
             CardDatabase.addSwap(s);
         }
 
-        CardDatabase.printAll();
+        /*CardDatabase.printAll();*/
     }
 
     public void loadDecks(String deckName) throws IOException, URISyntaxException, CardException {
@@ -92,7 +92,10 @@ public class AetherWars extends Application {
         List<String[]> deckRows = deckReader.read();
         for (String[] row : deckRows) {
             int id = Integer.parseInt(row[0]);
+            deck.addCard(CardDatabase.getCard(id));
         }
+
+        deck.printAll();
     }
 
     @Override
@@ -113,7 +116,7 @@ public class AetherWars extends Application {
 
         try {
             this.loadCards();
-            /*this.loadDecks("deck_1.csv");*/
+            this.loadDecks("deck_1.csv");
             text.setText("Minecraft: Aether Wars!");
         } catch (Exception e) {
             text.setText("Failed to load cards: " + e);

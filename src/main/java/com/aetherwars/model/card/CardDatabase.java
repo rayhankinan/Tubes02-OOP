@@ -56,23 +56,23 @@ public class CardDatabase {
         }
     }
 
-    public static Level getLevel(int id) throws CardException {
-        int index = CardDatabase.levelList.indexOf(new Level(id));
+    public static Swap getSwap(int id) throws CardException {
+        int index = CardDatabase.swapList.indexOf(new Swap(id));
 
         if (index == -1) {
-            throw new CardException("Level spell not found!");
+            throw new CardException("Swap spell not found!");
         } else {
-            return CardDatabase.levelList.get(index);
+            return CardDatabase.swapList.get(index);
         }
     }
 
-    public static void addLevel(Level l) throws CardException {
-        int index = CardDatabase.levelList.indexOf(l);
+    public static void addSwap(Swap s) throws CardException {
+        int index = CardDatabase.swapList.indexOf(s);
 
         if (index == -1) {
-            CardDatabase.levelList.add(l);
+            CardDatabase.swapList.add(s);
         } else {
-            throw new CardException("Level spell already added!");
+            throw new CardException("Swap spell already added!");
         }
     }
 
@@ -96,41 +96,53 @@ public class CardDatabase {
         }
     }
 
-    public static Swap getSwap(int id) throws CardException {
-        int index = CardDatabase.swapList.indexOf(new Swap(id));
+    public static Level getLevel(int id) throws CardException {
+        int index = CardDatabase.levelList.indexOf(new Level(id));
 
         if (index == -1) {
-            throw new CardException("Swap spell not found!");
+            throw new CardException("Level spell not found!");
         } else {
-            return CardDatabase.swapList.get(index);
+            return CardDatabase.levelList.get(index);
         }
     }
 
-    public static void addSwap(Swap s) throws CardException {
-        int index = CardDatabase.swapList.indexOf(s);
+    public static void addLevel(Level l) throws CardException {
+        int index = CardDatabase.levelList.indexOf(l);
 
         if (index == -1) {
-            CardDatabase.swapList.add(s);
+            CardDatabase.levelList.add(l);
         } else {
-            throw new CardException("Swap spell already added!");
+            throw new CardException("Level spell already added!");
         }
     }
 
-    /*public static Card getCard(int id) throws CardException {
-
-    }*/
+    public static Card getCard(int id) throws CardException {
+        if (id >= Character.MIN_ID && id <= Character.MAX_ID) {
+            return CardDatabase.getCharacter(id);
+        } else if (id >= Potion.MIN_ID && id <= Potion.MAX_ID) {
+            return CardDatabase.getPotion(id);
+        } else if (id >= Swap.MIN_ID && id <= Swap.MAX_ID) {
+            return CardDatabase.getSwap(id);
+        } else if (id >= Morph.MIN_ID && id <= Morph.MAX_ID) {
+            return CardDatabase.getMorph(id);
+        } else if (id >= Level.MIN_ID && id <= Level.MAX_ID) {
+            return CardDatabase.getLevel(id);
+        } else {
+            throw new CardException("Card not found!");
+        }
+    }
 
     public static void addCard(Card c) throws CardException {
         if (c instanceof Character) {
             CardDatabase.addCharacter((Character) c);
-        } else if (c instanceof Level) {
-            CardDatabase.addLevel((Level) c);
-        } else if (c instanceof Morph) {
-            CardDatabase.addMorph((Morph) c);
         } else if (c instanceof Potion) {
             CardDatabase.addPotion((Potion) c);
         } else if (c instanceof Swap) {
             CardDatabase.addSwap((Swap) c);
+        } else if (c instanceof Morph) {
+            CardDatabase.addMorph((Morph) c);
+        } else if (c instanceof Level) {
+            CardDatabase.addLevel((Level) c);
         } else {
             throw new CardException("Type is not recognized!");
         }
@@ -145,16 +157,16 @@ public class CardDatabase {
             System.out.println(p);
         }
 
-        for (Level l : CardDatabase.levelList) {
-            System.out.println(l);
+        for (Swap s : CardDatabase.swapList) {
+            System.out.println(s);
         }
 
         for (Morph m : CardDatabase.morphList) {
             System.out.println(m);
         }
 
-        for (Swap s : CardDatabase.swapList) {
-            System.out.println(s);
+        for (Level l : CardDatabase.levelList) {
+            System.out.println(l);
         }
     }
 }
