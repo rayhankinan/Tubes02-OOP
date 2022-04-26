@@ -56,10 +56,6 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
         this.revertableSpells = new ArrayList<>();
     }
 
-    public int getExpForNextLevel() {
-        return this.level * 2 - 1;
-    }
-
     @Override
     public int getLevel() {
         return this.level;
@@ -68,6 +64,11 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
     @Override
     public int getExp() {
         return this.exp;
+    }
+
+    @Override
+    public int getExpForNextLevel() {
+        return this.level * 2 - 1;
     }
 
     @Override

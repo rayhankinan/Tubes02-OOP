@@ -31,12 +31,12 @@ public class FieldCardController {
         Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + character.getImagepath())).toString());
         String xp = Integer.toString(character.getExp());
         String level = Integer.toString(character.getLevel());
-        // TODO: Tambahin exp per level (nunggu dari models)
+        /* TODO: Tambahin exp per level (nunggu dari models) */
         String desc = xp + "/___ [" + level + "]";
 
         cardImage.setImage(newImg);
-        cardAtt.setText(Integer.toString(character.getAttack()));
-        cardHp.setText(Integer.toString(character.getHealth()));
+        cardAtt.setText(Integer.toString(character.getBaseAttack()));
+        cardHp.setText(Integer.toString(character.getBaseHealth()));
         cardLevel.setText(desc);
     }
 }
