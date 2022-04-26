@@ -64,7 +64,7 @@ public class Board implements InterfaceBoard {
             this.turn = 1;
         }
         this.phase = Phase.DRAW;
-        getCurrentPlayer().addRun();
+        getCurrentPlayer().addRound();
         getCurrentPlayer().resetMana();
         getCurrentPlayer().drawCard();
     }

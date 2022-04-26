@@ -69,7 +69,7 @@ public class Player {
         }
     }
 
-    public void addRun(){
+    public void addRound(){
         this.round++;
     }
 
