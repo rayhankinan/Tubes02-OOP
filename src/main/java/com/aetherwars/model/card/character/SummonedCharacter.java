@@ -13,6 +13,9 @@ import java.util.ArrayList;
 public class SummonedCharacter extends Character implements Summonable {
     private int level;
     private int exp;
+    // TODO: Exp per level (buat tau kapan harus level up)
+    private int expNeeded;
+
     private final List<Activable> activeSpells;
 
     public SummonedCharacter(int id, String name, Type type, String description, String imagepath, int attack, int health, int mana, int attackup, int healthup, int level, int exp) throws CardException {

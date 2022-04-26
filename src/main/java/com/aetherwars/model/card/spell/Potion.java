@@ -38,6 +38,14 @@ public class Potion extends Spell implements Temporary {
         }
     }
 
+    public int getAttack() {
+        return attack;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
     @Override
     public boolean isActive() {
         return this.active;
