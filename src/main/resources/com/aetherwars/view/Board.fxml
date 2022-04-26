@@ -8,192 +8,172 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aetherwars.controller.BoardController">
+<Pane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aetherwars.controller.BoardController">
    <children>
-      <HBox layoutX="34.0" layoutY="273.0">
+      <Group autoSizeChildren="false" layoutX="973.0" layoutY="535.0" AnchorPane.bottomAnchor="168.0" AnchorPane.rightAnchor="49.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="94.0" prefWidth="57.0" text="Card">
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="94.0" prefWidth="57.0" text="Card">
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="94.0" prefWidth="57.0" text="Card">
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="94.0" prefWidth="57.0" text="Card">
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="94.0" prefWidth="57.0" text="Card">
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </Button>
+            <Rectangle fx:id="cardDetailBox1" fill="#e7e7e7" height="129.0" layoutX="-29.0" layoutY="-32.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="178.0" />
+            <Text fx:id="cardDetailName" layoutX="-9.0" layoutY="-6.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sheep">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="14.0" />
+               </font>
+            </Text>
+            <Text fx:id="cardDetailAtk" layoutX="-9.0" layoutY="14.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Atk: 0">
+               <font>
+                  <Font name="Arial" size="11.0" />
+               </font>
+            </Text>
+            <Text fx:id="cardDetailHP" layoutX="-9.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HP: 0">
+               <font>
+                  <Font name="Arial" size="11.0" />
+               </font>
+            </Text>
+            <Text fx:id="cardDetailLevel" layoutX="-9.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level: 0">
+               <font>
+                  <Font name="Arial" size="11.0" />
+               </font>
+            </Text>
+            <Text fx:id="cardDetailExp" layoutX="-9.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exp: 0/1">
+               <font>
+                  <Font name="Arial" size="11.0" />
+               </font>
+            </Text>
+            <Text fx:id="cardDetailType" layoutX="-10.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type: Overworld" wrappingWidth="83.01904296875">
+               <font>
+                  <Font name="Arial" size="11.0" />
+               </font>
+            </Text>
+         </children>
+      </Group>
+      <Group layoutX="34.0" layoutY="209.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="203.0" />
+      <Group layoutX="142.0" layoutY="209.0" AnchorPane.leftAnchor="138.0" AnchorPane.topAnchor="203.0" />
+      <Group layoutX="250.0" layoutY="209.0" AnchorPane.leftAnchor="246.0" AnchorPane.topAnchor="203.0" />
+      <Group layoutX="358.0" layoutY="209.0" AnchorPane.leftAnchor="353.0" AnchorPane.topAnchor="203.0" />
+      <Button layoutX="965.0" layoutY="435.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="156.0" text="Next Phase" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="965.0" AnchorPane.topAnchor="435.0">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+      </Button>
+      <Group layoutX="34.0" layoutY="250.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="240.0" />
+      <Group layoutX="34.0" layoutY="78.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="75.0" />
+      <Pane fx:id="fieldA1" layoutX="815.0" layoutY="234.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7e7;" />
+      <ProgressBar layoutX="34.0" layoutY="26.0" prefHeight="36.0" prefWidth="472.0" progress="1.0" AnchorPane.bottomAnchor="357.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="23.0" />
+      <ProgressBar layoutX="694.0" layoutY="26.0" prefHeight="36.0" prefWidth="472.0" progress="1.0" AnchorPane.bottomAnchor="746.0" AnchorPane.leftAnchor="714.0" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="26.0" />
+      <Group layoutX="578.0" layoutY="29.0" AnchorPane.bottomAnchor="725.0" AnchorPane.leftAnchor="576.0" AnchorPane.rightAnchor="575.0" AnchorPane.topAnchor="33.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7e7e7" height="42.0" layoutX="-2.0" layoutY="-5.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="49.0" />
+            <Text fx:id="turn" layoutX="5.0" layoutY="12.7578125" strokeType="OUTSIDE" strokeWidth="0.0" text="Turn 1" textAlignment="CENTER" wrappingWidth="34.49658203125">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font>
+            </Text>
+         </children>
+      </Group>
+      <Text layoutX="39.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 1" wrappingWidth="66.99999999999994" AnchorPane.leftAnchor="39.0" AnchorPane.topAnchor="71.2314453125">
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font>
+      </Text>
+      <Text layoutX="1094.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 2" textAlignment="RIGHT" wrappingWidth="66.99999999999994" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="71.2314453125">
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font>
+      </Text>
+      <HBox layoutX="78.0" layoutY="573.0">
+         <children>
+            <Pane fx:id="handCard1" prefHeight="180.0" prefWidth="122.0" style="-fx-background-color: #e7e7e7;" />
+            <Pane fx:id="handCard2" prefHeight="180.0" prefWidth="122.0" style="-fx-background-color: #e7e7e7;" />
+            <Pane fx:id="handCard3" prefHeight="180.0" prefWidth="122.0" style="-fx-background-color: #e7e7e7;" />
+            <Pane fx:id="handCard4" prefHeight="180.0" prefWidth="122.0" style="-fx-background-color: #e7e7e7;" />
+            <Pane fx:id="handCard5" prefHeight="180.0" prefWidth="122.0" style="-fx-background-color: #e7e7e7;" />
          </children>
       </HBox>
-      <Rectangle height="117.0" layoutX="329.0" layoutY="250.0" stroke="BLACK" strokeType="INSIDE" width="84.0" />
-      <Group autoSizeChildren="false" layoutX="413.0" layoutY="250.0">
+      <Group layoutX="58.0" layoutY="191.0">
          <children>
-            <Rectangle fill="#e7e7e7" height="117.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="74.0" />
-            <Text layoutX="11.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sheep">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="11.0" />
-               </font>
-            </Text>
-            <Text layoutX="11.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Atk:0">
-               <font>
-                  <Font name="Arial" size="9.0" />
-               </font>
-            </Text>
-            <Text layoutX="11.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HP: 0">
-               <font>
-                  <Font name="Arial" size="9.0" />
-               </font>
-            </Text>
-            <Text layoutX="11.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level: 0">
-               <font>
-                  <Font name="Arial" size="9.0" />
-               </font>
-            </Text>
-            <Text layoutX="11.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exp: 0/1">
-               <font>
-                  <Font name="Arial" size="9.0" />
-               </font>
-            </Text>
-            <Text layoutX="10.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type: Overworld" wrappingWidth="51.01904296875">
-               <font>
-                  <Font name="Arial" size="9.0" />
-               </font>
-            </Text>
+            <Pane fx:id="fieldE1" layoutX="109.0" layoutY="-75.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+            <ImageView fitHeight="100.0" fitWidth="106.0" layoutX="-18.0" layoutY="1.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../model/card/character/image/Creeper.png" />
+               </image>
+            </ImageView>
+            <Pane fx:id="fieldA2" layoutX="109.0" layoutY="43.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+            <Pane fx:id="fieldD1" layoutX="227.0" layoutY="43.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+            <Pane fx:id="fieldB1" layoutX="344.0" layoutY="-17.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+            <Pane fx:id="fieldB2" layoutX="227.0" layoutY="-75.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
          </children>
       </Group>
-      <Group layoutX="487.3999938964844" layoutY="250.0">
+      <Circle fill="#ef1414" layoutX="602.0" layoutY="230.0" radius="48.0" stroke="#ef1414" strokeType="INSIDE" strokeWidth="0.2" AnchorPane.leftAnchor="554.0" AnchorPane.rightAnchor="550.0" AnchorPane.topAnchor="182.0" />
+      <Pane fx:id="cardDetailBox3" layoutX="757.0" layoutY="503.0" prefHeight="267.0" prefWidth="187.0" style="-fx-background-color: #c7c7c7; -fx-border-color: #c7c7c7;" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="256.0">
          <children>
-            <Rectangle fill="#e7e7e7" height="117.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="74.0" />
-            <Text layoutX="7.600006103515625" layoutY="15.8525390625" strokeType="OUTSIDE" strokeWidth="0.0" text="Hewan bau bnar benar bau bau bau lol aokaokaw yayaya lololo OOP ROCKS &lt;3" wrappingWidth="57.59999999999991">
-               <font>
-                  <Font name="Arial" size="9.0" />
-               </font>
-            </Text>
+            <ImageView fx:id="cardDetailImage" fitHeight="172.0" fitWidth="142.0" layoutX="23.0" layoutY="26.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../model/card/character/image/Sheep.png" />
+               </image>
+            </ImageView>
          </children>
-      </Group>
-      <Group layoutX="34.0" layoutY="206.0">
-         <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7e7e7" height="18.0" layoutY="3.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="108.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7e7e7" height="18.0" layoutX="108.0" layoutY="3.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="108.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7e7e7" height="18.0" layoutX="216.0" layoutY="3.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="108.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7e7e7" height="18.0" layoutX="324.0" layoutY="3.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="108.0" />
-            <Button layoutX="444.0" layoutY="3.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="84.0" text="Next Phase" textAlignment="CENTER" wrapText="true">
-               <font>
-                  <Font name="Arial" size="10.0" />
-               </font>
-            </Button>
-            <Text layoutX="40.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DRAW">
-               <font>
-                  <Font name="Arial" size="9.0" />
-               </font>
-            </Text>
-            <Text layoutX="150.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PLAN">
-               <font>
-                  <Font name="Arial" size="9.0" />
-               </font>
-            </Text>
-            <Text layoutX="252.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ATTACK">
-               <font>
-                  <Font name="Arial" size="9.0" />
-               </font>
-            </Text>
-            <Text layoutX="369.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="END">
-               <font>
-                  <Font name="Arial" size="9.0" />
-               </font>
-            </Text>
-         </children>
-      </Group>
-      <Group layoutX="34.0" layoutY="250.0">
-         <children>
-            <Rectangle fill="#e7e7e7" height="18.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="74.0" />
-            <Text layoutX="14.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Deck: 35/40">
-               <font>
-                  <Font name="Arial" size="9.0" />
-               </font>
-            </Text>
-            <Rectangle fill="#e7e7e7" height="18.0" layoutX="74.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="67.0" />
-            <Text layoutX="85.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mana: 9/10">
-               <font>
-                  <Font name="Arial" size="9.0" />
-               </font>
-            </Text>
-         </children>
-      </Group>
-      <Group layoutX="34.0" layoutY="78.0">
-         <children>
-            <Pane layoutY="35.0" prefHeight="45.0" prefWidth="48.0">
-               <children>
-                  <ImageView fitHeight="45.0" fitWidth="48.0" layoutX="-1.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@../model/card/character/image/Creeper.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Button layoutX="60.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="A" />
-            <Button layoutX="60.0" layoutY="58.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="C" />
-            <Button layoutX="119.0" layoutY="58.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="D" />
-            <Button layoutX="119.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="B" />
-            <Button layoutX="176.0" layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="E" />
-         </children>
-      </Group>
-      <Group layoutX="337.0" layoutY="78.0">
-         <children>
-            <Pane layoutX="177.0" layoutY="35.0" prefHeight="45.0" prefWidth="48.0">
-               <children>
-                  <ImageView fitHeight="45.0" fitWidth="48.0" layoutX="-1.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@../model/card/character/image/Villager.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Button layoutX="58.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="B" />
-            <Button layoutX="58.0" layoutY="58.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="D" />
-            <Button layoutX="117.0" layoutY="58.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="C" />
-            <Button layoutX="117.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="A" />
-            <Button layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="E" />
-         </children>
-      </Group>
-      <ProgressBar layoutX="34.0" layoutY="26.0" prefHeight="14.0" prefWidth="226.0" progress="1.0" />
-      <ProgressBar layoutX="336.0" layoutY="26.0" prefHeight="14.0" prefWidth="226.0" progress="1.0" />
-      <Group layoutX="276.0" layoutY="17.0">
-         <children>
-            <Circle fill="#e7e7e7" layoutX="22.0" layoutY="15.0" radius="23.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" />
-            <Text layoutX="9.0" layoutY="17.7578125" strokeType="OUTSIDE" strokeWidth="0.0" text="Turn 1" textAlignment="CENTER" wrappingWidth="27.49658203125">
-               <font>
-                  <Font name="Arial" size="8.0" />
-               </font>
-            </Text>
-         </children>
-      </Group>
-      <Text layoutX="38.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 1" wrappingWidth="66.99999999999994">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </Pane>
+      <Text fx:id="discardCard" fill="WHITE" layoutX="570.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Discard Card" textAlignment="CENTER" wrappingWidth="64.037109375" AnchorPane.leftAnchor="570.0" AnchorPane.rightAnchor="565.962890625" AnchorPane.topAnchor="214.751953125">
          <font>
-            <Font name="Arial" size="8.0" />
+            <Font name="Arial Rounded MT Bold" size="14.0" />
          </font>
       </Text>
-      <Text layoutX="491.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 2" textAlignment="RIGHT" wrappingWidth="66.99999999999994">
+      <Pane fx:id="drawPane" layoutX="-1172.0" layoutY="-47.0" prefHeight="800.0" prefWidth="1081.0" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="-1172.0" AnchorPane.rightAnchor="1291.0" AnchorPane.topAnchor="-47.0" />
+      <Rectangle fx:id="cardDetailBox2" fill="#e7e7e7" height="136.0" layoutX="944.0" layoutY="632.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="178.0" />
+      <Text fx:id="cardDetailDesc" layoutX="965.0" layoutY="662.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hewan bau bnar benar bau bau bau lol aokaokaw yayaya lololo OOP ROCKS &lt;3" wrappingWidth="134.0">
          <font>
-            <Font name="Arial" size="8.0" />
+            <Font name="Arial" size="12.0" />
          </font>
       </Text>
+      <Rectangle fill="#e7e7e7" height="28.0" layoutX="78.0" layoutY="529.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="114.0" />
+      <Text fx:id="deckCapacity" layoutX="103.0" layoutY="547.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Deck: 35/40">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+      </Text>
+      <Rectangle fill="#e7e7e7" height="28.0" layoutX="204.0" layoutY="529.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="114.0" />
+      <Text fx:id="manaCapacity" layoutX="231.0" layoutY="547.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mana: 9/10">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+      </Text>
+      <Pane fx:id="fieldC1" layoutX="697.0" layoutY="171.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+      <Rectangle fx:id="phaseDrawBlock" arcHeight="5.0" arcWidth="5.0" fill="#e7e7e7" height="36.0" layoutX="78.0" layoutY="435.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="216.0" />
+      <Rectangle fx:id="phasePlanBlock" arcHeight="5.0" arcWidth="5.0" fill="#e7e7e7" height="36.0" layoutX="294.0" layoutY="435.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="216.0" />
+      <Rectangle fx:id="phaseAttackBlock" arcHeight="5.0" arcWidth="5.0" fill="#e7e7e7" height="36.0" layoutX="510.0" layoutY="435.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="216.0" />
+      <Rectangle fx:id="phaseEndBlock" arcHeight="5.0" arcWidth="5.0" fill="#e7e7e7" height="36.0" layoutX="726.0" layoutY="435.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="216.0" />
+      <Text layoutX="166.0" layoutY="457.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DRAW">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+      </Text>
+      <Text layoutX="386.0" layoutY="457.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PLAN">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+      </Text>
+      <Text layoutX="594.0" layoutY="457.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ATTACK">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+      </Text>
+      <Text layoutX="821.0" layoutY="457.0" strokeType="OUTSIDE" strokeWidth="0.0" text="END">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="100.0" fitWidth="106.0" layoutX="1059.0" layoutY="193.0" pickOnBounds="true">
+         <image>
+            <Image url="@../model/card/character/image/Villager.png" />
+         </image>
+      </ImageView>
+      <Pane fx:id="fieldC2" layoutX="815.0" layoutY="116.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+      <Pane fx:id="fieldC21" layoutX="933.0" layoutY="117.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+      <Pane fx:id="fieldC211" layoutX="932.0" layoutY="235.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
    </children>
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
    </padding>
-</AnchorPane>
+</Pane>

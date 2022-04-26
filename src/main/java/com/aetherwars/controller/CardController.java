@@ -94,4 +94,21 @@ public class CardController {
         cardMana.setText(Integer.toString(swap.getMana()));
         cardDesc.setText(desc);
     }
+    
+    /*
+    * Call the relevance method based on the instance of card */
+    public void setCard(Card card) {
+        if (card instanceof Character){
+            this.setCard((Character) card);
+        } else if (card instanceof Level){
+            this.setCard((Level) card);
+        } else if (card instanceof Potion){
+            this.setCard((Potion) card);
+        } else if (card instanceof Morph){
+            this.setCard((Morph) card);
+        } else if (card instanceof Swap) {
+            this.setCard((Swap) card);
+        }
+    }
 }
+

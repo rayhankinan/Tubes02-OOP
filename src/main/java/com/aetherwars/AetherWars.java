@@ -6,9 +6,13 @@ import java.net.URISyntaxException;
 import com.aetherwars.model.deck.Deck;
 import com.aetherwars.model.card.CardDatabase;
 import com.aetherwars.model.card.CardException;
+import com.aetherwars.controller.BoardController;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -27,26 +31,16 @@ public class AetherWars extends Application {
 
     @Override
     public void start(Stage stage) {
-        Text text = new Text();
-        text.setText("Loading...");
-        text.setX(50);
-        text.setY(50);
-
-        Group root = new Group();
-        root.getChildren().add(text);
-
-        Scene scene = new Scene(root, 1280, 720);
-
-        stage.setTitle("Minecraft: Aether Wars");
-        stage.setScene(scene);
-        stage.show();
-
         try {
-            this.loadCards();
-            this.loadDecks("deck_1.csv");
-            text.setText("Minecraft: Aether Wars!");
-        } catch (Exception e) {
-            text.setText("Failed to load cards: " + e);
+            FXMLLoader boardLoader = new FXMLLoader(getClass().getResource("/com/aetherwars/view/Board.fxml"));
+            Parent root = boardLoader.load();
+            Scene scene = new Scene(root, 1200, 800);
+
+            stage.setTitle("Minecraft: Aether Wars");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e){
+            System.out.println(e);
         }
     }
 
