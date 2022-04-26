@@ -1,12 +1,14 @@
 package com.aetherwars.model;
 
 import com.aetherwars.model.card.Card;
-import com.aetherwars.model.Deck.Deck;
+import com.aetherwars.model.card.CardException;
+import com.aetherwars.model.deck.Deck;
 import com.aetherwars.model.card.character.SummonedCharacter;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Player {
     private static final int MAX_HP = 80;
@@ -18,20 +20,19 @@ public class Player {
     private final String name;
     private int health;
     private int mana;
-    private List<Card> onHand;
+    /*private List<Card> onHand;*/
     private Deck deck;
 
-    private List<SummonedCharacter> character_zone;
+    /*private List<SummonedCharacter> character_zone;*/
 
-
-    public Player(String name) {
-        this.name = "Placeholder";
+    public Player(String playerName, String deckFilename) throws IOException, URISyntaxException, CardException {
+        this.name = playerName;
         this.health = MAX_HP;
         this.mana = 1;
-        this.onHand = new ArrayList<Card>(MAX_CARD_IN_HAND);
-        this.deck = new Deck();
+        /*this.onHand = new ArrayList<Card>(MAX_CARD_IN_HAND);*/
+        this.deck = new Deck(deckFilename);
 
-        this.character_zone = new ArrayList<SummonedCharacter>();
+        /*this.character_zone = new ArrayList<SummonedCharacter>();*/
 
     }
 
@@ -47,7 +48,7 @@ public class Player {
         return this.mana;
     }
 
-    public List<Card> getOnHand() {return this.onHand;}
+    /*public List<Card> getOnHand() {return this.onHand;}*/
 
     public Deck getDeck() {return this.deck;}
 

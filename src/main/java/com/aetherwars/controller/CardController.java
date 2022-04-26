@@ -1,8 +1,11 @@
 package com.aetherwars.controller;
 
 import com.aetherwars.model.card.character.Character;
-import com.aetherwars.model.card.spell.*;
 
+import com.aetherwars.model.card.spell.level.Level;
+import com.aetherwars.model.card.spell.morph.Morph;
+import com.aetherwars.model.card.spell.potion.Potion;
+import com.aetherwars.model.card.spell.swap.Swap;
 import javafx.fxml.*;
 import javafx.scene.text.Text;
 import javafx.scene.image.*;

@@ -1,8 +1,9 @@
-package com.aetherwars.model.card.spell;
+package com.aetherwars.model.card.spell.level;
 
-import com.aetherwars.model.card.character.Character;
 import com.aetherwars.model.card.character.SummonedCharacter;
 import com.aetherwars.model.card.CardException;
+import com.aetherwars.model.card.spell.Activable;
+import com.aetherwars.model.card.spell.Spell;
 
 public class Level extends Spell implements Activable {
     public static final int MIN_ID = 401;
