@@ -33,11 +33,11 @@ public class Deck {
         this.buffer.add(c);
     }
 
-    public Card getCard() throws CardException {
+    public Card getCard() throws DeckException {
         if (this.buffer.size() > 0) {
             return this.buffer.remove(0);
         } else {
-            throw new CardException("Deck is empty!");
+            throw new DeckException("Deck is empty!");
         }
     }
 
@@ -47,7 +47,7 @@ public class Deck {
         }
     }
 
-    public Card drawCard(int id) throws CardException{
+    public Card drawCard(int id) throws DeckException {
         List<Card> temporaryChoice = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {

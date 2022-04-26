@@ -8,6 +8,7 @@ import com.aetherwars.model.card.spell.Spell;
 import com.aetherwars.model.deck.Deck;
 import com.aetherwars.model.card.character.SummonedCharacter;
 import com.aetherwars.model.card.character.Character;
+import com.aetherwars.model.deck.DeckException;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -81,7 +82,7 @@ public class Player {
         }
     }
 
-    public void drawCard(int id) throws CardException {
+    public void drawCard(int id) throws DeckException {
         this.onHand.add(this.deck.drawCard(id));
 
         /* jika kartu di tangan sudah lebih dari 5 maka buang 1 kartu acak */

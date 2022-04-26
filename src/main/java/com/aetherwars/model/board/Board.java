@@ -1,6 +1,7 @@
 package com.aetherwars.model.board;
 
 import com.aetherwars.model.card.CardException;
+import com.aetherwars.model.deck.DeckException;
 import com.aetherwars.model.player.Player;
 
 import java.io.IOException;
@@ -12,7 +13,7 @@ public class Board implements TakeTurns {
     private Phase phase;
     private int turn;
 
-    public Board(String playerName1, String playerName2) throws IOException, URISyntaxException, CardException {
+    public Board(String playerName1, String playerName2) throws IOException, URISyntaxException, CardException, DeckException {
         /* TODO: Input deck-name from user */
         String deckName1 = "deck_1.csv";
         String deckName2 = "deck_1.csv";
@@ -61,7 +62,7 @@ public class Board implements TakeTurns {
     }
 
     @Override
-    public void switchTurn() throws CardException {
+    public void switchTurn() throws DeckException {
         if (this.turn == 1) {
             this.turn = 2;
         } else {

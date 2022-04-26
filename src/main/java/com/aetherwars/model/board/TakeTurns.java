@@ -1,8 +1,8 @@
 package com.aetherwars.model.board;
 
-import com.aetherwars.model.card.CardException;
+import com.aetherwars.model.deck.DeckException;
 
 public interface TakeTurns {
-    void switchTurn() throws CardException;
+    void switchTurn() throws DeckException;
     void nextPhase();
 }
