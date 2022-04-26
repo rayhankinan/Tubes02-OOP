@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aetherwars.controller.BoardController">
+   <children>
+      <HBox layoutX="34.0" layoutY="273.0">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="94.0" prefWidth="57.0" text="Card">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="94.0" prefWidth="57.0" text="Card">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="94.0" prefWidth="57.0" text="Card">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="94.0" prefWidth="57.0" text="Card">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="94.0" prefWidth="57.0" text="Card">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Button>
+         </children>
+      </HBox>
+      <Rectangle height="117.0" layoutX="329.0" layoutY="250.0" stroke="BLACK" strokeType="INSIDE" width="84.0" />
+      <Group autoSizeChildren="false" layoutX="413.0" layoutY="250.0">
+         <children>
+            <Rectangle fill="#e7e7e7" height="117.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="74.0" />
+            <Text layoutX="11.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sheep">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="11.0" />
+               </font>
+            </Text>
+            <Text layoutX="11.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Atk:0">
+               <font>
+                  <Font name="Arial" size="9.0" />
+               </font>
+            </Text>
+            <Text layoutX="11.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HP: 0">
+               <font>
+                  <Font name="Arial" size="9.0" />
+               </font>
+            </Text>
+            <Text layoutX="11.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level: 0">
+               <font>
+                  <Font name="Arial" size="9.0" />
+               </font>
+            </Text>
+            <Text layoutX="11.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exp: 0/1">
+               <font>
+                  <Font name="Arial" size="9.0" />
+               </font>
+            </Text>
+            <Text layoutX="10.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type: Overworld" wrappingWidth="51.01904296875">
+               <font>
+                  <Font name="Arial" size="9.0" />
+               </font>
+            </Text>
+         </children>
+      </Group>
+      <Group layoutX="487.3999938964844" layoutY="250.0">
+         <children>
+            <Rectangle fill="#e7e7e7" height="117.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="74.0" />
+            <Text layoutX="7.600006103515625" layoutY="15.8525390625" strokeType="OUTSIDE" strokeWidth="0.0" text="Hewan bau bnar benar bau bau bau lol aokaokaw yayaya lololo OOP ROCKS &lt;3" wrappingWidth="57.59999999999991">
+               <font>
+                  <Font name="Arial" size="9.0" />
+               </font>
+            </Text>
+         </children>
+      </Group>
+      <Group layoutX="34.0" layoutY="206.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7e7e7" height="18.0" layoutY="3.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="108.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7e7e7" height="18.0" layoutX="108.0" layoutY="3.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="108.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7e7e7" height="18.0" layoutX="216.0" layoutY="3.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="108.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7e7e7" height="18.0" layoutX="324.0" layoutY="3.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="108.0" />
+            <Button layoutX="444.0" layoutY="3.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="84.0" text="Next Phase" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="Arial" size="10.0" />
+               </font>
+            </Button>
+            <Text layoutX="40.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DRAW">
+               <font>
+                  <Font name="Arial" size="9.0" />
+               </font>
+            </Text>
+            <Text layoutX="150.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PLAN">
+               <font>
+                  <Font name="Arial" size="9.0" />
+               </font>
+            </Text>
+            <Text layoutX="252.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ATTACK">
+               <font>
+                  <Font name="Arial" size="9.0" />
+               </font>
+            </Text>
+            <Text layoutX="369.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="END">
+               <font>
+                  <Font name="Arial" size="9.0" />
+               </font>
+            </Text>
+         </children>
+      </Group>
+      <Group layoutX="34.0" layoutY="250.0">
+         <children>
+            <Rectangle fill="#e7e7e7" height="18.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="74.0" />
+            <Text layoutX="14.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Deck: 35/40">
+               <font>
+                  <Font name="Arial" size="9.0" />
+               </font>
+            </Text>
+            <Rectangle fill="#e7e7e7" height="18.0" layoutX="74.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="67.0" />
+            <Text layoutX="85.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mana: 9/10">
+               <font>
+                  <Font name="Arial" size="9.0" />
+               </font>
+            </Text>
+         </children>
+      </Group>
+      <Group layoutX="34.0" layoutY="78.0">
+         <children>
+            <Pane layoutY="35.0" prefHeight="45.0" prefWidth="48.0">
+               <children>
+                  <ImageView fitHeight="45.0" fitWidth="48.0" layoutX="-1.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../card/image/character/Creeper.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Button layoutX="60.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="A" />
+            <Button layoutX="60.0" layoutY="58.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="C" />
+            <Button layoutX="119.0" layoutY="58.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="D" />
+            <Button layoutX="119.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="B" />
+            <Button layoutX="176.0" layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="E" />
+         </children>
+      </Group>
+      <Group layoutX="337.0" layoutY="78.0">
+         <children>
+            <Pane layoutX="177.0" layoutY="35.0" prefHeight="45.0" prefWidth="48.0">
+               <children>
+                  <ImageView fitHeight="45.0" fitWidth="48.0" layoutX="-1.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../card/image/character/Villager.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Button layoutX="58.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="B" />
+            <Button layoutX="58.0" layoutY="58.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="D" />
+            <Button layoutX="117.0" layoutY="58.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="C" />
+            <Button layoutX="117.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="A" />
+            <Button layoutY="33.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="E" />
+         </children>
+      </Group>
+      <ProgressBar layoutX="34.0" layoutY="26.0" prefHeight="14.0" prefWidth="226.0" progress="1.0" />
+      <ProgressBar layoutX="336.0" layoutY="26.0" prefHeight="14.0" prefWidth="226.0" progress="1.0" />
+      <Group layoutX="276.0" layoutY="17.0">
+         <children>
+            <Circle fill="#e7e7e7" layoutX="22.0" layoutY="15.0" radius="23.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" />
+            <Text layoutX="9.0" layoutY="17.7578125" strokeType="OUTSIDE" strokeWidth="0.0" text="Turn 1" textAlignment="CENTER" wrappingWidth="27.49658203125">
+               <font>
+                  <Font name="Arial" size="8.0" />
+               </font>
+            </Text>
+         </children>
+      </Group>
+      <Text layoutX="38.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 1" wrappingWidth="66.99999999999994">
+         <font>
+            <Font name="Arial" size="8.0" />
+         </font>
+      </Text>
+      <Text layoutX="491.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 2" textAlignment="RIGHT" wrappingWidth="66.99999999999994">
+         <font>
+            <Font name="Arial" size="8.0" />
+         </font>
+      </Text>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</AnchorPane>
