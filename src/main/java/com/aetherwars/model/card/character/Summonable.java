@@ -3,7 +3,7 @@ package com.aetherwars.model.card.character;
 import com.aetherwars.model.player.Player;
 import com.aetherwars.model.card.CardException;
 import com.aetherwars.model.card.spell.Activable;
-import com.aetherwars.model.card.spell.Temporary;
+import com.aetherwars.model.card.spell.Inactiveable;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface Summonable {
     void addExp(int exp);
     void levelUp();
 
-    List<Temporary> getTemporary();
+    List<Inactiveable> getTemporary();
     void addActivable(Activable s) throws CardException;
     void decrementTemporaryDuration() throws CardException;
 

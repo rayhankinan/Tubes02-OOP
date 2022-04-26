@@ -3,7 +3,7 @@ package com.aetherwars.model.card.spell;
 import com.aetherwars.model.card.character.SummonedCharacter;
 import com.aetherwars.model.card.CardException;
 
-public interface Temporary extends Activable {
+public interface Inactiveable extends Activable {
     int getDuration();
     void revert(SummonedCharacter c) throws CardException;
     void decrementDuration() throws CardException;

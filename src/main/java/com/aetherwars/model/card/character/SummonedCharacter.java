@@ -4,7 +4,7 @@ import com.aetherwars.model.player.Player;
 import com.aetherwars.model.card.CardException;
 import com.aetherwars.model.card.CardDatabase;
 import com.aetherwars.model.card.spell.Activable;
-import com.aetherwars.model.card.spell.Temporary;
+import com.aetherwars.model.card.spell.Inactiveable;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -12,29 +12,27 @@ import java.util.ArrayList;
 public class SummonedCharacter extends Character implements Summonable {
     private int level;
     private int exp;
-    private final List<Temporary> temporarySpells;
-
-    /* TODO: Exp per level (buat tau kapan harus level up) */
+    private final List<Inactiveable> inactiveableSpells;
 
     public SummonedCharacter(int id) throws CardException {
         super(id);
         this.level = 1;
         this.exp = 0;
-        this.temporarySpells = new ArrayList<>();
+        this.inactiveableSpells = new ArrayList<>();
     }
 
     public SummonedCharacter(int id, String name, Type type, String description, String imagepath, int attack, int health, int mana, int attackup, int healthup) throws CardException {
         super(id, name, type, description, imagepath, attack, health, mana, attackup, healthup);
         this.level = 1;
         this.exp = 0;
-        this.temporarySpells = new ArrayList<>();
+        this.inactiveableSpells = new ArrayList<>();
     }
 
     public SummonedCharacter(Character C) throws CardException {
         super(C);
         this.level = 1;
         this.exp = 0;
-        this.temporarySpells = new ArrayList<>();
+        this.inactiveableSpells = new ArrayList<>();
     }
 
     public void morph(int id) throws CardException {
@@ -52,7 +50,7 @@ public class SummonedCharacter extends Character implements Summonable {
         this.healthup = newCharacter.getHealthup();
         this.level = 1;
         this.exp = 0;
-        this.temporarySpells.clear();
+        this.inactiveableSpells.clear();
     }
 
     @Override
@@ -93,20 +91,20 @@ public class SummonedCharacter extends Character implements Summonable {
     }
 
     @Override
-    public List<Temporary> getTemporary() {
-        return this.temporarySpells;
+    public List<Inactiveable> getTemporary() {
+        return this.inactiveableSpells;
     }
 
     @Override
     public void addActivable(Activable s) throws CardException {
-        if (s instanceof Temporary) {
-            int index = this.temporarySpells.indexOf(s);
+        if (s instanceof Inactiveable) {
+            int index = this.inactiveableSpells.indexOf(s);
 
             if (index != -1) {
-                this.temporarySpells.get(index).stackDuration(s);
+                this.inactiveableSpells.get(index).stackDuration(s);
             } else {
                 s.apply(this);
-                this.temporarySpells.add((Temporary) s);
+                this.inactiveableSpells.add((Inactiveable) s);
             }
 
         } else {
@@ -116,12 +114,12 @@ public class SummonedCharacter extends Character implements Summonable {
 
     @Override
     public void decrementTemporaryDuration() throws CardException {
-        for (Temporary t : this.temporarySpells) {
+        for (Inactiveable t : this.inactiveableSpells) {
             try {
                 t.decrementDuration();
             } catch (CardException ce) {
                 t.revert(this);
-                this.temporarySpells.remove(t);
+                this.inactiveableSpells.remove(t);
             }
         }
     }

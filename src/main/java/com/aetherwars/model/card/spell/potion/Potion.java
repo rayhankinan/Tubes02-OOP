@@ -4,9 +4,9 @@ import com.aetherwars.model.card.character.SummonedCharacter;
 import com.aetherwars.model.card.CardException;
 import com.aetherwars.model.card.spell.Activable;
 import com.aetherwars.model.card.spell.Spell;
-import com.aetherwars.model.card.spell.Temporary;
+import com.aetherwars.model.card.spell.Inactiveable;
 
-public class Potion extends Spell implements Temporary {
+public class Potion extends Spell implements Inactiveable {
     /* TODO: implement temporary health and temporary attack */
     public static final int MIN_ID = 101;
     public static final int MAX_ID = 199;

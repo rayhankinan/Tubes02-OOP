@@ -1,13 +1,12 @@
 package com.aetherwars.model.card.spell.swap;
 
-import com.aetherwars.model.card.Card;
 import com.aetherwars.model.card.character.SummonedCharacter;
 import com.aetherwars.model.card.CardException;
 import com.aetherwars.model.card.spell.Activable;
 import com.aetherwars.model.card.spell.Spell;
-import com.aetherwars.model.card.spell.Temporary;
+import com.aetherwars.model.card.spell.Inactiveable;
 
-public class Swap extends Spell implements Temporary {
+public class Swap extends Spell implements Inactiveable {
     public static final int MIN_ID = 201;
     public static final int MAX_ID = 299;
 
