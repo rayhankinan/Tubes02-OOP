@@ -54,7 +54,7 @@ public class Player {
 
     public void useMana(int mana) throws Exception {
         if (this.mana - mana < MIN_MANA) {
-            throw new Exception("Mana isn\'t sufficient!");
+            throw new Exception("Mana is not sufficient!");
         } else {
             this.mana -= mana;
         }

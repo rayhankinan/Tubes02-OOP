@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="279.0" style="-fx-background-color: rgba(255, 255, 255, 0)" stylesheets="@../material/material-design.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="10.0" layoutY="10.0" prefHeight="377.0" prefWidth="259.0" style="-fx-font-family: Belwe">
+         <children>
+            <ImageView fitHeight="285.0" fitWidth="215.0" layoutX="27.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../card/image/character/Enderman.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="384.0" fitWidth="259.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../material/card.png" />
+               </image>
+            </ImageView>
+            <HBox layoutX="62.0" layoutY="328.0" prefHeight="35.0" prefWidth="146.0">
+               <children>
+                  <ImageView fitHeight="53.0" fitWidth="145.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../material/race.png" />
+                     </image>
+                  </ImageView>
+               </children></HBox>
+            <HBox alignment="CENTER" layoutY="303.0" prefHeight="72.0" prefWidth="68.0">
+               <children>
+                  <Pane prefHeight="78.0" prefWidth="68.0" style="-fx-font-family: Belwe;">
+                     <children>
+                        <ImageView fitHeight="72.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../material/attack.png" />
+                           </image>
+                        </ImageView>
+                        <Text fill="WHITE" layoutX="23.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dfsf">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font></Text>
+                     </children>
+                  </Pane>
+               </children></HBox>
+            <HBox layoutX="206.0" layoutY="309.0" prefHeight="62.0" prefWidth="54.0">
+               <children>
+                  <Pane prefHeight="78.0" prefWidth="68.0">
+                     <children>
+                        <ImageView fitHeight="62.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../material/health.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+               </children></HBox>
+            <HBox layoutY="14.0" prefHeight="54.0" prefWidth="54.0">
+               <children>
+                  <Pane prefHeight="78.0" prefWidth="68.0">
+                     <children>
+                        <ImageView fitHeight="55.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../material/mana.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+               </children></HBox>
+         </children>
+      </Pane>
+   </children>
+</Pane>

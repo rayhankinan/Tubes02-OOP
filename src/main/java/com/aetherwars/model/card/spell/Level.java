@@ -33,6 +33,10 @@ public class Level extends Spell implements Activable {
         }
     }
 
+    public int getLevel() {
+        return level;
+    }
+
     @Override
     public boolean isActive() {
         return this.active;

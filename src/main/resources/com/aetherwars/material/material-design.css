@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'Belwe';
+    src: url("BelweBoldBT.ttf");
+}
+
+.root {
+    -fx-font-family: "Belwe";
+}
