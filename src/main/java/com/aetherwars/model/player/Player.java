@@ -28,7 +28,7 @@ public class Player {
     private final String name;
     private int health;
     private int mana;
-    private int turn;
+    private int round;
     private List<Card> onHand;
     private Deck deck;
 
@@ -67,6 +67,10 @@ public class Player {
         } else {
             this.mana -= mana;
         }
+    }
+
+    public void addRun(){
+        this.round++;
     }
 
     public void heal(int health) {
@@ -124,8 +128,9 @@ public class Player {
         this.characterFieldCards.remove(field);
     }
 
-    public void useManaForExp(int field, int mana) {
-        // set 1 mana 1 exp
+    public void useManaForExp(int field, int mana) throws Exception {
+        this.characterFieldCards.get(field).addExp(mana);
+        this.useMana(mana);
     }
 
     public boolean hasEnoughMana(int mana) {
@@ -142,7 +147,7 @@ public class Player {
     }
 
     public void resetMana(){
-        this.mana = this.turn;
+        this.mana = this.round;
     }
 
     public void attackOpponentPlayer(SummonedCharacter characterFieldCard, Player opponentPlayer) {
@@ -151,17 +156,10 @@ public class Player {
 
     public void attackOpponentCard(SummonedCharacter characterFieldCard, SummonedCharacter opponentCharacterFieldCard, Player opponentPlayer) {
         characterFieldCard.attackCharacter(opponentCharacterFieldCard);
-        if (opponentCharacterFieldCard.getHealth() <= 0) {
-            opponentPlayer.discardCharacterFieldCards(opponentCharacterFieldCard.getField());
-        }
+//        if (opponentCharacterFieldCard.getHealth() <= 0) {
+//            opponentPlayer.discardCharacterFieldCards(opponentCharacterFieldCard.getField());
+//        }
     }
 
 
-
-
-
-
-    public void takeTurn() {
-        /* TODO */
-    }
 }
