@@ -10,11 +10,15 @@ import java.util.List;
 public interface Summonable {
     int getLevel();
     int getExp();
+    int getExpForNextLevel();
+    void addExp(int exp);
+    void levelUp();
+
     List<Temporary> getTemporary();
     void addActivable(Activable s) throws CardException;
     void decrementTemporaryDuration() throws CardException;
+
     void attackCharacter(SummonedCharacter c) throws CardException;
     void attackPlayer(Player p);
     void takeDamage(int damage);
-    void levelUp();
 }

@@ -12,7 +12,6 @@ import java.util.ArrayList;
 public class SummonedCharacter extends Character implements Summonable {
     private int level;
     private int exp;
-
     private final List<Temporary> temporarySpells;
 
     /* TODO: Exp per level (buat tau kapan harus level up) */
@@ -64,6 +63,33 @@ public class SummonedCharacter extends Character implements Summonable {
     @Override
     public int getExp() {
         return this.exp;
+    }
+
+    @Override
+    public int getExpForNextLevel() {
+        return this.level * 2 - 1;
+    }
+
+    @Override
+    public void addExp(int exp) {
+        if (level < 10) {
+            if (this.exp + exp < this.getExpForNextLevel()) {
+                this.exp += exp;
+            } else {
+                this.levelUp();
+                this.exp += (exp - this.getExpForNextLevel());
+            }
+        }
+    }
+
+    @Override
+    public void levelUp() {
+        if (level < 10) {
+            this.level++;
+            this.exp = 0;
+            this.health += this.healthup;
+            this.attack += this.attackup;
+        }
     }
 
     @Override
@@ -124,16 +150,6 @@ public class SummonedCharacter extends Character implements Summonable {
             this.health = 0;
         } else {
             this.health -= damage;
-        }
-    }
-
-    @Override
-    public void levelUp() {
-        if (level < 9) {
-            this.level++;
-            this.exp = 0;
-            this.health += this.healthup;
-            this.attack += this.attackup;
         }
     }
 }
