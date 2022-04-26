@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class SummonedCharacter extends Character implements Summonable {
     private int level;
     private int exp;
+    //TODO field and getter
     private final List<Inactiveable> inactiveableSpells;
 
     public SummonedCharacter(int id) throws CardException {

@@ -2,13 +2,20 @@ package com.aetherwars.model.player;
 
 import com.aetherwars.model.card.Card;
 import com.aetherwars.model.card.CardException;
+import com.aetherwars.model.card.character.Summonable;
+import com.aetherwars.model.card.spell.Activable;
+import com.aetherwars.model.card.spell.Inactiveable;
+
+import com.aetherwars.model.card.spell.Spell;
 import com.aetherwars.model.deck.Deck;
 import com.aetherwars.model.card.character.SummonedCharacter;
+import com.aetherwars.model.card.character.Character;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Player {
     private static final int MAX_HP = 80;
@@ -16,25 +23,25 @@ public class Player {
     private static final int MIN_HP = 0;
     private static final int MIN_MANA = 0;
     private static final int MAX_CARD_IN_HAND = 5;
+    private static final int MAX_CARD_IN_BOARD = 5;
 
     private final String name;
-    private final String profilePath;
-    private final Deck deck;
     private int health;
     private int mana;
+    private int turn;
+    private List<Card> onHand;
+    private Deck deck;
 
-    /*private List<Card> onHand;*/
-    /*private List<SummonedCharacter> character_zone;*/
+    private List<SummonedCharacter> characterFieldCards;
 
-    public Player(String playerName, String deckFilename, String profilePath) throws IOException, URISyntaxException, CardException {
+    public Player(String playerName, String deckFilename) throws IOException, URISyntaxException, CardException {
         this.name = playerName;
-        this.profilePath = profilePath;
         this.health = MAX_HP;
         this.mana = 1;
-        /*this.onHand = new ArrayList<Card>(MAX_CARD_IN_HAND);*/
+        this.onHand = new ArrayList<Card>(MAX_CARD_IN_HAND);
         this.deck = new Deck(deckFilename);
 
-        /*this.character_zone = new ArrayList<SummonedCharacter>();*/
+        this.characterFieldCards = new ArrayList<SummonedCharacter>(MAX_CARD_IN_BOARD);
 
     }
 
@@ -50,11 +57,7 @@ public class Player {
         return this.mana;
     }
 
-    public String getProfilePath() {
-        return this.profilePath;
-    }
-
-    /*public List<Card> getOnHand() {return this.onHand;}*/
+    public List<Card> getOnHand() {return this.onHand;}
 
     public Deck getDeck() {return this.deck;}
 
@@ -83,18 +86,80 @@ public class Player {
     }
 
     public void drawCard() {
-/*        try {
+        try {
             this.onHand.add(this.deck.drawCard());
-        } catch (Exception e) {
+        } catch (CardException e) {
             //deck kosong
             e.printStackTrace();
         }
+        // jika kartu di tangan sudah lebih dari 5 maka buang 1 kartu acak
         if (this.onHand.size() > MAX_CARD_IN_HAND) {
             Random r = new Random();
             int idx = r.nextInt(this.onHand.size());
             this.onHand.remove(idx);
-        }*/
+        }
     }
+
+    public void addToField(int field, Card card) throws CardException {
+        if (card instanceof Character) {
+            SummonedCharacter fieldCard = new SummonedCharacter((Character) card);
+            characterFieldCards.set(field, fieldCard);
+        }
+        else if (card instanceof Spell) {
+            try{
+                characterFieldCards.get(field).addActivable((Activable) card);
+            } catch (CardException e) {
+                e.printStackTrace();
+            }
+
+        }
+        discardCardOnHand(card);
+    }
+
+    public void discardCardOnHand(Card card) {
+        this.onHand.remove(card);
+    }
+
+    public void discardCharacterFieldCards(int field) {
+        this.characterFieldCards.remove(field);
+    }
+
+    public void useManaForExp(int field, int mana) {
+        // set 1 mana 1 exp
+    }
+
+    public boolean hasEnoughMana(int mana) {
+        return this.mana >= mana;
+    }
+
+    public boolean canDeploy(int field, Card card) {
+        if (card instanceof Character) {
+            return hasEnoughMana(card.getMana()) && characterFieldCards.get(field) == null;
+        } else if (card instanceof Spell) {
+            return hasEnoughMana(card.getMana()) && characterFieldCards.get(field) != null;
+        }
+        return false;
+    }
+
+    public void resetMana(){
+        this.mana = this.turn;
+    }
+
+    public void attackOpponentPlayer(SummonedCharacter characterFieldCard, Player opponentPlayer) {
+        characterFieldCard.attackPlayer(opponentPlayer);
+    }
+
+    public void attackOpponentCard(SummonedCharacter characterFieldCard, SummonedCharacter opponentCharacterFieldCard, Player opponentPlayer) {
+        characterFieldCard.attackCharacter(opponentCharacterFieldCard);
+        if (opponentCharacterFieldCard.getHealth() <= 0) {
+            opponentPlayer.discardCharacterFieldCards(opponentCharacterFieldCard.getField());
+        }
+    }
+
+
+
+
+
 
     public void takeTurn() {
         /* TODO */
