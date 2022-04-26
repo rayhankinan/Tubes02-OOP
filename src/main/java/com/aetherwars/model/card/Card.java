@@ -23,6 +23,14 @@ public class Card {
         this.mana = mana;
     }
 
+    public Card(Card C) {
+        this.id = C.id;
+        this.name = C.name;
+        this.description = C.description;
+        this.imagepath = C.imagepath;
+        this.mana = C.mana;
+    }
+
     public int getId() {
         return this.id;
     }

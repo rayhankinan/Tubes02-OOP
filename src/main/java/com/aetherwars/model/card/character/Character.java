@@ -41,6 +41,20 @@ public class Character extends Card {
         }
     }
 
+    public Character(Character C) throws CardException {
+        super(C);
+
+        if (C.getId() < Character.MIN_ID || C.getId() > Character.MAX_ID) {
+            throw new CardException("Id is invalid!");
+        } else {
+            this.type = C.type;
+            this.attack = C.attack;
+            this.health = C.health;
+            this.attackup = C.attackup;
+            this.healthup = C.healthup;
+        }
+    }
+
     public Type getType() {
         return this.type;
     }

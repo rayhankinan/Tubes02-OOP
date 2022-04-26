@@ -13,14 +13,28 @@ public class SummonedCharacter extends Character implements Summonable {
     private int level;
     private int exp;
 
-    /* TODO: Exp per level (buat tau kapan harus level up) */
-
     private final List<Temporary> temporarySpells;
 
-    public SummonedCharacter(int id, String name, Type type, String description, String imagepath, int attack, int health, int mana, int attackup, int healthup, int level, int exp) throws CardException {
+    /* TODO: Exp per level (buat tau kapan harus level up) */
+
+    public SummonedCharacter(int id) throws CardException {
+        super(id);
+        this.level = 1;
+        this.exp = 0;
+        this.temporarySpells = new ArrayList<>();
+    }
+
+    public SummonedCharacter(int id, String name, Type type, String description, String imagepath, int attack, int health, int mana, int attackup, int healthup) throws CardException {
         super(id, name, type, description, imagepath, attack, health, mana, attackup, healthup);
-        this.level = level;
-        this.exp = exp;
+        this.level = 1;
+        this.exp = 0;
+        this.temporarySpells = new ArrayList<>();
+    }
+
+    public SummonedCharacter(Character C) throws CardException {
+        super(C);
+        this.level = 1;
+        this.exp = 0;
         this.temporarySpells = new ArrayList<>();
     }
 
