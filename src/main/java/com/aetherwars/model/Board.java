@@ -12,4 +12,6 @@ public class Board {
         this.deck1 = new Deck();
         this.deck2 = new Deck();
     }
+
+
 }
