@@ -10,6 +10,8 @@ import javafx.fxml.*;
 import javafx.scene.text.Text;
 import javafx.scene.image.*;
 
+import java.util.Objects;
+
 // CONTROLLER FOR CARD
 public class CardController {
     @FXML
@@ -30,7 +32,7 @@ public class CardController {
     /*
     * Display character card information for character card*/
     public void setCard(Character character){
-        Image newImg = new Image(character.getImagepath());
+        Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + character.getImagepath())).toString());
         String atk = Integer.toString(character.getAttack());
         String hp = Integer.toString(character.getHealth());
         String desc = "ATK " + atk + "/HP " + hp;
@@ -44,7 +46,7 @@ public class CardController {
     /*
      * Display character card information for level spell card*/
     public void setCard(Level level){
-        Image newImg = new Image(level.getImagepath());
+        Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + level.getImagepath())).toString());
         String lvl = Integer.toString(level.getLevel());
         String desc = "LEVEL " + lvl;
 
@@ -57,7 +59,7 @@ public class CardController {
     /*
      * Display character card information for potion spell card*/
     public void setCard(Potion potion){
-        Image newImg = new Image(potion.getImagepath());
+        Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + potion.getImagepath())).toString());
         String atk = Integer.toString(potion.getAttack());
         String hp = Integer.toString(potion.getHealth());
         String desc = "ATK + " + atk + "/HP +" + hp;
@@ -71,7 +73,7 @@ public class CardController {
     /*
      * Display character card information for potion morph card*/
     public void setCard(Morph morph){
-        Image newImg = new Image(morph.getImagepath());
+        Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + morph.getImagepath())).toString());
         String desc = "MORPH";
 
         cardImage.setImage(newImg);
@@ -83,7 +85,7 @@ public class CardController {
     /*
      * Display character card information for potion swap card*/
     public void setCard(Swap swap){
-        Image newImg = new Image(swap.getImagepath());
+        Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + swap.getImagepath())).toString());
         String dur = Integer.toString(swap.getDuration());
         String desc = "SWAP " + dur;
 
