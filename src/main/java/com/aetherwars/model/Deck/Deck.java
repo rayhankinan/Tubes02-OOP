@@ -1,4 +1,4 @@
-package com.aetherwars.model;
+package com.aetherwars.model.Deck;
 
 import com.aetherwars.model.card.Card;
 import com.aetherwars.model.card.CardException;
@@ -8,18 +8,9 @@ import java.util.ArrayList;
 
 public class Deck {
     private final List<Card> buffer;
-    private final List<Card> temporaryChoice;
-    public boolean deckEmpty;
 
     public Deck() {
         this.buffer = new ArrayList<>();
-        this.temporaryChoice = new ArrayList<>();
-        buildDeck();
-        this.deckEmpty = false;
-    }
-
-    public void buildDeck() {
-        /*TODO*/
     }
 
     public void addCard(Card c) {
@@ -40,8 +31,8 @@ public class Deck {
         }
     }
 
-    public Card drawCard() throws Exception{
-        //loop 3 times
+/*    public Card drawCard() throws Exception{
+         *//*loop 3 times *//*
         for (int i = 0; i < 3; i++) {
             if (this.buffer.size() > 0) {
                 this.temporaryChoice.add(this.buffer.remove(0));
@@ -59,9 +50,9 @@ public class Deck {
         this.buffer.addAll(this.temporaryChoice);
         this.temporaryChoice.clear();
         return result;
-    }
+    }*/
 
-    public boolean isDeckEmpty(){
-        return this.deckEmpty;
+    public boolean isDeckEmpty() {
+        return this.buffer.isEmpty();
     }
 }

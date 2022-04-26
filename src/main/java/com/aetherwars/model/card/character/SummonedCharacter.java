@@ -5,7 +5,6 @@ import com.aetherwars.model.card.CardException;
 import com.aetherwars.model.card.CardDatabase;
 import com.aetherwars.model.card.spell.Activable;
 import com.aetherwars.model.card.spell.Temporary;
-import com.aetherwars.model.card.character.TypeComparator;
 
 import java.util.List;
 import java.util.ArrayList;

@@ -1,9 +1,8 @@
 package com.aetherwars.model;
 
 import com.aetherwars.model.card.Card;
-import com.aetherwars.model.Deck;
+import com.aetherwars.model.Deck.Deck;
 import com.aetherwars.model.card.character.SummonedCharacter;
-import com.aetherwars.model.card.character.Character;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +76,7 @@ public class Player {
     }
 
     public void drawCard() {
-        try {
+/*        try {
             this.onHand.add(this.deck.drawCard());
         } catch (Exception e) {
             //deck kosong
@@ -87,11 +86,8 @@ public class Player {
             Random r = new Random();
             int idx = r.nextInt(this.onHand.size());
             this.onHand.remove(idx);
-        }
+        }*/
     }
-
-
-
 
     public void takeTurn() {
         /* TODO */

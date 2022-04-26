@@ -12,7 +12,7 @@
                     <children>
                         <ImageView fx:id="cardImage" fitHeight="174.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../card/image/character/Creeper.png" />
+                                <Image url="@../model/card/image/character/Creeper.png" />
                             </image>
                         </ImageView>
                     </children>
