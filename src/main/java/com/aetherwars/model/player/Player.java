@@ -1,4 +1,4 @@
-package com.aetherwars.model;
+package com.aetherwars.model.player;
 
 import com.aetherwars.model.card.Card;
 import com.aetherwars.model.card.CardException;
@@ -18,15 +18,17 @@ public class Player {
     private static final int MAX_CARD_IN_HAND = 5;
 
     private final String name;
+    private final String profilePath;
     private int health;
     private int mana;
-    /*private List<Card> onHand;*/
     private Deck deck;
 
+    /*private List<Card> onHand;*/
     /*private List<SummonedCharacter> character_zone;*/
 
-    public Player(String playerName, String deckFilename) throws IOException, URISyntaxException, CardException {
+    public Player(String playerName, String deckFilename, String profilePath) throws IOException, URISyntaxException, CardException {
         this.name = playerName;
+        this.profilePath = profilePath;
         this.health = MAX_HP;
         this.mana = 1;
         /*this.onHand = new ArrayList<Card>(MAX_CARD_IN_HAND);*/
@@ -46,6 +48,10 @@ public class Player {
 
     public int getMana() {
         return this.mana;
+    }
+
+    public String getProfilePath() {
+        return this.profilePath;
     }
 
     /*public List<Card> getOnHand() {return this.onHand;}*/

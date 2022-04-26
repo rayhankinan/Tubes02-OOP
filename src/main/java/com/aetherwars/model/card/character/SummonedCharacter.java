@@ -1,6 +1,6 @@
 package com.aetherwars.model.card.character;
 
-import com.aetherwars.model.Player;
+import com.aetherwars.model.player.Player;
 import com.aetherwars.model.card.CardException;
 import com.aetherwars.model.card.CardDatabase;
 import com.aetherwars.model.card.spell.Activable;

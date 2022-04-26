@@ -1,4 +1,4 @@
-package com.aetherwars.model;
+package com.aetherwars.model.board;
 
 import com.aetherwars.model.deck.Deck;
 
