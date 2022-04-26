@@ -8,8 +8,8 @@ public class Character extends Card {
     public static final int MAX_ID = 99;
 
     protected Type type;
-    protected int health;
-    protected int attack;
+    protected int baseHealth;
+    protected int baseAttack;
     protected int attackup;
     protected int healthup;
 
@@ -20,22 +20,22 @@ public class Character extends Card {
             throw new CardException("Id is invalid!");
         } else {
             this.type = Type.OVERWORLD;
-            this.attack = 0;
-            this.health = 0;
+            this.baseAttack = 0;
+            this.baseHealth = 0;
             this.attackup = 0;
             this.healthup = 0;
         }
     }
 
-    public Character(int id, String name, Type type, String description, String imagepath, int attack, int health, int mana, int attackup, int healthup) throws CardException {
+    public Character(int id, String name, Type type, String description, String imagepath, int baseAttack, int baseHealth, int mana, int attackup, int healthup) throws CardException {
         super(id, name, description, imagepath, mana);
 
         if (id < Character.MIN_ID || id > Character.MAX_ID) {
             throw new CardException("Id is invalid!");
         } else {
             this.type = type;
-            this.attack = attack;
-            this.health = health;
+            this.baseAttack = baseAttack;
+            this.baseHealth = baseHealth;
             this.attackup = attackup;
             this.healthup = healthup;
         }
@@ -48,8 +48,8 @@ public class Character extends Card {
             throw new CardException("Id is invalid!");
         } else {
             this.type = C.type;
-            this.attack = C.attack;
-            this.health = C.health;
+            this.baseAttack = C.baseAttack;
+            this.baseHealth = C.baseHealth;
             this.attackup = C.attackup;
             this.healthup = C.healthup;
         }
@@ -59,50 +59,44 @@ public class Character extends Card {
         return this.type;
     }
 
-    public int getAttack() {
-        return this.attack;
+    public int getBaseAttack() {
+        return this.baseAttack;
     }
 
-    public void addAttack(int attack) {
-        if (this.attack + attack >= 0) {
-            this.attack += attack;
+    public void addBaseAttack(int attack) {
+        if (this.baseAttack + attack >= 0) {
+            this.baseAttack += attack;
         } else {
-            this.attack = 0;
+            this.baseAttack = 0;
         }
     }
 
-    public void subtractAttack(int attack) {
-        if (this.attack - attack >= 0) {
-            this.attack -= attack;
+    public void subtractBaseAttack(int attack) {
+        if (this.baseAttack - attack >= 0) {
+            this.baseAttack -= attack;
         } else {
-            this.attack = 0;
+            this.baseAttack = 0;
         }
     }
 
-    public int getHealth() {
-        return this.health;
+    public int getBaseHealth() {
+        return this.baseHealth;
     }
 
-    public void addHealth(int health) {
-        if (this.health + health >= 0) {
-            this.health += health;
+    public void addBaseHealth(int health) {
+        if (this.baseHealth + health >= 0) {
+            this.baseHealth += health;
         } else {
-            this.health = 0;
+            this.baseHealth = 0;
         }
     }
 
-    public void subtractHealth(int health) {
-        if (this.health - health >= 0) {
-            this.health -= health;
+    public void subtractBaseHealth(int health) {
+        if (this.baseHealth - health >= 0) {
+            this.baseHealth -= health;
         } else {
-            this.health = 0;
+            this.baseHealth = 0;
         }
-    }
-
-    public void swapAttackHealth() {
-        int temp = this.health;
-        this.health = this.attack;
-        this.attack = temp;
     }
 
     public int getAttackup() {
@@ -115,6 +109,6 @@ public class Character extends Card {
 
     @Override
     public String toString() {
-        return String.format("Id: %d\nName: %s\nType: %s\nDescription: %s\nImagepath: %s\nAttack: %d\nHealth: %d\nMana: %d\nAttack Up: %d\nHealth Up: %d", this.id, this.name, this.type, this.description, this.imagepath, this.attack, this.health, this.mana, this.attackup, this.healthup);
+        return String.format("Id: %d\nName: %s\nType: %s\nDescription: %s\nImagepath: %s\nAttack: %d\nHealth: %d\nMana: %d\nAttack Up: %d\nHealth Up: %d", this.id, this.name, this.type, this.description, this.imagepath, this.baseAttack, this.baseHealth, this.mana, this.attackup, this.healthup);
     }
 }

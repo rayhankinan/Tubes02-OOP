@@ -33,8 +33,8 @@ public class CardController {
     * Display character card information for character card*/
     public void setCard(Character character){
         Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + character.getImagepath())).toString());
-        String atk = Integer.toString(character.getAttack());
-        String hp = Integer.toString(character.getHealth());
+        String atk = Integer.toString(character.getBaseAttack());
+        String hp = Integer.toString(character.getBaseHealth());
         String desc = "ATK " + atk + "/HP " + hp;
 
         cardImage.setImage(newImg);
@@ -60,8 +60,8 @@ public class CardController {
      * Display character card information for potion spell card*/
     public void setCard(Potion potion){
         Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + potion.getImagepath())).toString());
-        String atk = Integer.toString(potion.getAttack());
-        String hp = Integer.toString(potion.getHealth());
+        String atk = Integer.toString(potion.getTempAttack());
+        String hp = Integer.toString(potion.getTempHealth());
         String desc = "ATK + " + atk + "/HP +" + hp;
 
         cardImage.setImage(newImg);

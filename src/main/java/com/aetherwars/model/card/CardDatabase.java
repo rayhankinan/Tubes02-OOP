@@ -16,8 +16,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class CardDatabase {
-    /* TODO: Input data from resources automatically, without the need to initialize it in main program */
-
     private static final String CHARACTER_CSV_FILE_PATH = "data/character.csv";
     private static final String SPELL_POTION_FILE_PATH = "data/spell_ptn.csv";
     private static final String SPELL_LEVEL_FILE_PATH = "data/spell_lvl.csv";

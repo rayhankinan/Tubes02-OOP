@@ -2,15 +2,14 @@ package com.aetherwars.model.card.spell.morph;
 
 import com.aetherwars.model.card.character.SummonedCharacter;
 import com.aetherwars.model.card.CardException;
-import com.aetherwars.model.card.spell.Activable;
+import com.aetherwars.model.card.spell.Applicable;
 import com.aetherwars.model.card.spell.Spell;
 
-public class Morph extends Spell implements Activable {
+public class Morph extends Spell implements Applicable {
     public static final int MIN_ID = 301;
     public static final int MAX_ID = 399;
 
     private final int targetid;
-    private boolean active;
 
     public Morph(int id) throws CardException {
         super(id);
@@ -19,7 +18,6 @@ public class Morph extends Spell implements Activable {
             throw new CardException("Id is invalid");
         } else {
             this.targetid = 0;
-            this.active = false;
         }
     }
 
@@ -30,23 +28,12 @@ public class Morph extends Spell implements Activable {
             throw new CardException("Id is invalid");
         } else {
             this.targetid = targetid;
-            this.active = false;
         }
-    }
-
-    @Override
-    public boolean isActive() {
-        return this.active;
     }
 
     @Override
     public void apply(SummonedCharacter c) throws CardException {
-        if (this.active) {
-            throw new CardException("Spell is already activated!");
-        } else {
-            c.morph(this.targetid);
-            this.active = true;
-        }
+        c.morph(this.targetid);
     }
 
     @Override

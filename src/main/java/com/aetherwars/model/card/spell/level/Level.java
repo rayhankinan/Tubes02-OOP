@@ -2,15 +2,14 @@ package com.aetherwars.model.card.spell.level;
 
 import com.aetherwars.model.card.character.SummonedCharacter;
 import com.aetherwars.model.card.CardException;
-import com.aetherwars.model.card.spell.Activable;
+import com.aetherwars.model.card.spell.Applicable;
 import com.aetherwars.model.card.spell.Spell;
 
-public class Level extends Spell implements Activable {
+public class Level extends Spell implements Applicable {
     public static final int MIN_ID = 401;
     public static final int MAX_ID = 499;
 
     private final int level;
-    private boolean active;
 
     public Level(int id) throws CardException {
         super(id);
@@ -19,7 +18,6 @@ public class Level extends Spell implements Activable {
             throw new CardException("Id is invalid");
         } else {
             this.level = 0;
-            this.active = false;
         }
     }
 
@@ -30,7 +28,6 @@ public class Level extends Spell implements Activable {
             throw new CardException("Id is invalid");
         } else {
             this.level = level;
-            this.active = false;
         }
     }
 
@@ -39,21 +36,19 @@ public class Level extends Spell implements Activable {
     }
 
     @Override
-    public boolean isActive() {
-        return this.active;
-    }
-
-    @Override
     public void apply(SummonedCharacter c) throws CardException {
-        if (this.active) {
-            throw new CardException("Spell is already activated!");
-        } else {
+        if (this.level >= 0) {
             int N = this.level;
             while (N > 0) {
                 c.levelUp();
                 N--;
             }
-            this.active = true;
+        } else {
+            int N = this.level;
+            while (N < 0) {
+                c.levelDown();
+                N++;
+            }
         }
     }
 

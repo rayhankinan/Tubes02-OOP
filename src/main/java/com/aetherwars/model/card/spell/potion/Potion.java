@@ -2,17 +2,16 @@ package com.aetherwars.model.card.spell.potion;
 
 import com.aetherwars.model.card.character.SummonedCharacter;
 import com.aetherwars.model.card.CardException;
-import com.aetherwars.model.card.spell.Activable;
+import com.aetherwars.model.card.spell.Applicable;
 import com.aetherwars.model.card.spell.Spell;
-import com.aetherwars.model.card.spell.Inactiveable;
+import com.aetherwars.model.card.spell.Revertable;
 
-public class Potion extends Spell implements Inactiveable {
-    /* TODO: implement temporary health and temporary attack */
+public class Potion extends Spell implements Revertable {
     public static final int MIN_ID = 101;
     public static final int MAX_ID = 199;
 
-    private final int attack;
-    private final int health;
+    private final int tempAttack;
+    private final int tempHealth;
     private int duration;
     private boolean active;
 
@@ -22,30 +21,30 @@ public class Potion extends Spell implements Inactiveable {
         if (id < Potion.MIN_ID || id > Potion.MAX_ID) {
             throw new CardException("Id is invalid");
         } else {
-            this.attack = 0;
-            this.health = 0;
+            this.tempAttack = 0;
+            this.tempHealth = 0;
             this.duration = 0;
         }
     }
 
-    public Potion(int id, String name, String description, String imagepath, int attack, int health, int mana, int duration) throws CardException {
+    public Potion(int id, String name, String description, String imagepath, int tempAttack, int tempHealth, int mana, int duration) throws CardException {
         super(id, name, description, imagepath, mana);
 
         if (id < Potion.MIN_ID || id > Potion.MAX_ID) {
             throw new CardException("Id is invalid");
         } else {
-            this.attack = attack;
-            this.health = health;
+            this.tempAttack = tempAttack;
+            this.tempHealth = tempHealth;
             this.duration = duration;
         }
     }
 
-    public int getAttack() {
-        return attack;
+    public int getTempAttack() {
+        return this.tempAttack;
     }
 
-    public int getHealth() {
-        return health;
+    public int getTempHealth() {
+        return this.tempHealth;
     }
 
     @Override
@@ -58,8 +57,8 @@ public class Potion extends Spell implements Inactiveable {
         if (this.active) {
             throw new CardException("Spell is already activated!");
         } else {
-            c.addAttack(this.attack);
-            c.addHealth(this.health);
+            c.addTempAttack(this.tempAttack);
+            c.addTempHealth(this.tempHealth);
             this.active = true;
         }
     }
@@ -69,8 +68,8 @@ public class Potion extends Spell implements Inactiveable {
         if (!this.active) {
             throw new CardException("Spell is already inactivated!");
         } else {
-            c.subtractAttack(this.attack);
-            c.subtractHealth(this.health);
+            c.subtractTempAttack(this.tempAttack);
+            c.subtractTempHealth(this.tempHealth);
             this.active = false;
         }
     }
@@ -90,7 +89,7 @@ public class Potion extends Spell implements Inactiveable {
     }
 
     @Override
-    public void stackDuration(Activable s) throws CardException {
+    public void stackDuration(Applicable s) throws CardException {
         if (s instanceof Potion) {
             this.duration += ((Potion) s).getDuration();
         } else {
@@ -100,6 +99,6 @@ public class Potion extends Spell implements Inactiveable {
 
     @Override
     public String toString() {
-        return String.format("Id: %d\nName: %s\nDescription: %s\nImagepath: %s\nAttack: %d\nHealth: %d\nMana: %d\nDuration: %d", this.id, this.name, this.description, this.imagepath, this.attack, this.health, this.mana, this.duration);
+        return String.format("Id: %d\nName: %s\nDescription: %s\nImagepath: %s\nAttack: %d\nHealth: %d\nMana: %d\nDuration: %d", this.id, this.name, this.description, this.imagepath, this.tempAttack, this.tempHealth, this.mana, this.duration);
     }
 }

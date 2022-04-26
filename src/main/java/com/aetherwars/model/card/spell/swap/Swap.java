@@ -2,11 +2,11 @@ package com.aetherwars.model.card.spell.swap;
 
 import com.aetherwars.model.card.character.SummonedCharacter;
 import com.aetherwars.model.card.CardException;
-import com.aetherwars.model.card.spell.Activable;
+import com.aetherwars.model.card.spell.Applicable;
 import com.aetherwars.model.card.spell.Spell;
-import com.aetherwars.model.card.spell.Inactiveable;
+import com.aetherwars.model.card.spell.Revertable;
 
-public class Swap extends Spell implements Inactiveable {
+public class Swap extends Spell implements Revertable {
     public static final int MIN_ID = 201;
     public static final int MAX_ID = 299;
 
@@ -45,7 +45,7 @@ public class Swap extends Spell implements Inactiveable {
         if (this.active) {
             throw new CardException("Spell is already activated!");
         } else {
-            c.swapAttackHealth();
+            c.swapHealthAttack();
             this.active = true;
         }
     }
@@ -55,7 +55,7 @@ public class Swap extends Spell implements Inactiveable {
         if (!this.active) {
             throw new CardException("Spell is already inactivated!");
         } else {
-            c.swapAttackHealth();
+            c.swapHealthAttack();
             this.active = false;
         }
     }
@@ -75,7 +75,7 @@ public class Swap extends Spell implements Inactiveable {
     }
 
     @Override
-    public void stackDuration(Activable s) throws CardException {
+    public void stackDuration(Applicable s) throws CardException {
         if (s instanceof Swap) {
             this.duration += ((Swap) s).getDuration();
         } else {
