@@ -2,9 +2,10 @@ package com.aetherwars.model.card.character;
 
 import com.aetherwars.model.Player;
 import com.aetherwars.model.card.CardException;
-import com.aetherwars.model.card.spell.Activable;
 import com.aetherwars.model.card.CardDatabase;
+import com.aetherwars.model.card.spell.Activable;
 import com.aetherwars.model.card.spell.Temporary;
+import com.aetherwars.model.card.character.TypeComparator;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -66,30 +67,31 @@ public class SummonedCharacter extends Character implements Summonable {
             if (s instanceof Temporary) {
                 try {
                     s.apply(this);
-                } catch (CardException ce) { //dia sudah teraktivasi
+
+                } catch (CardException ce1) {
+                    /* Already activated */
                     try {
                         ((Temporary) s).decrementDuration();
-                        if (((Temporary) s).getDuration() == 0) {
-                            // try revert
-                            try {
-                                ((Temporary) s).revert(this);
-                                this.activeSpells.remove(s);
 
-                            }
-                            catch (CardException ce2) {
-                                ce2.printStackTrace();
-                            }
+                    } catch (CardException ce2) {
+                        /* Duration is 0 */
+                        try {
+                            ((Temporary) s).revert(this);
+                            this.activeSpells.remove(s);
+
+                        } catch (CardException ce3) {
+                            ce3.printStackTrace();
                         }
-                    } catch (CardException ce2) { //durasi dia sudah 0
-                        ce2.printStackTrace();
                     }
                 }
+
             } else {
                 try {
                     s.apply(this);
                     this.activeSpells.remove(s);
-                } catch (CardException ce) {    //dia sudah teraktivasi
-                    ce.printStackTrace();
+
+                } catch (CardException ce1) {
+                    ce1.printStackTrace();
                 }
             }
         }
@@ -97,29 +99,14 @@ public class SummonedCharacter extends Character implements Summonable {
 
     @Override
     public void attackCharacter(SummonedCharacter c) {
-        if (this.type == Type.NETHER) {
-            if (c.getType() == Type.OVERWORLD) {
-                c.takeDamage(this.attack*2);
-            }
-            else if (c.getType() == Type.END) {
-                c.takeDamage(this.attack/2);
-            }
-        }
-        else if (this.type == Type.OVERWORLD) {
-            if (c.getType() == Type.END) {
-                c.takeDamage(this.attack*2);
-            }
-            else if (c.getType() == Type.NETHER) {
-                c.takeDamage(this.attack/2);
-            }
-        }
-        else if (this.type == Type.END) {
-            if (c.getType() == Type.NETHER) {
-                c.takeDamage(this.attack*2);
-            }
-            else if (c.getType() == Type.OVERWORLD) {
-                c.takeDamage(this.attack/2);
-            }
+        TypeComparator typeComparator = new TypeComparator();
+
+        if (typeComparator.compare(this.type, c.getType()) > 0) {
+            c.takeDamage(this.attack * 2);
+        } else if (typeComparator.compare(this.type, c.getType()) < 0) {
+            c.takeDamage(this.attack / 2);
+        } else {
+            c.takeDamage(this.attack);
         }
     }
 
