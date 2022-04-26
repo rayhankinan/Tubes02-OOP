@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class CardDatabase {
+    /* TODO: Input data from resources automatically, without the need to initialize it in main program */
+
     private static final List<Character> characterList = new ArrayList<>();
     private static final List<Potion> potionList = new ArrayList<>();
     private static final List<Level> levelList = new ArrayList<>();

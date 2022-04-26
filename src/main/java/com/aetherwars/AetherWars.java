@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import com.aetherwars.model.Deck;
+import com.aetherwars.model.Deck.Deck;
 import com.aetherwars.model.card.CardDatabase;
 import com.aetherwars.model.card.CardException;
 import com.aetherwars.model.card.character.Character;

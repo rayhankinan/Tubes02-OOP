@@ -1,5 +1,7 @@
 package com.aetherwars.model;
 
+import com.aetherwars.model.Deck.Deck;
+
 public class Board {
     private final Player player1;
     private final Player player2;
@@ -12,4 +14,6 @@ public class Board {
         this.deck1 = new Deck();
         this.deck2 = new Deck();
     }
+
+
 }
