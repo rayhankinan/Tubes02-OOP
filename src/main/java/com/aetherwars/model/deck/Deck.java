@@ -14,9 +14,6 @@ import java.util.Objects;
 
 public class Deck {
     private final List<Card> buffer;
-    private List<Card> temporaryChoice;
-    private boolean deckEmpty;
-
 
     public Deck(String deckFilename) throws IOException, URISyntaxException, CardException {
         this.buffer = new ArrayList<>();
@@ -30,8 +27,6 @@ public class Deck {
             int id = Integer.parseInt(row[0]);
             this.addCard(CardDatabase.getCard(id));
         }
-        deckEmpty = false;
-        this.temporaryChoice = new ArrayList<>();
     }
 
     public void addCard(Card c) {
@@ -52,27 +47,21 @@ public class Deck {
         }
     }
 
-    public Card drawCard() throws CardException{
-        for (int i = 0; i < 3; i++) {
-            if (this.buffer.size() > 0) {
-                this.temporaryChoice.add(this.buffer.remove(0));
-            }
-            else{
-                deckEmpty = true;
-                throw new CardException("Deck is empty!");
-            }
-        }
-        //bingung bagaimana cara mengambil choice card dari temporaryChoice
-        //misalkan user memilih card tengah berarti card index ke 1
-        int userChoice = 1;
-        Card result = this.temporaryChoice.remove(userChoice);
-        // kembalikan temporaryChoice ke buffer
-        this.buffer.addAll(this.temporaryChoice);
-        this.temporaryChoice.clear();
-        return result;
-    }
+    public Card drawCard(int id) throws CardException{
+        List<Card> temporaryChoice = new ArrayList<>();
 
-    public boolean isDeckEmpty() {
-        return this.buffer.isEmpty();
+        for (int i = 0; i < 3; i++) {
+            temporaryChoice.add(this.getCard());
+        }
+
+        /*  bingung bagaimana cara mengambil choice card dari temporaryChoice
+            misalkan user memilih card tengah berarti card index ke 1   */
+
+        Card result = temporaryChoice.remove(id);
+
+        /*  kembalikan temporaryChoice ke buffer    */
+
+        this.buffer.addAll(temporaryChoice);
+        return result;
     }
 }

@@ -2,10 +2,8 @@ package com.aetherwars.model.player;
 
 import com.aetherwars.model.card.Card;
 import com.aetherwars.model.card.CardException;
-import com.aetherwars.model.card.character.Summonable;
-import com.aetherwars.model.card.spell.Activable;
-import com.aetherwars.model.card.spell.Inactiveable;
 
+import com.aetherwars.model.card.spell.Applicable;
 import com.aetherwars.model.card.spell.Spell;
 import com.aetherwars.model.deck.Deck;
 import com.aetherwars.model.card.character.SummonedCharacter;
@@ -25,24 +23,22 @@ public class Player {
     private static final int MAX_CARD_IN_HAND = 5;
     private static final int MAX_CARD_IN_BOARD = 5;
 
+    private final List<SummonedCharacter> characterFieldCards;
+    private final List<Card> onHand;
+    private final Deck deck;
     private final String name;
+
     private int health;
     private int mana;
     private int round;
-    private List<Card> onHand;
-    private Deck deck;
-
-    private List<SummonedCharacter> characterFieldCards;
 
     public Player(String playerName, String deckFilename) throws IOException, URISyntaxException, CardException {
         this.name = playerName;
         this.health = MAX_HP;
         this.mana = 1;
-        this.onHand = new ArrayList<Card>(MAX_CARD_IN_HAND);
+        this.onHand = new ArrayList<>(MAX_CARD_IN_HAND);
         this.deck = new Deck(deckFilename);
-
-        this.characterFieldCards = new ArrayList<SummonedCharacter>(MAX_CARD_IN_BOARD);
-
+        this.characterFieldCards = new ArrayList<>(MAX_CARD_IN_BOARD);
     }
 
     public String getName() {
@@ -57,13 +53,17 @@ public class Player {
         return this.mana;
     }
 
-    public List<Card> getOnHand() {return this.onHand;}
+    public List<Card> getOnHand() {
+        return this.onHand;
+    }
 
-    public Deck getDeck() {return this.deck;}
+    public Deck getDeck() {
+        return this.deck;
+    }
 
-    public void useMana(int mana) throws Exception {
+    public void useMana(int mana) throws PlayerException {
         if (this.mana - mana < MIN_MANA) {
-            throw new Exception("Mana is not sufficient!");
+            throw new PlayerException("Mana is not sufficient!");
         } else {
             this.mana -= mana;
         }
@@ -71,14 +71,6 @@ public class Player {
 
     public void addRound(){
         this.round++;
-    }
-
-    public void heal(int health) {
-        if (this.health + health > MAX_HP) {
-            this.health = MAX_HP;
-        } else {
-            this.health += health;
-        }
     }
 
     public void takeDamage(int damage) {
@@ -89,14 +81,11 @@ public class Player {
         }
     }
 
-    public void drawCard() {
-        try {
-            this.onHand.add(this.deck.drawCard());
-        } catch (CardException e) {
-            //deck kosong
-            e.printStackTrace();
-        }
-        // jika kartu di tangan sudah lebih dari 5 maka buang 1 kartu acak
+    public void drawCard(int id) throws CardException {
+        this.onHand.add(this.deck.drawCard(id));
+
+        /* jika kartu di tangan sudah lebih dari 5 maka buang 1 kartu acak */
+
         if (this.onHand.size() > MAX_CARD_IN_HAND) {
             Random r = new Random();
             int idx = r.nextInt(this.onHand.size());
@@ -108,16 +97,15 @@ public class Player {
         if (card instanceof Character) {
             SummonedCharacter fieldCard = new SummonedCharacter((Character) card);
             characterFieldCards.set(field, fieldCard);
-        }
-        else if (card instanceof Spell) {
-            try{
-                characterFieldCards.get(field).addActivable((Activable) card);
-            } catch (CardException e) {
-                e.printStackTrace();
-            }
+            discardCardOnHand(card);
 
+        } else if (card instanceof Spell) {
+            characterFieldCards.get(field).addActivable((Applicable) card);
+            discardCardOnHand(card);
+
+        } else {
+            throw new CardException("Class is not recognized!");
         }
-        discardCardOnHand(card);
     }
 
     public void discardCardOnHand(Card card) {
@@ -128,7 +116,9 @@ public class Player {
         this.characterFieldCards.remove(field);
     }
 
-    public void useManaForExp(int field, int mana) throws Exception {
+    public void useManaForExp(int field, int mana) throws CardException, PlayerException {
+        /* CATATAN KINAN: INI UNTUK APA YA?  */
+
         this.characterFieldCards.get(field).addExp(mana);
         this.useMana(mana);
     }
@@ -137,17 +127,20 @@ public class Player {
         return this.mana >= mana;
     }
 
-    public boolean canDeploy(int field, Card card) {
+    public boolean canDeploy(int field, Card card) throws CardException {
         if (card instanceof Character) {
             return hasEnoughMana(card.getMana()) && characterFieldCards.get(field) == null;
+
         } else if (card instanceof Spell) {
             return hasEnoughMana(card.getMana()) && characterFieldCards.get(field) != null;
+
+        } else {
+            throw new CardException("Class is not recognized!");
         }
-        return false;
     }
 
-    public void resetMana(){
-        this.mana = this.round;
+    public void resetMana() {
+        this.mana = Math.min(this.round, MAX_MANA);
     }
 
     public void attackOpponentPlayer(SummonedCharacter characterFieldCard, Player opponentPlayer) {
@@ -156,10 +149,8 @@ public class Player {
 
     public void attackOpponentCard(SummonedCharacter characterFieldCard, SummonedCharacter opponentCharacterFieldCard, Player opponentPlayer) {
         characterFieldCard.attackCharacter(opponentCharacterFieldCard);
-//        if (opponentCharacterFieldCard.getHealth() <= 0) {
-//            opponentPlayer.discardCharacterFieldCards(opponentCharacterFieldCard.getField());
-//        }
+        /*if (opponentCharacterFieldCard.getHealth() <= 0) {
+            opponentPlayer.discardCharacterFieldCards(opponentCharacterFieldCard.getField());
+        }*/
     }
-
-
 }

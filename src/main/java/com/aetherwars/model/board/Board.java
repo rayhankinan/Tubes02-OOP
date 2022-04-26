@@ -1,30 +1,33 @@
 package com.aetherwars.model.board;
 
 import com.aetherwars.model.card.CardException;
-import com.aetherwars.model.deck.Deck;
 import com.aetherwars.model.player.Player;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-public class Board implements InterfaceBoard {
+public class Board implements TakeTurns {
     private final Player player1;
     private final Player player2;
     private Phase phase;
     private int turn;
 
-    public Board(String namaPlayer1, String namaPlayer2) throws IOException, URISyntaxException, CardException {
-        String namaDeck1 = "deck1";
-        String namaDeck2 = "deck2";
-        this.player1 = new Player(namaPlayer1, namaDeck1);
-        this.player2 = new Player(namaPlayer2, namaDeck2);
-        player1.drawCard();
-        player2.drawCard();
+    public Board(String playerName1, String playerName2) throws IOException, URISyntaxException, CardException {
+        /* TODO: Input deck-name from user */
+        String deckName1 = "deck_1.csv";
+        String deckName2 = "deck_1.csv";
+
+        this.player1 = new Player(playerName1, deckName1);
+        this.player2 = new Player(playerName2, deckName2);
+
+        /* TODO: Input index from user */
+        player1.drawCard(1);
+        player2.drawCard(1);
+
         this.phase = Phase.DRAW;
     }
 
     public Player getPlayer1(){
-
         return this.player1;
     }
 
@@ -35,6 +38,7 @@ public class Board implements InterfaceBoard {
     public Player getCurrentPlayer() {
         if (this.turn == 1) {
             return this.player1;
+
         } else {
             return this.player2;
         }
@@ -57,24 +61,31 @@ public class Board implements InterfaceBoard {
     }
 
     @Override
-    public void switchTurn() {
+    public void switchTurn() throws CardException {
         if (this.turn == 1) {
             this.turn = 2;
         } else {
             this.turn = 1;
         }
-        this.phase = Phase.DRAW;
-        getCurrentPlayer().addRound();
-        getCurrentPlayer().resetMana();
-        getCurrentPlayer().drawCard();
+
+        this.getCurrentPlayer().addRound();
+        this.getCurrentPlayer().resetMana();
+
+        /* TODO: Input index from user */
+        this.getCurrentPlayer().drawCard(1);
     }
 
     @Override
     public void nextPhase() {
         if (this.phase == Phase.DRAW) {
             this.phase = Phase.PLANNING;
+
         } else if (this.phase == Phase.PLANNING) {
             this.phase = Phase.ATTACK;
+
+        } else {
+            /* TODO: Implement next player DRAW PHASE */
+            this.phase = Phase.DRAW;
         }
     }
 }
