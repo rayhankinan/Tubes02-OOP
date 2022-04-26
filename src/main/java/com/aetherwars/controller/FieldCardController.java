@@ -1,9 +1,12 @@
 package com.aetherwars.controller;
 
+import com.aetherwars.model.card.character.Character;
 import com.aetherwars.model.card.character.SummonedCharacter;
 import javafx.fxml.*;
 import javafx.scene.text.Text;
 import javafx.scene.image.*;
+
+import java.util.Objects;
 
 // CONTROLLER FOR FieldCard
 public class FieldCardController {
@@ -25,7 +28,7 @@ public class FieldCardController {
     /*
     * Display Field Card*/
     public void setFieldCard(SummonedCharacter character) {
-        Image newImg = new Image(character.getImagepath());
+        Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + character.getImagepath())).toString());
         String xp = Integer.toString(character.getExp());
         String level = Integer.toString(character.getLevel());
         // TODO: Tambahin exp per level (nunggu dari models)
