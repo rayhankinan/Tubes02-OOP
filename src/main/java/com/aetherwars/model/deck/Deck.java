@@ -14,6 +14,9 @@ import java.util.Objects;
 
 public class Deck {
     private final List<Card> buffer;
+    private List<Card> temporaryChoice;
+    private boolean deckEmpty;
+
 
     public Deck(String deckFilename) throws IOException, URISyntaxException, CardException {
         this.buffer = new ArrayList<>();
@@ -27,6 +30,8 @@ public class Deck {
             int id = Integer.parseInt(row[0]);
             this.addCard(CardDatabase.getCard(id));
         }
+        deckEmpty = false;
+        this.temporaryChoice = new ArrayList<>();
     }
 
     public void addCard(Card c) {
@@ -47,15 +52,14 @@ public class Deck {
         }
     }
 
-/*    public Card drawCard() throws Exception{
-         *//*loop 3 times *//*
+    public Card drawCard() throws CardException{
         for (int i = 0; i < 3; i++) {
             if (this.buffer.size() > 0) {
                 this.temporaryChoice.add(this.buffer.remove(0));
             }
             else{
                 deckEmpty = true;
-                throw new Exception("Deck is empty!");
+                throw new CardException("Deck is empty!");
             }
         }
         //bingung bagaimana cara mengambil choice card dari temporaryChoice
@@ -66,7 +70,7 @@ public class Deck {
         this.buffer.addAll(this.temporaryChoice);
         this.temporaryChoice.clear();
         return result;
-    }*/
+    }
 
     public boolean isDeckEmpty() {
         return this.buffer.isEmpty();
