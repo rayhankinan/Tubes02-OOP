@@ -1,12 +1,12 @@
 package com.aetherwars.model.card.spell.potion;
 
-import com.aetherwars.model.card.Card;
 import com.aetherwars.model.card.character.SummonedCharacter;
 import com.aetherwars.model.card.CardException;
+import com.aetherwars.model.card.spell.Activable;
 import com.aetherwars.model.card.spell.Spell;
-import com.aetherwars.model.card.spell.Temporary;
+import com.aetherwars.model.card.spell.Inactiveable;
 
-public class Potion extends Spell implements Temporary {
+public class Potion extends Spell implements Inactiveable {
     /* TODO: implement temporary health and temporary attack */
     public static final int MIN_ID = 101;
     public static final int MAX_ID = 199;
@@ -90,11 +90,11 @@ public class Potion extends Spell implements Temporary {
     }
 
     @Override
-    public void stackDuration(Card C) throws CardException {
-        if (C instanceof Potion) {
-            this.duration += ((Potion) C).getDuration();
+    public void stackDuration(Activable s) throws CardException {
+        if (s instanceof Potion) {
+            this.duration += ((Potion) s).getDuration();
         } else {
-            throw new CardException(String.format("Invalid operation between %s and %s!", this.getClass().getSimpleName(), C.getClass().getSimpleName()));
+            throw new CardException(String.format("Invalid operation between %s and %s!", this.getClass().getSimpleName(), s.getClass().getSimpleName()));
         }
     }
 

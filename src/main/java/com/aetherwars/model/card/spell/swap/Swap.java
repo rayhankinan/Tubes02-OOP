@@ -1,12 +1,12 @@
 package com.aetherwars.model.card.spell.swap;
 
-import com.aetherwars.model.card.Card;
 import com.aetherwars.model.card.character.SummonedCharacter;
 import com.aetherwars.model.card.CardException;
+import com.aetherwars.model.card.spell.Activable;
 import com.aetherwars.model.card.spell.Spell;
-import com.aetherwars.model.card.spell.Temporary;
+import com.aetherwars.model.card.spell.Inactiveable;
 
-public class Swap extends Spell implements Temporary {
+public class Swap extends Spell implements Inactiveable {
     public static final int MIN_ID = 201;
     public static final int MAX_ID = 299;
 
@@ -75,11 +75,11 @@ public class Swap extends Spell implements Temporary {
     }
 
     @Override
-    public void stackDuration(Card C) throws CardException {
-        if (C instanceof Swap) {
-            this.duration += ((Swap) C).getDuration();
+    public void stackDuration(Activable s) throws CardException {
+        if (s instanceof Swap) {
+            this.duration += ((Swap) s).getDuration();
         } else {
-            throw new CardException(String.format("Invalid operation between %s and %s!", this.getClass().getSimpleName(), C.getClass().getSimpleName()));
+            throw new CardException(String.format("Invalid operation between %s and %s!", this.getClass().getSimpleName(), s.getClass().getSimpleName()));
         }
     }
 

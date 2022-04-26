@@ -1,10 +1,10 @@
 package com.aetherwars.model.card.character;
 
-import com.aetherwars.model.Player;
+import com.aetherwars.model.player.Player;
 import com.aetherwars.model.card.CardException;
 import com.aetherwars.model.card.CardDatabase;
 import com.aetherwars.model.card.spell.Activable;
-import com.aetherwars.model.card.spell.Temporary;
+import com.aetherwars.model.card.spell.Inactiveable;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -12,18 +12,27 @@ import java.util.ArrayList;
 public class SummonedCharacter extends Character implements Summonable {
     private int level;
     private int exp;
-    // TODO: Exp per level (buat tau kapan harus level up)
-    // TODO: Field dan getFieldnya
-    // TODO: setter exp
-    private int expNeeded;
-    private final List<Activable> activeSpells;
+    private final List<Inactiveable> inactiveableSpells;
 
-    public SummonedCharacter(int id, String name, Type type, String description, String imagepath, int attack, int health, int mana, int attackup, int healthup, int level, int exp) throws CardException {
+    public SummonedCharacter(int id) throws CardException {
+        super(id);
+        this.level = 1;
+        this.exp = 0;
+        this.inactiveableSpells = new ArrayList<>();
+    }
+
+    public SummonedCharacter(int id, String name, Type type, String description, String imagepath, int attack, int health, int mana, int attackup, int healthup) throws CardException {
         super(id, name, type, description, imagepath, attack, health, mana, attackup, healthup);
-        this.level = level;
-        this.exp = exp;
-        this.activeSpells = new ArrayList<>();
+        this.level = 1;
+        this.exp = 0;
+        this.inactiveableSpells = new ArrayList<>();
+    }
 
+    public SummonedCharacter(Character C) throws CardException {
+        super(C);
+        this.level = 1;
+        this.exp = 0;
+        this.inactiveableSpells = new ArrayList<>();
     }
 
     public void morph(int id) throws CardException {
@@ -41,7 +50,7 @@ public class SummonedCharacter extends Character implements Summonable {
         this.healthup = newCharacter.getHealthup();
         this.level = 1;
         this.exp = 0;
-        this.activeSpells.clear();
+        this.inactiveableSpells.clear();
     }
 
     @Override
@@ -55,48 +64,62 @@ public class SummonedCharacter extends Character implements Summonable {
     }
 
     @Override
-    public void addActivable(Activable s) {
-        this.activeSpells.add(s);
-        /* TODO: stack duration */
+    public int getExpForNextLevel() {
+        return this.level * 2 - 1;
     }
 
     @Override
-    public List<Activable> getActivable() {
-        return this.activeSpells;
-    }
-
-    @Override
-    public void activateEffects() {
-        for (Activable s : this.activeSpells) {
-            if (s instanceof Temporary) {
-                try {
-                    s.apply(this);
-
-                } catch (CardException ce1) {
-                    /* Already activated */
-                    try {
-                        ((Temporary) s).decrementDuration();
-
-                    } catch (CardException ce2) {
-                        /* Duration is 0 */
-                        try {
-                            ((Temporary) s).revert(this);
-                            this.activeSpells.remove(s);
-
-                        } catch (CardException ce3) {
-                            ce3.printStackTrace();
-                        }
-                    }
-                }
-
+    public void addExp(int exp) {
+        if (level < 10) {
+            if (this.exp + exp < this.getExpForNextLevel()) {
+                this.exp += exp;
             } else {
-                try {
-                    s.apply(this);
-                    this.activeSpells.remove(s);
+                this.levelUp();
+                this.exp += (exp - this.getExpForNextLevel());
+            }
+        }
+    }
 
-                } catch (CardException ce1) {
-                    ce1.printStackTrace();
-                }
+    @Override
+    public void levelUp() {
+        if (level < 10) {
+            this.level++;
+            this.exp = 0;
+            this.health += this.healthup;
+            this.attack += this.attackup;
+        }
+    }
+
+    @Override
+    public List<Inactiveable> getTemporary() {
+        return this.inactiveableSpells;
+    }
+
+    @Override
+    public void addActivable(Activable s) throws CardException {
+        if (s instanceof Inactiveable) {
+            int index = this.inactiveableSpells.indexOf(s);
+
+            if (index != -1) {
+                this.inactiveableSpells.get(index).stackDuration(s);
+            } else {
+                s.apply(this);
+                this.inactiveableSpells.add((Inactiveable) s);
+            }
+
+        } else {
+            s.apply(this);
+        }
+    }
+
+    @Override
+    public void decrementTemporaryDuration() throws CardException {
+        for (Inactiveable t : this.inactiveableSpells) {
+            try {
+                t.decrementDuration();
+            } catch (CardException ce) {
+                t.revert(this);
+                this.inactiveableSpells.remove(t);
             }
         }
     }
@@ -125,16 +148,6 @@ public class SummonedCharacter extends Character implements Summonable {
             this.health = 0;
         } else {
             this.health -= damage;
-        }
-    }
-
-    @Override
-    public void levelUp() {
-        if (level < 9) {
-            this.level++;
-            this.exp = 0;
-            this.health += this.healthup;
-            this.attack += this.attackup;
         }
     }
 }
