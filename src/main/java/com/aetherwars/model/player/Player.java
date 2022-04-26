@@ -19,9 +19,9 @@ public class Player {
 
     private final String name;
     private final String profilePath;
+    private final Deck deck;
     private int health;
     private int mana;
-    private Deck deck;
 
     /*private List<Card> onHand;*/
     /*private List<SummonedCharacter> character_zone;*/

@@ -12,16 +12,16 @@ import java.util.ArrayList;
 public class SummonedCharacter extends Character implements Summonable {
     private int level;
     private int exp;
-    // TODO: Exp per level (buat tau kapan harus level up)
-    private int expNeeded;
 
-    private final List<Activable> activeSpells;
+    /* TODO: Exp per level (buat tau kapan harus level up) */
+
+    private final List<Temporary> temporarySpells;
 
     public SummonedCharacter(int id, String name, Type type, String description, String imagepath, int attack, int health, int mana, int attackup, int healthup, int level, int exp) throws CardException {
         super(id, name, type, description, imagepath, attack, health, mana, attackup, healthup);
         this.level = level;
         this.exp = exp;
-        this.activeSpells = new ArrayList<>();
+        this.temporarySpells = new ArrayList<>();
     }
 
     public void morph(int id) throws CardException {
@@ -39,7 +39,7 @@ public class SummonedCharacter extends Character implements Summonable {
         this.healthup = newCharacter.getHealthup();
         this.level = 1;
         this.exp = 0;
-        this.activeSpells.clear();
+        this.temporarySpells.clear();
     }
 
     @Override
@@ -53,48 +53,35 @@ public class SummonedCharacter extends Character implements Summonable {
     }
 
     @Override
-    public void addActivable(Activable s) {
-        this.activeSpells.add(s);
-        /* TODO: stack duration */
+    public List<Temporary> getTemporary() {
+        return this.temporarySpells;
     }
 
     @Override
-    public List<Activable> getActivable() {
-        return this.activeSpells;
-    }
+    public void addActivable(Activable s) throws CardException {
+        if (s instanceof Temporary) {
+            int index = this.temporarySpells.indexOf(s);
 
-    @Override
-    public void activateEffects() {
-        for (Activable s : this.activeSpells) {
-            if (s instanceof Temporary) {
-                try {
-                    s.apply(this);
-
-                } catch (CardException ce1) {
-                    /* Already activated */
-                    try {
-                        ((Temporary) s).decrementDuration();
-
-                    } catch (CardException ce2) {
-                        /* Duration is 0 */
-                        try {
-                            ((Temporary) s).revert(this);
-                            this.activeSpells.remove(s);
-
-                        } catch (CardException ce3) {
-                            ce3.printStackTrace();
-                        }
-                    }
-                }
-
+            if (index != -1) {
+                this.temporarySpells.get(index).stackDuration(s);
             } else {
-                try {
-                    s.apply(this);
-                    this.activeSpells.remove(s);
+                s.apply(this);
+                this.temporarySpells.add((Temporary) s);
+            }
 
-                } catch (CardException ce1) {
-                    ce1.printStackTrace();
-                }
+        } else {
+            s.apply(this);
+        }
+    }
+
+    @Override
+    public void decrementTemporaryDuration() throws CardException {
+        for (Temporary t : this.temporarySpells) {
+            try {
+                t.decrementDuration();
+            } catch (CardException ce) {
+                t.revert(this);
+                this.temporarySpells.remove(t);
             }
         }
     }
