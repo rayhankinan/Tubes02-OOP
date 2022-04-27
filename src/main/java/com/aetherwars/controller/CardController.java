@@ -1,4 +1,5 @@
 package com.aetherwars.controller;
+import com.aetherwars.model.card.Card;
 
 import com.aetherwars.model.card.character.Character;
 

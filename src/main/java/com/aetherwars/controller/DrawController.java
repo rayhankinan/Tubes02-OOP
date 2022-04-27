@@ -1,6 +1,7 @@
 package com.aetherwars.controller;
 
 import com.aetherwars.model.card.*;
+import com.aetherwars.model.deck.DeckException;
 import com.aetherwars.model.player.Player;
 import com.aetherwars.model.deck.Deck;
 import javafx.fxml.FXML;
@@ -29,7 +30,7 @@ public class DrawController {
             insertCard(drawCard2, card2);
             insertCard(drawCard3, card3);
         }
-        catch (CardException e){
+        catch (DeckException e){
             System.out.println(e);
         }
     }
