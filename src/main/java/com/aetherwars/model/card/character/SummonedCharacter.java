@@ -12,15 +12,15 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class SummonedCharacter extends Character implements Summonable, Attackable, Affectable {
-    private int field;
     private int level;
     private int exp;
     private int currentHealth;
     private int currentAttack;
     private final List<Potion> potionSpells;
     private Swap swapSpell;
-    // 0 is not available, 1 is available attack
-    private int isAvailableAttack;
+
+    private final int field; /* Position in field */
+    private int isAvailableAttack; /* 0 is not available, 1 is available attack */
 
     public SummonedCharacter(int id) throws CardException {
         super(id);
@@ -317,8 +317,8 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
 
         this.level = 1;
         this.exp = 0;
-        this.currentHealth = 0;
-        this.currentAttack = 0;
+        this.currentHealth = this.baseHealth;
+        this.currentAttack = this.baseAttack;
         this.potionSpells.clear();
         this.swapSpell = null;
     }
@@ -344,5 +344,3 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
         return stringBuilder.toString();
     }
 }
-
-

@@ -53,23 +53,21 @@ public class Deck {
 
     public List<Card> getThreeCards() throws DeckException {
         List<Card> threeCards = new ArrayList<>();
-        // if card more than 3 times, draw 3 cards else draw remain cards
+
         if (this.buffer.size() >= 3) {
             for (int i = 0; i < 3; i++) {
                 threeCards.add(this.buffer.remove(0));
             }
-        }
-        else if (this.buffer.size() == 0) {
+
+        } else if (this.buffer.size() == 0) {
             throw new DeckException("Deck is empty!");
-        }
-        else {
+
+        } else {
             for (int i = 0; i < this.buffer.size(); i++) {
                 threeCards.add(this.buffer.remove(0));
             }
         }
 
         return threeCards;
-
     }
-
 }
