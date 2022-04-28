@@ -155,8 +155,9 @@ public class Player {
 
     public void attackOpponentCard(SummonedCharacter characterFieldCard, SummonedCharacter opponentCharacterFieldCard, Player opponentPlayer) {
         characterFieldCard.attackCharacter(opponentCharacterFieldCard);
-        /*if (opponentCharacterFieldCard.getHealth() <= 0) {
-            opponentPlayer.discardCharacterFieldCards(opponentCharacterFieldCard.getField());
-        }*/
+        if (opponentCharacterFieldCard.getTotalHealth() <= 0) {
+            //discard opponent card
+            opponentPlayer.characterFieldCards.remove(opponentCharacterFieldCard);
+        }
     }
 }
