@@ -13,10 +13,10 @@ public class Board implements TakeTurns {
     private Phase phase;
     private int turn;
 
-    public Board(String pathDeck1, String pathDeck2) throws IOException, URISyntaxException, CardException, DeckException {
+    public Board(String playerName1, String playerName2, String pathDeck1, String pathDeck2) throws IOException, URISyntaxException, CardException, DeckException {
 
-        this.player1 = new Player("Steve", pathDeck1);
-        this.player2 = new Player("Alex", pathDeck2);
+        this.player1 = new Player(playerName1, pathDeck1);
+        this.player2 = new Player(playerName2, pathDeck2);
 
         player1.drawCard();
         player2.drawCard();
