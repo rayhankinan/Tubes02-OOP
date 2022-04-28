@@ -19,6 +19,8 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
     private int currentAttack;
     private final List<Potion> potionSpells;
     private Swap swapSpell;
+    // 0 is not available, 1 is available attack
+    private int isAvailableAttack;
 
     public SummonedCharacter(int id) throws CardException {
         super(id);
@@ -30,6 +32,7 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
         this.currentAttack = 0;
         this.potionSpells = new ArrayList<>();
         this.swapSpell = null;
+        this.isAvailableAttack = 0;
     }
 
     public SummonedCharacter(int id, String name, Type type, String description, String imagepath, int baseAttack, int baseHealth, int mana, int attackup, int healthup) throws CardException {
@@ -42,6 +45,7 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
         this.currentAttack = baseAttack;
         this.potionSpells = new ArrayList<>();
         this.swapSpell = null;
+        this.isAvailableAttack = 0;
     }
 
     public SummonedCharacter(Character C) throws CardException {
@@ -54,6 +58,7 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
         this.currentAttack = C.baseAttack;
         this.potionSpells = new ArrayList<>();
         this.swapSpell = null;
+        this.isAvailableAttack = 0;
     }
 
     public SummonedCharacter(Character C, int field) throws CardException {
@@ -66,6 +71,7 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
         this.currentAttack = C.baseAttack;
         this.potionSpells = new ArrayList<>();
         this.swapSpell = null;
+        this.isAvailableAttack = 0;
     }
 
     @Override
@@ -141,6 +147,16 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
         } else {
             throw new CardException("Character level is already 0!");
         }
+    }
+
+    @Override
+    public int getBattleAvailability() {
+        return this.isAvailableAttack;
+    }
+
+    @Override
+    public void setBattleAvailability(int battleAvailability) {
+        this.isAvailableAttack = battleAvailability;
     }
 
     @Override
@@ -328,3 +344,5 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
         return stringBuilder.toString();
     }
 }
+
+

@@ -12,4 +12,6 @@ public interface Summonable {
     void addExp(int exp) throws CardException;
     void levelUp() throws CardException;
     void levelDown() throws CardException;
+    int getBattleAvailability();
+    void setBattleAvailability(int battleAvailability);
 }

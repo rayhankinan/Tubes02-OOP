@@ -169,6 +169,7 @@ public class Player {
 
     public void attackOpponentPlayer(SummonedCharacter characterFieldCard, Player opponentPlayer) {
         characterFieldCard.attackPlayer(opponentPlayer);
+        characterFieldCard.setBattleAvailability(0);
     }
 
     public void attackOpponentCard(SummonedCharacter characterFieldCard, SummonedCharacter opponentCharacterFieldCard, Player opponentPlayer) {
@@ -177,5 +178,6 @@ public class Player {
             //discard opponent card
             opponentPlayer.discardCharacterFieldCards(opponentCharacterFieldCard.getField());
         }
+        characterFieldCard.setBattleAvailability(0);
     }
 }
