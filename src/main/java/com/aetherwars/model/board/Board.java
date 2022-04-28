@@ -13,15 +13,11 @@ public class Board implements TakeTurns {
     private Phase phase;
     private int turn;
 
-    public Board(String playerName1, String playerName2) throws IOException, URISyntaxException, CardException, DeckException {
-        /* TODO: Input deck-name from user */
-        String deckName1 = "deck_1.csv";
-        String deckName2 = "deck_1.csv";
+    public Board(String pathDeck1, String pathDeck2) throws IOException, URISyntaxException, CardException, DeckException {
 
-        this.player1 = new Player(playerName1, deckName1);
-        this.player2 = new Player(playerName2, deckName2);
+        this.player1 = new Player("Steve", pathDeck1);
+        this.player2 = new Player("Alex", pathDeck2);
 
-        /* TODO: Input index from user */
         player1.drawCard();
         player2.drawCard();
 
@@ -73,7 +69,6 @@ public class Board implements TakeTurns {
         this.getCurrentPlayer().addRound();
         this.getCurrentPlayer().resetMana();
 
-        /* TODO: Input index from user */
         this.getCurrentPlayer().drawCard();
     }
 
@@ -89,7 +84,6 @@ public class Board implements TakeTurns {
             this.phase = Phase.END;
 
         } else {
-            /* TODO: Implement next player DRAW PHASE */
             this.phase = Phase.DRAW;
         }
     }
