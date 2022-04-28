@@ -585,10 +585,5 @@ public class BoardController {
         });
     }
 
-    public void updateCharacterFieldCardAttackAvailability(List<SummonedCharacter> fieldCards){
-        for (SummonedCharacter characterFieldCard : fieldCards){
-            characterFieldCard.setBattleAvailability(1);
-        }
-    }
 
 }
