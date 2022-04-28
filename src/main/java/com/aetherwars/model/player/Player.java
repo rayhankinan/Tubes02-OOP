@@ -101,7 +101,7 @@ public class Player {
 
     public void addToField(int field, Card card) throws CardException {
         if (card instanceof Character) {
-            SummonedCharacter fieldCard = new SummonedCharacter((Character) card);
+            SummonedCharacter fieldCard = new SummonedCharacter((Character) card, field);
             characterFieldCards.set(field, fieldCard);
             discardCardOnHand(card);
 
@@ -119,7 +119,7 @@ public class Player {
     }
 
     public void discardCharacterFieldCards(int field) {
-        this.characterFieldCards.remove(field);
+        this.characterFieldCards.set(field, null);
     }
 
     public void useManaForExp(int field, int mana) throws CardException, PlayerException {
@@ -133,12 +133,12 @@ public class Player {
         return this.mana >= mana;
     }
 
-    public boolean canDeploy(int field, Card card) throws CardException {
+    public boolean canDeploy(Card card) throws CardException {
         if (card instanceof Character) {
-            return hasEnoughMana(card.getMana()) && characterFieldCards.get(field) == null;
+            return hasEnoughMana(card.getMana());
 
         } else if (card instanceof Spell) {
-            return hasEnoughMana(card.getMana()) && characterFieldCards.get(field) != null;
+            return hasEnoughMana(card.getMana());
 
         } else {
             throw new CardException("Class is not recognized!");
@@ -157,7 +157,7 @@ public class Player {
         characterFieldCard.attackCharacter(opponentCharacterFieldCard);
         if (opponentCharacterFieldCard.getTotalHealth() <= 0) {
             //discard opponent card
-            opponentPlayer.characterFieldCards.remove(opponentCharacterFieldCard);
+            opponentPlayer.discardCharacterFieldCards(opponentCharacterFieldCard.getField());
         }
     }
 }

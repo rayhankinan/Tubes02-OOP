@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class SummonedCharacter extends Character implements Summonable, Attackable, Affectable {
+    private int field;
     private int level;
     private int exp;
     private int currentHealth;
@@ -22,6 +23,7 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
     public SummonedCharacter(int id) throws CardException {
         super(id);
 
+        this.field = -1;
         this.level = 1;
         this.exp = 0;
         this.currentHealth = 0;
@@ -33,6 +35,7 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
     public SummonedCharacter(int id, String name, Type type, String description, String imagepath, int baseAttack, int baseHealth, int mana, int attackup, int healthup) throws CardException {
         super(id, name, type, description, imagepath, baseAttack, baseHealth, mana, attackup, healthup);
 
+        this.field = -1;
         this.level = 1;
         this.exp = 0;
         this.currentHealth = baseHealth;
@@ -44,12 +47,30 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
     public SummonedCharacter(Character C) throws CardException {
         super(C);
 
+        this.field = 0;
         this.level = 1;
         this.exp = 0;
         this.currentHealth = C.baseHealth;
         this.currentAttack = C.baseAttack;
         this.potionSpells = new ArrayList<>();
         this.swapSpell = null;
+    }
+
+    public SummonedCharacter(Character C, int field) throws CardException {
+        super(C);
+
+        this.field = field;
+        this.level = 1;
+        this.exp = 0;
+        this.currentHealth = C.baseHealth;
+        this.currentAttack = C.baseAttack;
+        this.potionSpells = new ArrayList<>();
+        this.swapSpell = null;
+    }
+
+    @Override
+    public int getField() {
+        return this.field;
     }
 
     @Override
