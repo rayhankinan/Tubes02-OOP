@@ -51,7 +51,7 @@ public class Deck {
         }
     }
 
-    public List<Card> getThreeCards() throws DeckException {
+    /*public List<Card> getThreeCards() throws DeckException {
         List<Card> threeCards = new ArrayList<>();
 
         if (this.buffer.size() >= 3) {
@@ -69,5 +69,5 @@ public class Deck {
         }
 
         return threeCards;
-    }
+    }*/
 }

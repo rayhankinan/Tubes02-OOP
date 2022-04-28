@@ -253,7 +253,7 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
     }
 
     @Override
-    public void decrementTemporaryDuration() throws CardException {
+    public void decrementTemporaryDuration() {
         List<Potion> toRemove = new ArrayList<>();
 
         for (Potion p : this.potionSpells) {
