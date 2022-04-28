@@ -28,15 +28,16 @@ public class FieldCardController {
     /*
     * Display Field Card*/
     public void setFieldCard(SummonedCharacter character) {
-//        Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + character.getImagepath())).toString());
+        Image newImg = new Image("/com/aetherwars/model/card/character/image/" + character.getImagepath());
         String xp = Integer.toString(character.getExp());
+        String nextXp = Integer.toString(character.getExpForNextLevel());
         String level = Integer.toString(character.getLevel());
         /* TODO: Tambahin exp per level (nunggu dari models) */
-        String desc = xp + "/___ [" + level + "]";
+        String desc = xp + "/" + nextXp + " [" + level + "]";
 
-//        cardImage.setImage(newImg);
-        cardAtt.setText(Integer.toString(character.getBaseAttack()));
-        cardHp.setText(Integer.toString(character.getBaseHealth()));
+        cardImage.setImage(newImg);
+        cardAtt.setText(Integer.toString(character.getTotalAttack()));
+        cardHp.setText(Integer.toString(character.getTotalHealth()));
         cardLevel.setText(desc);
     }
 }

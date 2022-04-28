@@ -9,9 +9,8 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<Pane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.aetherwars.controller.BoardController">
+<Pane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aetherwars.controller.BoardController">
    <children>
-      <Pane fx:id="drawPane" prefHeight="800.0" prefWidth="1200.0" />
       <Pane fx:id="cardDetail" layoutX="749.0" layoutY="494.0" opacity="0.0" prefHeight="284.0" prefWidth="383.0" style="-fx-background-color: #d7d7d7;">
          <children>
             <Rectangle fx:id="cardDetailBox1" fill="#e7e7e7" height="129.0" layoutX="195.0" layoutY="9.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="178.0" />
@@ -93,10 +92,6 @@
                </font>
             </Text>
          </children></Pane>
-      <Group layoutX="34.0" layoutY="209.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="203.0" />
-      <Group layoutX="142.0" layoutY="209.0" AnchorPane.leftAnchor="138.0" AnchorPane.topAnchor="203.0" />
-      <Group layoutX="250.0" layoutY="209.0" AnchorPane.leftAnchor="246.0" AnchorPane.topAnchor="203.0" />
-      <Group layoutX="358.0" layoutY="209.0" AnchorPane.leftAnchor="353.0" AnchorPane.topAnchor="203.0" />
       <Button fx:id="nextPhase" layoutX="965.0" layoutY="435.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="156.0" text="Next Phase" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="965.0" AnchorPane.topAnchor="435.0">
          <font>
             <Font name="Arial" size="12.0" />
@@ -135,11 +130,15 @@
       <Group layoutX="58.0" layoutY="191.0">
          <children>
             <Pane id="field1" fx:id="fieldA1" layoutX="109.0" layoutY="-75.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
-            <ImageView fx:id="playerOneImage" fitHeight="100.0" fitWidth="106.0" layoutX="-18.0" layoutY="1.0" pickOnBounds="true" scaleX="-1">
-               <image>
-                  <Image url="@../model/player/image/Alex.png" />
-               </image>
-            </ImageView>
+            <Pane fx:id="playerOneImage" id="playerImage" layoutX="-18.0" layoutY="1.0" prefHeight="100.0" prefWidth="107.0">
+               <children>
+                  <ImageView fitHeight="100.0" fitWidth="106.0" pickOnBounds="true" scaleX="-1">
+                     <image>
+                        <Image url="@../model/player/image/Alex.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
             <Pane id="field1" fx:id="fieldC1" layoutX="109.0" layoutY="43.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
             <Pane id="field1" fx:id="fieldD1" layoutX="227.0" layoutY="43.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
             <Pane id="field1" fx:id="fieldE1" layoutX="344.0" layoutY="-17.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
@@ -221,14 +220,19 @@
             <Font name="Arial" size="12.0" />
          </font>
       </Text>
-      <ImageView fitHeight="100.0" fitWidth="106.0" layoutX="1059.0" layoutY="193.0" pickOnBounds="true">
-         <image>
-            <Image url="@../model/player/image/Steve.png" />
-         </image>
-      </ImageView>
+      <Pane fx:id="playerTwoImage" id="playerImage" layoutX="1059.0" layoutY="193.0">
+         <children>
+            <ImageView fitHeight="100.0" fitWidth="106.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../model/player/image/Steve.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
       <Pane id="field2" fx:id="fieldB2" layoutX="815.0" layoutY="116.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
       <Pane id="field2" fx:id="fieldA2" layoutX="933.0" layoutY="117.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
       <Pane id="field2" fx:id="fieldC2" layoutX="932.0" layoutY="235.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+      <Pane fx:id="drawPane" prefHeight="800.0" prefWidth="1200.0" />
    </children>
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

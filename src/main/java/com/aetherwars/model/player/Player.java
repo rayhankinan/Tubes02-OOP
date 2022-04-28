@@ -24,7 +24,7 @@ public class Player {
     private static final int MAX_CARD_IN_HAND = 5;
     private static final int MAX_CARD_IN_BOARD = 5;
 
-    private final List<SummonedCharacter> characterFieldCards;
+    private final SummonedCharacter[] characterFieldCards = new SummonedCharacter[5];
     private final List<Card> onHand;
     private final Deck deck;
     private final String name;
@@ -40,7 +40,9 @@ public class Player {
         this.round = 1;
         this.onHand = new ArrayList<>(MAX_CARD_IN_HAND);
         this.deck = new Deck(deckFilename);
-        this.characterFieldCards = new ArrayList<>(MAX_CARD_IN_BOARD);
+        for (int i = 0; i < 5; i++) {
+            this.characterFieldCards[i] = null;
+        }
     }
 
     public String getName() {
@@ -83,30 +85,46 @@ public class Player {
         }
     }
 
-    public void drawCard() throws DeckException {
-        List<Card> threeCards = this.deck.getThreeCards();
+    public void drawCard(Card choice, List<Card> remain) throws DeckException {
+//        List<Card> threeCards = this.deck.getThreeCards();
         //TODO: buat choice sesuai dengan pilihan user dari UI
-        int choice = new Random().nextInt(threeCards.size());
-        this.onHand.add(threeCards.remove(choice));
-        this.deck.returnCardsToDeck(threeCards);
+//        int choice = new Random().nextInt(threeCards.size()
 
         /* jika kartu di tangan sudah lebih dari 5 maka buang 1 kartu acak */
 
-        if (this.onHand.size() > MAX_CARD_IN_HAND) {
+        if (this.onHand.size() >= MAX_CARD_IN_HAND) {
             Random r = new Random();
             int idx = r.nextInt(this.onHand.size());
             this.onHand.remove(idx);
         }
+
+        this.onHand.add(choice);
+        this.deck.returnCardsToDeck(remain);
+    }
+
+    public SummonedCharacter[] getCharacterFieldCards() {
+        return this.characterFieldCards;
+    }
+
+    public SummonedCharacter getField(int field) {
+        return this.characterFieldCards[field];
+    }
+
+    public Card getHand(int hand) {
+        if (hand < this.onHand.size()) {
+            return onHand.get(hand);
+        }
+        return null;
     }
 
     public void addToField(int field, Card card) throws CardException {
         if (card instanceof Character) {
             SummonedCharacter fieldCard = new SummonedCharacter((Character) card, field);
-            characterFieldCards.set(field, fieldCard);
+            characterFieldCards[field] = fieldCard;
             discardCardOnHand(card);
 
         } else if (card instanceof Spell) {
-            characterFieldCards.get(field).addActivable((Applicable) card);
+            characterFieldCards[field].addActivable((Applicable) card);
             discardCardOnHand(card);
 
         } else {
@@ -119,13 +137,13 @@ public class Player {
     }
 
     public void discardCharacterFieldCards(int field) {
-        this.characterFieldCards.set(field, null);
+        this.characterFieldCards[field] = null;
     }
 
     public void useManaForExp(int field, int mana) throws CardException, PlayerException {
         /* CATATAN KINAN: INI UNTUK APA YA?  */
 
-        this.characterFieldCards.get(field).addExp(mana);
+        this.characterFieldCards[field].addExp(mana);
         this.useMana(mana);
     }
 
