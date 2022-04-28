@@ -66,11 +66,12 @@ public class BoardController {
         // initial set up
         try {
             CardDatabase.initialize();
-            this.board = new Board("Joko", "Kiki");
+            this.board = new Board("yaya", "YOYO", "deck_1.csv", "deck_1.csv");
         }
         catch (Exception e) {
             System.out.println(e);
         }
+        System.out.println(this.board.getPlayer2());
         this.playerOne = this.board.getPlayer1();
         this.playerTwo = this.board.getPlayer2();
         this.playerOneName.setText(this.playerOne.getName());
@@ -103,10 +104,12 @@ public class BoardController {
         // testing aja, JANGAN LUPA apus yg di bawah ini
         Level level;
         try {
-            level = new Level(403, "OYA? BODO", "BAPAK KAU", "PALA KAU", 9, 3);
+            level = new Level(403, "OYA? BODO", "BAPAK KAU", "Bottle O' Enchanting.png", 9, 3);
+            System.out.println(level);
             this.setHandOrFieldCard(this.handCard1, level);
         }
         catch (Exception e) {
+            System.out.println("masuk sini");
             System.out.println(e);
         }
     }
@@ -151,9 +154,9 @@ public class BoardController {
 
     /* Display detailed card for Level*/
     public void displayCard(Level level) {
-//        Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + level.getImagepath())).toString());
+        Image newImg = new Image("/com/aetherwars/model/card/spell/level/image/" + level.getImagepath().toString());
         this.cardDetailName.setText(level.getName());
-//        this.cardDetailImage.setImage(newImg);
+        this.cardDetailImage.setImage(newImg);
         this.cardDetailAtk.setText("-");
         this.cardDetailHP.setText("-");
         this.cardDetailLevel.setText(Integer.toString(level.getLevel()));
@@ -164,9 +167,9 @@ public class BoardController {
 
     /* Display detailed card for Morph*/
     public void displayCard(Morph morph) {
-//        Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + morph.getImagepath())).toString());
+        Image newImg = new Image("/com/aetherwars/model/card/spell/morph/image/" + morph.getImagepath().toString());
         this.cardDetailName.setText(morph.getName());
-//        this.cardDetailImage.setImage(newImg);
+        this.cardDetailImage.setImage(newImg);
         this.cardDetailAtk.setText("-");
         this.cardDetailHP.setText("-");
         this.cardDetailLevel.setText("-");
@@ -177,9 +180,9 @@ public class BoardController {
 
     /* Display detailed card for Potion*/
     public void displayCard(Potion potion) {
-//        Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + potion.getImagepath())).toString());
+        Image newImg = new Image("/com/aetherwars/model/card/spell/potion/image/" + potion.getImagepath().toString());
         this.cardDetailName.setText(potion.getName());
-//        this.cardDetailImage.setImage(newImg);
+        this.cardDetailImage.setImage(newImg);
         this.cardDetailAtk.setText("+" + Integer.toString(potion.getTempAttack()));
         this.cardDetailHP.setText("+" + Integer.toString(potion.getTempHealth()));
         this.cardDetailLevel.setText("-");
@@ -191,9 +194,9 @@ public class BoardController {
     /* Display detailed card
      * only summoned character can be put in the field*/
     public void displayCard(SummonedCharacter character){
-//        Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + character.getImagepath())).toString());
+        Image newImg = new Image("/com/aetherwars/model/card/character/image/" + character.getImagepath().toString());
         this.cardDetailName.setText(character.getName());
-//        this.cardDetailImage.setImage(newImg);
+        this.cardDetailImage.setImage(newImg);
         this.cardDetailAtk.setText(Integer.toString(character.getTotalAttack()));
         this.cardDetailHP.setText(Integer.toString(character.getTotalHealth()));
         this.cardDetailLevel.setText(Integer.toString(character.getLevel()));
@@ -204,9 +207,9 @@ public class BoardController {
 
     /* Display detailed card for Swap*/
     public void displayCard(Swap swap) {
-//        Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + swap.getImagepath())).toString());
+        Image newImg = new Image("/com/aetherwars/model/card/spell/swap/image/" + swap.getImagepath().toString());
         this.cardDetailName.setText(swap.getName());
-//        this.cardDetailImage.setImage(newImg);
+        this.cardDetailImage.setImage(newImg);
         this.cardDetailAtk.setText("-");
         this.cardDetailHP.setText("-");
         this.cardDetailLevel.setText("-");
@@ -280,6 +283,7 @@ public class BoardController {
         }
         return true;
     }
+
     /* Hover event */
     public void setUpHover(Pane slot) {
         slot.setOnMouseEntered(mouseEvent -> {
@@ -315,6 +319,7 @@ public class BoardController {
                         if (event.getTransferMode() == TransferMode.MOVE) {
                             slot.getChildren().clear();
                             slot.setUserData(null);
+                            slot.setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
                         }
                         event.consume();
                     }
@@ -365,7 +370,7 @@ public class BoardController {
                     }
                 }
                 if (this.slotClicked != null) {
-                    if (slot != this.slotClicked && !(slot.getId().equals("field1") || slot.getId().equals("field2"))) {
+                    if (slot != this.slotClicked && !slot.getId().equals("field1") && !slot.getId().equals("field2")) {
                         return;
                     }
                     // set on click
@@ -375,8 +380,8 @@ public class BoardController {
                     }
                     else if (slot.getUserData() == null) {
                         try {
-                            this.slotClicked.setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
                             this.setHandOrFieldCard(slot, (Card) this.slotClicked.getUserData());
+                            this.slotClicked.setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
                             this.slotClicked.getChildren().clear();
                             this.slotClicked.setUserData(null);
                             this.slotClicked = null;
@@ -391,14 +396,14 @@ public class BoardController {
                     }
                 }
                 else {
-                    if ((slot.getId().equals("field1")) || (slot.getId().equals("field2"))) {
+                    if ((slot.getId().equals("field1")) || (slot.getId().equals("field2")) || slot.getUserData() == null) {
                         return;
                     }
                     this.slotClicked = slot;
                     slot.setBackground(new Background(new BackgroundFill(Color.GREENYELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
                 }
-
             }
+
             // on click behavior for ATTACK phase
             else if (this.board.getPhase() == Phase.ATTACK) {
                 if (!(slot.getId().equals("field1") || slot.getId().equals("field2"))) {
