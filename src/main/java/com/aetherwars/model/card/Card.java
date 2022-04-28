@@ -1,5 +1,12 @@
 package com.aetherwars.model.card;
 
+import com.aetherwars.model.card.character.Character; /* DELETE THIS LATER */
+import com.aetherwars.model.card.character.SummonedCharacter; /* DELETE THIS LATER */
+import com.aetherwars.model.card.spell.level.Level; /* DELETE THIS LATER */
+import com.aetherwars.model.card.spell.morph.Morph;
+import com.aetherwars.model.card.spell.potion.Potion; /* DELETE THIS LATER */
+import com.aetherwars.model.card.spell.swap.Swap; /* DELETE THIS LATER */
+
 public class Card {
     protected int id;
     protected String name;
@@ -59,6 +66,60 @@ public class Card {
 
         } else {
             return false;
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            CardDatabase.initialize();
+
+            System.out.println("Initialize Character:");
+            Character character = CardDatabase.getCharacter(1);
+            SummonedCharacter summonedCharacter = new SummonedCharacter(character);
+            System.out.println(summonedCharacter);
+            System.out.println();
+
+            System.out.println("Add Potion:");
+            Potion potion = CardDatabase.getPotion(102);
+            summonedCharacter.addActivable(potion);
+            System.out.println(summonedCharacter);
+            System.out.println();
+
+            System.out.println("Decrement Duration:");
+            summonedCharacter.decrementTemporaryDuration();
+            System.out.println(summonedCharacter);
+            System.out.println();
+
+            System.out.println("Add Level:");
+            Level level = CardDatabase.getLevel(401);
+            summonedCharacter.addActivable(level);
+            System.out.println(summonedCharacter);
+            System.out.println();
+
+            System.out.println("Decrement Duration:");
+            summonedCharacter.decrementTemporaryDuration();
+            System.out.println(summonedCharacter);
+            System.out.println();
+
+            System.out.println("Add Swap:");
+            Swap swap = CardDatabase.getSwap(205);
+            summonedCharacter.addActivable(swap);
+            System.out.println(summonedCharacter);
+            System.out.println();
+
+            System.out.println("Decrement Duration:");
+            summonedCharacter.decrementTemporaryDuration();
+            System.out.println(summonedCharacter);
+            System.out.println();
+
+            System.out.println("Add Morph:");
+            Morph morph = CardDatabase.getMorph(301);
+            summonedCharacter.addActivable(morph);
+            System.out.println(summonedCharacter);
+            System.out.println();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
