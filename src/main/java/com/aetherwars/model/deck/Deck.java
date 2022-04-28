@@ -54,12 +54,7 @@ public class Deck {
             temporaryChoice.add(this.getCard());
         }
 
-        /*  bingung bagaimana cara mengambil choice card dari temporaryChoice
-            misalkan user memilih card tengah berarti card index ke 1   */
-
         Card result = temporaryChoice.remove(id);
-
-        /*  kembalikan temporaryChoice ke buffer    */
 
         this.buffer.addAll(temporaryChoice);
         return result;

@@ -8,7 +8,6 @@ import com.aetherwars.model.card.CardDatabase;
 import com.aetherwars.model.card.spell.Applicable;
 import com.aetherwars.model.card.spell.Revertable;
 
-import java.rmi.activation.Activatable;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -208,13 +207,19 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
 
     @Override
     public void decrementTemporaryDuration() throws CardException {
+        List<Revertable> toRemove = new ArrayList<>();
+
         for (Revertable t : this.revertableSpells) {
             try {
                 t.decrementDuration();
             } catch (CardException ce) {
-                t.revert(this);
-                this.revertableSpells.remove(t);
+                toRemove.add(t);
             }
+        }
+
+        for (Revertable t : toRemove) {
+            t.revert(this);
+            this.revertableSpells.remove(t);
         }
     }
 
@@ -273,5 +278,18 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
         this.tempHealth = 0;
         this.tempAttack = 0;
         this.revertableSpells.clear();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder(String.format("Id: %d\nName: %s\nType: %s\nDescription: %s\nImagepath: %s\nAttack: %d\nHealth: %d\nMana: %d\nAttack Up: %d\nHealth Up: %d\nLevel: %d\nExp: %d\nCurrent Attack: %d\nCurrent Health: %d\nTemp Attack: %d\nTemp Health: %d", this.id, this.name, this.type, this.description, this.imagepath, this.baseAttack, this.baseHealth, this.mana, this.attackup, this.healthup, this.level, this.exp, this.currentAttack, this.currentHealth, this.tempAttack, this.tempHealth));
+
+        stringBuilder.append("\nACTIVE SPELLS:");
+        for (Revertable r : this.revertableSpells) {
+            stringBuilder.append("\n");
+            stringBuilder.append(r);
+        }
+
+        return stringBuilder.toString();
     }
 }
