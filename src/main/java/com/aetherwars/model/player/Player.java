@@ -37,6 +37,7 @@ public class Player {
         this.name = playerName;
         this.health = MAX_HP;
         this.mana = 1;
+        this.round = 1;
         this.onHand = new ArrayList<>(MAX_CARD_IN_HAND);
         this.deck = new Deck(deckFilename);
         this.characterFieldCards = new ArrayList<>(MAX_CARD_IN_BOARD);
@@ -82,8 +83,12 @@ public class Player {
         }
     }
 
-    public void drawCard(int id) throws DeckException {
-        this.onHand.add(this.deck.drawCard(id));
+    public void drawCard() throws DeckException {
+        List<Card> threeCards = this.deck.getThreeCards();
+        //TODO: buat choice sesuai dengan pilihan user dari UI
+        int choice = new Random().nextInt(threeCards.size());
+        this.onHand.add(threeCards.remove(choice));
+        this.deck.returnCardsToDeck(threeCards);
 
         /* jika kartu di tangan sudah lebih dari 5 maka buang 1 kartu acak */
 

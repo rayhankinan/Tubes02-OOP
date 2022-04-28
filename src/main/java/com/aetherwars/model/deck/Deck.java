@@ -33,6 +33,10 @@ public class Deck {
         this.buffer.add(c);
     }
 
+    public void returnCardsToDeck(List<Card> remainCards) {
+        this.buffer.addAll(remainCards);
+    }
+
     public Card getCard() throws DeckException {
         if (this.buffer.size() > 0) {
             return this.buffer.remove(0);
@@ -47,21 +51,24 @@ public class Deck {
         }
     }
 
-    public Card drawCard(int id) throws DeckException {
-        List<Card> temporaryChoice = new ArrayList<>();
-
-        for (int i = 0; i < 3; i++) {
-            temporaryChoice.add(this.getCard());
+    public List<Card> getThreeCards() throws DeckException {
+        List<Card> threeCards = new ArrayList<>();
+        // if card more than 3 times, draw 3 cards else draw remain cards
+        if (this.buffer.size() >= 3) {
+            for (int i = 0; i < 3; i++) {
+                threeCards.add(this.buffer.remove(0));
+            }
+        }
+        else if (this.buffer.size() == 0) {
+            throw new DeckException("Deck is empty!");
+        }
+        else {
+            for (int i = 0; i < this.buffer.size(); i++) {
+                threeCards.add(this.buffer.remove(0));
+            }
         }
 
-        /*  bingung bagaimana cara mengambil choice card dari temporaryChoice
-            misalkan user memilih card tengah berarti card index ke 1   */
-
-        Card result = temporaryChoice.remove(id);
-
-        /*  kembalikan temporaryChoice ke buffer    */
-
-        this.buffer.addAll(temporaryChoice);
-        return result;
+        return threeCards;
     }
+
 }

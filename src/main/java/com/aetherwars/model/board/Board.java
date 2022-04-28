@@ -22,8 +22,8 @@ public class Board implements TakeTurns {
         this.player2 = new Player(playerName2, deckName2);
 
         /* TODO: Input index from user */
-        player1.drawCard(1);
-        player2.drawCard(1);
+        player1.drawCard();
+        player2.drawCard();
 
         this.phase = Phase.DRAW;
         this.turn = 1;
@@ -74,7 +74,7 @@ public class Board implements TakeTurns {
         this.getCurrentPlayer().resetMana();
 
         /* TODO: Input index from user */
-        this.getCurrentPlayer().drawCard(1);
+        this.getCurrentPlayer().drawCard();
     }
 
     @Override
