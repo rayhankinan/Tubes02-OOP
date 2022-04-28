@@ -101,7 +101,11 @@ public class CardDatabase {
         if (index == -1) {
             throw new CardException("Potion spell not found!");
         } else {
-            return CardDatabase.potionList.get(index);
+            try {
+                return (Potion) CardDatabase.potionList.get(index).clone();
+            } catch (CloneNotSupportedException e) {
+                throw new CardException(e.toString());
+            }
         }
     }
 
@@ -121,7 +125,11 @@ public class CardDatabase {
         if (index == -1) {
             throw new CardException("Swap spell not found!");
         } else {
-            return CardDatabase.swapList.get(index);
+            try {
+                return (Swap) CardDatabase.swapList.get(index).clone();
+            } catch (CloneNotSupportedException e) {
+                throw new CardException(e.toString());
+            }
         }
     }
 
@@ -141,7 +149,11 @@ public class CardDatabase {
         if (index == -1) {
             throw new CardException("Morph spell not found!");
         } else {
-            return CardDatabase.morphList.get(index);
+            try {
+                return (Morph) CardDatabase.morphList.get(index).clone();
+            } catch (CloneNotSupportedException e) {
+                throw new CardException(e.toString());
+            }
         }
     }
 
@@ -161,7 +173,11 @@ public class CardDatabase {
         if (index == -1) {
             throw new CardException("Level spell not found!");
         } else {
-            return CardDatabase.levelList.get(index);
+            try {
+                return (Level) CardDatabase.levelList.get(index).clone();
+            } catch (CloneNotSupportedException e) {
+                throw new CardException(e.toString());
+            }
         }
     }
 

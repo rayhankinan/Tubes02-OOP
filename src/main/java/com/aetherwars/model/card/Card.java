@@ -3,7 +3,7 @@ package com.aetherwars.model.card;
 import com.aetherwars.model.card.character.Character; /* DELETE THIS LATER */
 import com.aetherwars.model.card.character.SummonedCharacter; /* DELETE THIS LATER */
 import com.aetherwars.model.card.spell.level.Level; /* DELETE THIS LATER */
-import com.aetherwars.model.card.spell.morph.Morph;
+import com.aetherwars.model.card.spell.morph.Morph; /* DELETE THIS LATER */
 import com.aetherwars.model.card.spell.potion.Potion; /* DELETE THIS LATER */
 import com.aetherwars.model.card.spell.swap.Swap; /* DELETE THIS LATER */
 
@@ -79,9 +79,20 @@ public class Card {
             System.out.println(summonedCharacter);
             System.out.println();
 
-            System.out.println("Add Potion:");
-            Potion potion = CardDatabase.getPotion(102);
-            summonedCharacter.addActivable(potion);
+            System.out.println("Add Potion Again:");
+            Potion potion1 = CardDatabase.getPotion(102);
+            summonedCharacter.addActivable(potion1);
+            System.out.println(summonedCharacter);
+            System.out.println();
+
+            System.out.println("Decrement Duration:");
+            summonedCharacter.decrementTemporaryDuration();
+            System.out.println(summonedCharacter);
+            System.out.println();
+
+            System.out.println("Add Potion Again:");
+            Potion potion2 = CardDatabase.getPotion(108);
+            summonedCharacter.addActivable(potion2);
             System.out.println(summonedCharacter);
             System.out.println();
 
@@ -101,20 +112,14 @@ public class Card {
             System.out.println(summonedCharacter);
             System.out.println();
 
-            System.out.println("Add Swap:");
-            Swap swap = CardDatabase.getSwap(205);
-            summonedCharacter.addActivable(swap);
-            System.out.println(summonedCharacter);
+            System.out.println("Initialize Other Character:");
+            Character otherCharacter = CardDatabase.getCharacter(1);
+            SummonedCharacter summonedOtherCharacter = new SummonedCharacter(otherCharacter);
+            System.out.println(summonedOtherCharacter);
             System.out.println();
 
-            System.out.println("Decrement Duration:");
-            summonedCharacter.decrementTemporaryDuration();
-            System.out.println(summonedCharacter);
-            System.out.println();
-
-            System.out.println("Add Morph:");
-            Morph morph = CardDatabase.getMorph(301);
-            summonedCharacter.addActivable(morph);
+            System.out.println("Character Attacked by Other Character:");
+            summonedOtherCharacter.attackCharacter(summonedCharacter);
             System.out.println(summonedCharacter);
             System.out.println();
 

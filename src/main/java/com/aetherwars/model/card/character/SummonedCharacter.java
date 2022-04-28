@@ -6,7 +6,7 @@ import com.aetherwars.model.player.Player;
 import com.aetherwars.model.card.CardException;
 import com.aetherwars.model.card.CardDatabase;
 import com.aetherwars.model.card.spell.Applicable;
-import com.aetherwars.model.card.spell.Revertable;
+import com.aetherwars.model.card.spell.Revertible;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -16,9 +16,8 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
     private int exp;
     private int currentHealth;
     private int currentAttack;
-    private int tempHealth;
-    private int tempAttack;
-    private final List<Revertable> revertableSpells;
+    private final List<Potion> potionSpells;
+    private Swap swapSpell;
 
     public SummonedCharacter(int id) throws CardException {
         super(id);
@@ -27,9 +26,8 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
         this.exp = 0;
         this.currentHealth = 0;
         this.currentAttack = 0;
-        this.tempHealth = 0;
-        this.tempAttack = 0;
-        this.revertableSpells = new ArrayList<>();
+        this.potionSpells = new ArrayList<>();
+        this.swapSpell = null;
     }
 
     public SummonedCharacter(int id, String name, Type type, String description, String imagepath, int baseAttack, int baseHealth, int mana, int attackup, int healthup) throws CardException {
@@ -39,9 +37,8 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
         this.exp = 0;
         this.currentHealth = baseHealth;
         this.currentAttack = baseAttack;
-        this.tempHealth = 0;
-        this.tempAttack = 0;
-        this.revertableSpells = new ArrayList<>();
+        this.potionSpells = new ArrayList<>();
+        this.swapSpell = null;
     }
 
     public SummonedCharacter(Character C) throws CardException {
@@ -51,9 +48,8 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
         this.exp = 0;
         this.currentHealth = C.baseHealth;
         this.currentAttack = C.baseAttack;
-        this.tempHealth = 0;
-        this.tempAttack = 0;
-        this.revertableSpells = new ArrayList<>();
+        this.potionSpells = new ArrayList<>();
+        this.swapSpell = null;
     }
 
     @Override
@@ -90,6 +86,7 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
                 this.levelUp();
                 this.exp += (exp - this.getExpForNextLevel());
             }
+
         } else {
             throw new CardException("Character level is already maxed out!");
         }
@@ -130,100 +127,120 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
         TypeComparator typeComparator = new TypeComparator();
 
         if (typeComparator.compare(this.type, c.getType()) > 0) {
-            c.takeDamage(Math.max(this.currentAttack + this.tempAttack, 0) * 2);
+            c.takeDamage(Math.max(this.currentAttack + this.getTempAttack(), 0) * 2);
         } else if (typeComparator.compare(this.type, c.getType()) < 0) {
-            c.takeDamage(Math.max(this.currentAttack + this.tempAttack, 0) / 2);
+            c.takeDamage(Math.max(this.currentAttack + this.getTempAttack(), 0) / 2);
         } else {
-            c.takeDamage(Math.max(this.currentAttack + this.tempAttack, 0));
+            c.takeDamage(Math.max(this.currentAttack + this.getTempAttack(), 0));
         }
     }
 
     @Override
     public void attackPlayer(Player p) {
-        p.takeDamage(Math.max(this.currentAttack + this.tempAttack, 0));
+        p.takeDamage(Math.max(this.currentAttack + this.getTempAttack(), 0));
     }
 
     @Override
     public void takeDamage(int damage) {
-        if (this.tempHealth > damage) {
-            this.tempHealth -= damage;
-        } else {
-            this.tempHealth = 0;
-            this.currentHealth = Math.max(this.currentHealth + this.tempHealth - damage, 0);
+        for (Potion p : this.potionSpells) {
+            int initialTempHealth = p.getTempHealth();
+            p.setTempHealth(Math.max(initialTempHealth - damage, 0));
+            damage = Math.max(damage - initialTempHealth, 0);
         }
+
+        this.currentHealth = Math.max(this.currentHealth - damage, 0);
     }
 
     @Override
     public int getTempHealth() {
-        return this.tempHealth;
+        int result = 0;
+
+        for (Potion p : this.potionSpells) {
+            result += p.getTempHealth();
+        }
+
+        return result;
     }
 
     @Override
     public int getTempAttack() {
-        return this.tempAttack;
+        int result = 0;
+
+        for (Potion p : this.potionSpells) {
+            result += p.getTempAttack();
+        }
+
+        return result;
     }
 
     @Override
     public int getTotalHealth() {
-        return Math.max(this.currentHealth + this.tempHealth, 0);
+        return Math.max(this.currentHealth + this.getTempHealth(), 0);
     }
 
     @Override
     public int getTotalAttack() {
-        return Math.max(this.currentAttack + this.tempAttack, 0);
+        return Math.max(this.currentAttack + this.getTempAttack(), 0);
     }
 
     @Override
-    public List<Revertable> getTemporary() {
-        return this.revertableSpells;
+    public List<Potion> getTemporary() {
+        return this.potionSpells;
+    }
+
+    @Override
+    public void addPotion(Potion p) throws CardException {
+        int index = this.potionSpells.indexOf(p);
+
+        if (index != -1) {
+            this.potionSpells.get(index).stackDuration(p);
+        } else {
+            this.potionSpells.add(p);
+        }
+    }
+
+    @Override
+    public void deletePotion(Potion p) throws CardException {
+        int index = this.potionSpells.indexOf(p);
+
+        if (index != -1) {
+            this.potionSpells.remove(p);
+        } else {
+            throw new CardException("Potion does not exist!");
+        }
     }
 
     @Override
     public void addActivable(Applicable s) throws CardException {
-        if (s instanceof Swap) {
-            Revertable currentSwap = this.revertableSpells.stream().filter((r) -> r instanceof Swap).findFirst().orElse(null);
-
-            if (currentSwap != null) {
-                currentSwap.stackDuration(s);
-            } else {
-                s.apply(this);
-                this.revertableSpells.add((Revertable) s);
-            }
-
-        } else if (s instanceof Potion) {
-            int index = this.revertableSpells.indexOf(s);
-
-            if (index != -1) {
-                this.revertableSpells.get(index).stackDuration(s);
-            } else {
-                s.apply(this);
-                this.revertableSpells.add((Revertable) s);
-            }
-
-        } else {
-            s.apply(this);
-        }
+        s.apply(this);
     }
 
     @Override
     public void decrementTemporaryDuration() throws CardException {
-        List<Revertable> toRemove = new ArrayList<>();
+        List<Potion> toRemove = new ArrayList<>();
 
-        for (Revertable t : this.revertableSpells) {
+        for (Potion p : this.potionSpells) {
             try {
-                t.decrementDuration();
+                p.decrementDuration();
             } catch (CardException ce) {
-                toRemove.add(t);
+                toRemove.add(p);
             }
         }
 
-        for (Revertable t : toRemove) {
-            t.revert(this);
-            this.revertableSpells.remove(t);
+        for (Potion p : toRemove) {
+            this.potionSpells.remove(p);
+        }
+
+        if (this.swapSpell != null) {
+            try {
+                this.swapSpell.decrementDuration();
+            } catch (CardException e) {
+                this.swapHealthAttack();
+                this.swapSpell = null;
+            }
         }
     }
 
-    @Override
     public void swapHealthAttack() {
         int temp;
 
@@ -231,29 +248,19 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
         this.currentHealth = this.currentAttack;
         this.currentAttack = temp;
 
-        temp = this.tempHealth;
-        this.tempHealth = this.tempAttack;
-        this.tempAttack = temp;
+        for (Potion p : this.potionSpells) {
+            p.swapAttackHealth();
+        }
     }
 
     @Override
-    public void addTempHealth(int tempHealth) {
-        this.tempHealth += tempHealth;
-    }
-
-    @Override
-    public void addTempAttack(int tempAttack) {
-        this.tempAttack += tempAttack;
-    }
-
-    @Override
-    public void subtractTempHealth(int tempHealth) {
-        this.tempHealth -= tempHealth;
-    }
-
-    @Override
-    public void subtractTempAttack(int tempAttack) {
-        this.tempAttack -= tempAttack;
+    public void setSwap(Swap s) throws CardException {
+        if (this.swapSpell != null) {
+            this.swapSpell.stackDuration(s);
+        } else {
+            this.swapHealthAttack();
+            this.swapSpell = s;
+        }
     }
 
     @Override
@@ -273,21 +280,28 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
 
         this.level = 1;
         this.exp = 0;
-        this.currentHealth = newCharacter.getBaseHealth();
-        this.currentAttack = newCharacter.getBaseAttack();
-        this.tempHealth = 0;
-        this.tempAttack = 0;
-        this.revertableSpells.clear();
+        this.currentHealth = 0;
+        this.currentAttack = 0;
+        this.potionSpells.clear();
+        this.swapSpell = null;
     }
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder(String.format("Id: %d\nName: %s\nType: %s\nDescription: %s\nImagepath: %s\nAttack: %d\nHealth: %d\nMana: %d\nAttack Up: %d\nHealth Up: %d\nLevel: %d\nExp: %d\nCurrent Attack: %d\nCurrent Health: %d\nTemp Attack: %d\nTemp Health: %d", this.id, this.name, this.type, this.description, this.imagepath, this.baseAttack, this.baseHealth, this.mana, this.attackup, this.healthup, this.level, this.exp, this.currentAttack, this.currentHealth, this.tempAttack, this.tempHealth));
+        StringBuilder stringBuilder = new StringBuilder(String.format("Id: %d\nName: %s\nType: %s\nDescription: %s\nImagepath: %s\nAttack: %d\nHealth: %d\nMana: %d\nAttack Up: %d\nHealth Up: %d\nLevel: %d\nExp: %d\nCurrent Attack: %d\nCurrent Health: %d\nTemp Attack: %d\nTemp Health: %d", this.id, this.name, this.type, this.description, this.imagepath, this.baseAttack, this.baseHealth, this.mana, this.attackup, this.healthup, this.level, this.exp, this.currentAttack, this.currentHealth, this.getTempAttack(), this.getTempHealth()));
 
-        stringBuilder.append("\nACTIVE SPELLS:");
-        for (Revertable r : this.revertableSpells) {
+        if (this.potionSpells.size() > 0) {
+            stringBuilder.append("\nACTIVE POTIONS:");
+            for (Revertible r : this.potionSpells) {
+                stringBuilder.append("\n");
+                stringBuilder.append(r);
+            }
+
+        }
+        if (this.swapSpell != null) {
+            stringBuilder.append("\nACTIVE SWAP:");
             stringBuilder.append("\n");
-            stringBuilder.append(r);
+            stringBuilder.append(this.swapSpell);
         }
 
         return stringBuilder.toString();

@@ -2,7 +2,8 @@ package com.aetherwars.model.card.character;
 
 import com.aetherwars.model.card.CardException;
 import com.aetherwars.model.card.spell.Applicable;
-import com.aetherwars.model.card.spell.Revertable;
+import com.aetherwars.model.card.spell.potion.Potion;
+import com.aetherwars.model.card.spell.swap.Swap;
 
 import java.util.List;
 
@@ -11,13 +12,11 @@ public interface Affectable {
     int getTempAttack();
     int getTotalHealth();
     int getTotalAttack();
-    List<Revertable> getTemporary();
+    List<Potion> getTemporary();
+    void addPotion(Potion p) throws CardException;
+    void deletePotion(Potion p) throws CardException;
     void addActivable(Applicable s) throws CardException;
     void decrementTemporaryDuration() throws CardException;
-    void swapHealthAttack();
-    void addTempHealth(int tempHealth);
-    void addTempAttack(int tempAttack);
-    void subtractTempHealth(int tempHealth);
-    void subtractTempAttack(int tempAttack);
+    void setSwap(Swap s) throws CardException;
     void morph(int id) throws CardException;
 }

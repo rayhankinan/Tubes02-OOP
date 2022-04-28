@@ -5,7 +5,9 @@ import com.aetherwars.model.card.CardException;
 import com.aetherwars.model.card.spell.Applicable;
 import com.aetherwars.model.card.spell.Spell;
 
-public class Level extends Spell implements Applicable {
+import java.util.Objects;
+
+public class Level extends Spell implements Applicable, Cloneable {
     public static final int MIN_ID = 401;
     public static final int MAX_ID = 499;
 
@@ -55,5 +57,10 @@ public class Level extends Spell implements Applicable {
     @Override
     public String toString() {
         return String.format("Id: %d\nName: %s\nDescription: %s\nImagepath: %s\nMana: %d\nLevel: %d", this.id, this.name, this.description, this.imagepath, this.mana, this.level);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

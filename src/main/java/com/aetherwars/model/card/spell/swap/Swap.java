@@ -4,14 +4,13 @@ import com.aetherwars.model.card.character.SummonedCharacter;
 import com.aetherwars.model.card.CardException;
 import com.aetherwars.model.card.spell.Applicable;
 import com.aetherwars.model.card.spell.Spell;
-import com.aetherwars.model.card.spell.Revertable;
+import com.aetherwars.model.card.spell.Revertible;
 
-public class Swap extends Spell implements Revertable {
+public class Swap extends Spell implements Revertible, Cloneable {
     public static final int MIN_ID = 201;
     public static final int MAX_ID = 299;
 
     private int duration;
-    private boolean active;
 
     public Swap(int id) throws CardException {
         super(id);
@@ -20,7 +19,6 @@ public class Swap extends Spell implements Revertable {
             throw new CardException("Id is invalid");
         } else {
             this.duration = 0;
-            this.active = false;
         }
     }
 
@@ -31,33 +29,12 @@ public class Swap extends Spell implements Revertable {
             throw new CardException("Id is invalid");
         } else {
             this.duration = duration;
-            this.active = false;
         }
-    }
-
-    @Override
-    public boolean isActive() {
-        return this.active;
     }
 
     @Override
     public void apply(SummonedCharacter c) throws CardException {
-        if (this.active) {
-            throw new CardException("Spell is already activated!");
-        } else {
-            c.swapHealthAttack();
-            this.active = true;
-        }
-    }
-
-    @Override
-    public void revert(SummonedCharacter c) throws CardException {
-        if (!this.active) {
-            throw new CardException("Spell is already inactivated!");
-        } else {
-            c.swapHealthAttack();
-            this.active = false;
-        }
+        c.setSwap(this);
     }
 
     @Override
@@ -86,5 +63,10 @@ public class Swap extends Spell implements Revertable {
     @Override
     public String toString() {
         return String.format("Id: %d\nName: %s\nDescription: %s\nImagepath: %s\nMana: %d\nDuration: %d", this.id, this.name, this.description, this.imagepath, this.mana, this.duration);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

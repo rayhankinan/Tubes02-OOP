@@ -4,16 +4,15 @@ import com.aetherwars.model.card.character.SummonedCharacter;
 import com.aetherwars.model.card.CardException;
 import com.aetherwars.model.card.spell.Applicable;
 import com.aetherwars.model.card.spell.Spell;
-import com.aetherwars.model.card.spell.Revertable;
+import com.aetherwars.model.card.spell.Revertible;
 
-public class Potion extends Spell implements Revertable {
+public class Potion extends Spell implements Revertible, Cloneable {
     public static final int MIN_ID = 101;
     public static final int MAX_ID = 199;
 
-    private final int tempAttack;
-    private final int tempHealth;
+    private int tempAttack;
+    private int tempHealth;
     private int duration;
-    private boolean active;
 
     public Potion(int id) throws CardException {
         super(id);
@@ -43,35 +42,29 @@ public class Potion extends Spell implements Revertable {
         return this.tempAttack;
     }
 
+    public void setTempAttack(int tempAttack) {
+        this.tempAttack = tempAttack;
+    }
+
     public int getTempHealth() {
         return this.tempHealth;
     }
 
-    @Override
-    public boolean isActive() {
-        return this.active;
+    public void setTempHealth(int tempHealth) {
+        this.tempHealth = tempHealth;
+    }
+
+    public void swapAttackHealth() {
+        int temp;
+
+        temp = this.tempAttack;
+        this.tempAttack = this.tempHealth;
+        this.tempHealth = temp;
     }
 
     @Override
     public void apply(SummonedCharacter c) throws CardException {
-        if (this.active) {
-            throw new CardException("Spell is already activated!");
-        } else {
-            c.addTempAttack(this.tempAttack);
-            c.addTempHealth(this.tempHealth);
-            this.active = true;
-        }
-    }
-
-    @Override
-    public void revert(SummonedCharacter c) throws CardException {
-        if (!this.active) {
-            throw new CardException("Spell is already inactivated!");
-        } else {
-            c.subtractTempAttack(this.tempAttack);
-            c.subtractTempHealth(this.tempHealth);
-            this.active = false;
-        }
+        c.addPotion(this);
     }
 
     @Override
@@ -100,5 +93,10 @@ public class Potion extends Spell implements Revertable {
     @Override
     public String toString() {
         return String.format("Id: %d\nName: %s\nDescription: %s\nImagepath: %s\nAttack: %d\nHealth: %d\nMana: %d\nDuration: %d", this.id, this.name, this.description, this.imagepath, this.tempAttack, this.tempHealth, this.mana, this.duration);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }
