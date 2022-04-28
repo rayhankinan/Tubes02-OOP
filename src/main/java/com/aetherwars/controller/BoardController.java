@@ -566,7 +566,11 @@ public class BoardController {
                     Player oppPlayer = this.board.getOppositePlayer();
                     if (oppPlayer.getField(getSlotNum(slot)) != null){
                         this.slotClicked.setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
-                        curPlayer.attackOpponentCard((SummonedCharacter) getCard(this.slotClicked), (SummonedCharacter) oppPlayer.getField(getSlotNum(slot)), this.board.getOppositePlayer());
+                        try {
+                            curPlayer.attackOpponentCard((SummonedCharacter) getCard(this.slotClicked), (SummonedCharacter) oppPlayer.getField(getSlotNum(slot)), this.board.getOppositePlayer());
+                        } catch (CardException e) {
+                            e.printStackTrace();
+                        }
                         this.slotClicked = null;
                         try {
                             this.reloadField();

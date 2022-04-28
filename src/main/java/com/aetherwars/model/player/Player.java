@@ -172,10 +172,11 @@ public class Player {
         characterFieldCard.setBattleAvailability(0);
     }
 
-    public void attackOpponentCard(SummonedCharacter characterFieldCard, SummonedCharacter opponentCharacterFieldCard, Player opponentPlayer) {
+    public void attackOpponentCard(SummonedCharacter characterFieldCard, SummonedCharacter opponentCharacterFieldCard, Player opponentPlayer) throws CardException {
         characterFieldCard.attackCharacter(opponentCharacterFieldCard);
         if (opponentCharacterFieldCard.getTotalHealth() <= 0) {
             //discard opponent card
+            characterFieldCard.addExp(opponentCharacterFieldCard.getLevel());
             opponentPlayer.discardCharacterFieldCards(opponentCharacterFieldCard.getField());
         }
         characterFieldCard.setBattleAvailability(0);
