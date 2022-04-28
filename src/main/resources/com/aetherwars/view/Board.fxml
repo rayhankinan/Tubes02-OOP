@@ -11,7 +11,8 @@
 
 <Pane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aetherwars.controller.BoardController">
    <children>
-      <Pane fx:id="cardDetail" layoutX="749.0" layoutY="494.0" prefHeight="284.0" prefWidth="383.0" style="-fx-background-color: #d7d7d7;">
+      <Pane fx:id="drawPane" prefHeight="800.0" prefWidth="1200.0" />
+      <Pane fx:id="cardDetail" layoutX="749.0" layoutY="494.0" opacity="0.0" prefHeight="284.0" prefWidth="383.0" style="-fx-background-color: #d7d7d7;">
          <children>
             <Rectangle fx:id="cardDetailBox1" fill="#e7e7e7" height="129.0" layoutX="195.0" layoutY="9.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="178.0" />
             <Group autoSizeChildren="false" layoutX="223.0" layoutY="42.0">
@@ -103,27 +104,27 @@
       </Button>
       <Group layoutX="34.0" layoutY="250.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="240.0" />
       <Group layoutX="34.0" layoutY="78.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="75.0" />
-      <Pane fx:id="fieldD2" layoutX="815.0" layoutY="234.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7e7;" />
+      <Pane id="field2" fx:id="fieldD2" layoutX="815.0" layoutY="234.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7e7;" />
       <ProgressBar layoutX="34.0" layoutY="26.0" prefHeight="36.0" prefWidth="472.0" progress="1.0" AnchorPane.bottomAnchor="357.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="23.0" />
       <ProgressBar layoutX="694.0" layoutY="26.0" prefHeight="36.0" prefWidth="472.0" progress="1.0" AnchorPane.bottomAnchor="746.0" AnchorPane.leftAnchor="714.0" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="26.0" />
       <Group layoutX="578.0" layoutY="29.0" AnchorPane.bottomAnchor="725.0" AnchorPane.leftAnchor="576.0" AnchorPane.rightAnchor="575.0" AnchorPane.topAnchor="33.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7e7e7" height="42.0" layoutX="-2.0" layoutY="-5.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="49.0" />
-            <Text fx:id="turn" layoutX="5.0" layoutY="12.7578125" strokeType="OUTSIDE" strokeWidth="0.0" text="Turn 1" textAlignment="CENTER" wrappingWidth="34.49658203125">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7e7e7" height="42.0" layoutX="-27.0" layoutY="-10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="102.0" />
+            <Text fx:id="round" layoutX="-21.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Round 1" textAlignment="CENTER" wrappingWidth="90.49658203125">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
             </Text>
          </children>
       </Group>
-      <Text layoutX="39.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 1" wrappingWidth="66.99999999999994" AnchorPane.leftAnchor="39.0" AnchorPane.topAnchor="71.2314453125">
+      <Text fx:id="playerOneName" layoutX="39.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 1" wrappingWidth="66.99999999999994" AnchorPane.leftAnchor="39.0" AnchorPane.topAnchor="71.2314453125">
          <font>
-            <Font name="Arial" size="13.0" />
+            <Font name="Arial" size="15.0" />
          </font>
       </Text>
-      <Text layoutX="1094.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 2" textAlignment="RIGHT" wrappingWidth="66.99999999999994" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="71.2314453125">
+      <Text fx:id="playerTwoName" layoutX="1094.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 2" textAlignment="RIGHT" wrappingWidth="66.99999999999994" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="71.2314453125">
          <font>
-            <Font name="Arial" size="13.0" />
+            <Font name="Arial" size="15.0" />
          </font>
       </Text>
       <Pane fx:id="handCard1" layoutX="78.0" layoutY="573.0" prefHeight="180.0" prefWidth="122.0" style="-fx-background-color: #e7e7e7;" />
@@ -133,16 +134,16 @@
       <Pane fx:id="handCard5" layoutX="575.5999755859375" layoutY="573.0" prefHeight="180.0" prefWidth="122.0" style="-fx-background-color: #e7e7e7;" />
       <Group layoutX="58.0" layoutY="191.0">
          <children>
-            <Pane fx:id="fieldA1" layoutX="109.0" layoutY="-75.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+            <Pane id="field1" fx:id="fieldA1" layoutX="109.0" layoutY="-75.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
             <ImageView fitHeight="100.0" fitWidth="106.0" layoutX="-18.0" layoutY="1.0" pickOnBounds="true">
                <image>
                   <Image url="@../model/card/character/image/Creeper.png" />
                </image>
             </ImageView>
-            <Pane fx:id="fieldC1" layoutX="109.0" layoutY="43.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
-            <Pane fx:id="fieldD1" layoutX="227.0" layoutY="43.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
-            <Pane fx:id="fieldE1" layoutX="344.0" layoutY="-17.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
-            <Pane fx:id="fieldB1" layoutX="227.0" layoutY="-75.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+            <Pane id="field1" fx:id="fieldC1" layoutX="109.0" layoutY="43.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+            <Pane id="field1" fx:id="fieldD1" layoutX="227.0" layoutY="43.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+            <Pane id="field1" fx:id="fieldE1" layoutX="344.0" layoutY="-17.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+            <Pane id="field1" fx:id="fieldB1" layoutX="227.0" layoutY="-75.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
          </children>
       </Group>
       <Circle fx:id="discardCard" layoutX="602.0" layoutY="230.0" radius="48.0" strokeType="INSIDE" strokeWidth="0.2" AnchorPane.leftAnchor="554.0" AnchorPane.rightAnchor="550.0" AnchorPane.topAnchor="182.0">
@@ -183,7 +184,6 @@
             <Font name="Arial Rounded MT Bold" size="14.0" />
          </font>
       </Text>
-      <Pane fx:id="drawPane" layoutX="-1172.0" layoutY="-47.0" prefHeight="800.0" prefWidth="1081.0" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="-1172.0" AnchorPane.rightAnchor="1291.0" AnchorPane.topAnchor="-47.0" />
       <Rectangle fill="#e7e7e7" height="28.0" layoutX="78.0" layoutY="529.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="114.0" />
       <Text fx:id="deckCapacity" layoutX="103.0" layoutY="547.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Deck: 35/40">
          <font>
@@ -196,8 +196,8 @@
             <Font name="Arial" size="12.0" />
          </font>
       </Text>
-      <Pane fx:id="fieldE2" layoutX="697.0" layoutY="171.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
-      <Rectangle fx:id="phaseDrawBlock" arcHeight="5.0" arcWidth="5.0" fill="#e7e7e7" height="36.0" layoutX="78.0" layoutY="435.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="216.0" />
+      <Pane id="field2" fx:id="fieldE2" layoutX="697.0" layoutY="171.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+      <Rectangle fx:id="phaseDrawBlock" arcHeight="5.0" arcWidth="5.0" fill="ORANGE" height="36.0" layoutX="78.0" layoutY="435.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="216.0" />
       <Rectangle fx:id="phasePlanBlock" arcHeight="5.0" arcWidth="5.0" fill="#e7e7e7" height="36.0" layoutX="294.0" layoutY="435.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="216.0" />
       <Rectangle fx:id="phaseAttackBlock" arcHeight="5.0" arcWidth="5.0" fill="#e7e7e7" height="36.0" layoutX="510.0" layoutY="435.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="216.0" />
       <Rectangle fx:id="phaseEndBlock" arcHeight="5.0" arcWidth="5.0" fill="#e7e7e7" height="36.0" layoutX="726.0" layoutY="435.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="216.0" />
@@ -226,9 +226,9 @@
             <Image url="@../model/card/character/image/Villager.png" />
          </image>
       </ImageView>
-      <Pane fx:id="fieldB2" layoutX="815.0" layoutY="116.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
-      <Pane fx:id="fieldA2" layoutX="933.0" layoutY="117.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
-      <Pane fx:id="fieldC2" layoutX="932.0" layoutY="235.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+      <Pane id="field2" fx:id="fieldB2" layoutX="815.0" layoutY="116.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+      <Pane id="field2" fx:id="fieldA2" layoutX="933.0" layoutY="117.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+      <Pane id="field2" fx:id="fieldC2" layoutX="932.0" layoutY="235.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
    </children>
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

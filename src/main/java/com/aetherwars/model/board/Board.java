@@ -26,6 +26,7 @@ public class Board implements TakeTurns {
         player2.drawCard(1);
 
         this.phase = Phase.DRAW;
+        this.turn = 1;
     }
 
     public Player getPlayer1(){
@@ -83,6 +84,9 @@ public class Board implements TakeTurns {
 
         } else if (this.phase == Phase.PLANNING) {
             this.phase = Phase.ATTACK;
+
+        } else if (this.phase == Phase.ATTACK){
+            this.phase = Phase.END;
 
         } else {
             /* TODO: Implement next player DRAW PHASE */

@@ -1,5 +1,6 @@
 package com.aetherwars.controller;
 
+import com.aetherwars.model.board.Phase;
 import com.aetherwars.model.card.*;
 import com.aetherwars.model.player.*;
 import com.aetherwars.model.card.character.Character;
@@ -10,6 +11,7 @@ import com.aetherwars.model.card.spell.potion.Potion;
 import com.aetherwars.model.card.spell.swap.Swap;
 import com.aetherwars.model.deck.*;
 import com.aetherwars.model.board.Board;
+import javafx.geometry.Insets;
 import javafx.scene.input.*;
 import javafx.event.ActionEvent;
 
@@ -18,7 +20,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.event.EventHandler;
 
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -26,6 +28,7 @@ import javafx.scene.text.Text;
 import javafx.scene.image.*;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Objects;
 
 public class BoardController {
@@ -33,7 +36,7 @@ public class BoardController {
     private Button nextPhase;
 
     @FXML
-    private Text cardDetailName, cardDetailAtk, cardDetailHP, cardDetailLevel, cardDetailExp, cardDetailType, cardDetailDesc, deckCapacity, manaCapacity, turn;
+    private Text cardDetailName, cardDetailAtk, cardDetailHP, cardDetailLevel, cardDetailExp, cardDetailType, cardDetailDesc, deckCapacity, manaCapacity, round, playerOneName, playerTwoName;
 
     @FXML
     private ImageView cardDetailImage;
@@ -45,26 +48,30 @@ public class BoardController {
     private Circle discardCard;
 
     @FXML
-    private Pane drawPane, handCard1, handCard2, handCard3, handCard4, handCard5, cardDetail, fieldA1, fieldB1, fieldC1, fieldD1, fieldE1;
-
-    private String currentPhase = "";
-
-    private Player currentPlayer;
-
-    private int currentTurn = 1;
+    private Pane drawPane, handCard1, handCard2, handCard3, handCard4, handCard5, cardDetail, fieldA1, fieldB1, fieldC1, fieldD1, fieldE1, fieldA2, fieldB2, fieldC2, fieldD2, fieldE2;
 
     private Board board;
 
-    public static final DataFormat cardData = new DataFormat("Card Format");
+    private Pane slotClicked = null;
 
+    private Player playerOne, playerTwo;
+
+    public static final DataFormat cardData = new DataFormat("Card Format");
 
     @FXML
     public void initialize() {
-        this.setCardDetailOpacity(0.0);
-        this.phaseDrawBlock.setFill(Color.ORANGE);
-        this.currentPhase = "DRAW";
-        this.turn.setText("Turn " + Integer.toString(this.currentTurn));
-        Pane[] startSlots = { handCard1, handCard2, handCard3, handCard4, handCard5, fieldA1, fieldB1, fieldC1, fieldD1, fieldE1 };
+        // initial set up
+        try {
+            CardDatabase.initialize();
+            this.board = new Board("Joko", "Kiki");
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+        this.playerOne = this.board.getPlayer1();
+        this.playerTwo = this.board.getPlayer2();
+        this.playerOneName.setText(this.playerOne.getName());
+        this.playerTwoName.setText(this.playerTwo.getName());
 
         // JANGAN LUPA: 5 line di bawah diapus, ini cuma buat testing
         this.fieldA1.setOpacity(0.50);
@@ -73,123 +80,29 @@ public class BoardController {
         this.fieldD1.setOpacity(0.50);
         this.fieldE1.setOpacity(0.50);
 
+        Pane[] slots = { handCard1, handCard2, handCard3, handCard4, handCard5, fieldA1, fieldB1, fieldC1, fieldD1, fieldE1, fieldA2, fieldB2, fieldC2, fieldD2, fieldE2 };
         // set up mouse hover & drag-n-drop event handlers
-        for (int i = 0; i < startSlots.length; i++){
-            this.setUpHover(startSlots[i]);
-            this.setUpDragAndDrop(startSlots[i]);
+        for (int i = 0; i < slots.length; i++){
+            this.setUpHover(slots[i]);
+            this.setUpDragAndDrop(slots[i]);
+            this.setUpClick(slots[i]);
         }
         this.setUpDiscardDrop(this.discardCard);
 
         // set up button handler
         EventHandler<ActionEvent> buttonEvent = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                setPhase(currentPhase);
+                setPhase(board.getPhase().toString());
             }
         };
         this.nextPhase.setOnAction(buttonEvent);
 
+        // TODO : BLOM BISA INI
+        // this.displayDrawCard(this.board.getCurrentPlayer());
 
         // JANGAN LUPA: set di bawah ini
-        // this.currentPlayer = isi dari board !! <33;
         // this.deckCapacity.setText(brapa / brapa dari punya player <33);
         // this.manaCapacity.setText(brapa / brapa dari punya player <33);
-    }
-
-    /* Hover event */
-    public void setUpHover(Pane handCard) {
-        handCard.setOnMouseEntered(mouseEvent -> {
-            if (handCard.getOpacity() == 1.00) {
-                this.cardDetailName.setText(handCard.getId());
-                this.setCardDetailOpacity(1.0);
-            }
-        });
-        handCard.setOnMouseExited(mouseEvent -> this.setCardDetailOpacity(0.0) );
-    }
-
-    /* Drag and Drop event */
-    public void setUpDragAndDrop(Pane slot) {
-        // CHECK IF SLOT IS EMPTY OR NOT + summoned character
-
-        // case when not empty: set for drag
-        if (slot.getOpacity() == 1.00) { // JANGAN LUPA: ini ganti pake cek if slot is not empty (ada card yg bisa dipindah ke slot lain ato ngga)
-            slot.setOnDragDetected(new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent event) {
-                    Dragboard db = slot.startDragAndDrop(TransferMode.MOVE);
-                    ClipboardContent content = new ClipboardContent();
-                    content.put(cardData, "MAMAMA"); // JANGAN LUPA: nanti disini yg "MAMAMA" itu diisi pake Card yg mo ditransfer
-                    db.setContent(content);
-                    event.consume();
-                }
-            });
-            slot.setOnDragDone(new EventHandler<DragEvent>() {
-                public void handle(DragEvent event) {
-                    if (event.getTransferMode() == TransferMode.MOVE) {
-                        // JANGAN LUPA: nanti di line ini kosongin Card yg udah ditransfer
-                        slot.setOnDragDetected(null);
-                        slot.setOnDragDone(null);
-                        slot.setOpacity(0.50); // JANGAN LUPA: line ini nanti diapus, skrg cm buat testing aja
-                        setUpDragAndDrop(slot);
-                    }
-                    event.consume();
-                }
-            });
-        }
-        // case when empty: set for drop
-        else {
-            slot.setOnDragOver(new EventHandler<DragEvent>() {
-                public void handle(DragEvent event) {
-                    if (event.getGestureSource() != slot && event.getDragboard().hasContent(cardData)) {
-                        Object content = event.getDragboard().getContent(cardData);
-                        // if (!(content instanceof SummonedCharacter)) return; // JANGAN LUPA: ini cek lagi critanya biar yg bs di drop ke field itu cm summoned character aaokaok :V <3
-                        event.acceptTransferModes(TransferMode.MOVE);
-                    }
-                    event.consume();
-                }
-            });
-            slot.setOnDragDropped(new EventHandler<DragEvent>() {
-                public void handle(DragEvent event) {
-                    boolean success = false;
-                    if (event.getDragboard().hasContent(cardData)) {
-                        success = true;
-                    }
-                    event.setDropCompleted(success);
-                    // Card content = (Card) event.getDragboard().getContent(cardData); // JANGAN LUPA: ini critanya ngambil card dari contentnya tp tunggu contentnya bener dulu hehe
-                    // JANGAN LUPA: di line ini, set slot pake Card yg ditransfer (pake content yg di line atas ini persis)
-                    slot.setOnDragOver(null);
-                    slot.setOnDragDropped(null);
-                    slot.setOpacity(1.00); // JANGAN LUPA: line ini nanti diapus, skrg cm buat testing aja
-                    setUpDragAndDrop(slot);
-                    event.consume();
-                }
-            });
-        }
-    }
-
-    /* Drop event for discarding Cards only */
-    public void setUpDiscardDrop(Circle discardCard) {
-        discardCard.setOnDragOver(new EventHandler<DragEvent>() {
-            public void handle(DragEvent event) {
-                if (event.getGestureSource() != discardCard && event.getDragboard().hasContent(cardData)) {
-                    event.acceptTransferModes(TransferMode.MOVE);
-                }
-                event.consume();
-            }
-        });
-        discardCard.setOnDragDropped(new EventHandler<DragEvent>() {
-            public void handle(DragEvent event) {
-                boolean success = false;
-                if (event.getDragboard().hasContent(cardData)) {
-                    success = true;
-                }
-                event.setDropCompleted(success);
-                event.consume();
-            }
-        });
-    }
-
-    /* Sets card detail visibility */
-    public void setCardDetailOpacity(double opacity) {
-        this.cardDetail.setOpacity(opacity);
     }
 
     /* Board setter */
@@ -197,44 +110,37 @@ public class BoardController {
         this.board = board;
     }
 
-    /* Sets nxt phase */
+    /* Sets next phase */
     public void setPhase(String currentPhase) {
-        if (currentPhase == "END") {
-            this.phaseEndBlock.setFill(Color.valueOf("#E7E7E7"));
-            this.phaseDrawBlock.setFill(Color.ORANGE);
-            this.currentPhase = "DRAW";
-            this.currentTurn += 1; // if end --> CURRENT TURN +1 JANGAN LUPA !!! trs set this.turn jd this.currentTurn
+        this.board.nextPhase();
+        // JANGAN LUPA: line di bawah ini nunggu get round dari player, karena round itu disimpennya di player (jdnya pake round bukan turn :V !!)
+        // this.round.setText("Round " + Integer.toString(this.playerOne.getRound()));
+        switch (this.board.getPhase()) {
+            case DRAW:
+                this.phaseEndBlock.setFill(Color.valueOf("#E7E7E7"));
+                this.phaseDrawBlock.setFill(Color.ORANGE);
+                try {
+                    this.board.switchTurn();
+                }
+                catch (DeckException e) {
+                    System.out.println(e);
+                }
+                // JANGAN LUPA: fungsi buat ganti HANDCARD
+                return;
+            case PLANNING:
+                this.phaseDrawBlock.setFill(Color.valueOf("#E7E7E7"));
+                this.phasePlanBlock.setFill(Color.ORANGE);
+                break;
+            case ATTACK:
+                this.phasePlanBlock.setFill(Color.valueOf("#E7E7E7"));
+                this.phaseAttackBlock.setFill(Color.ORANGE);
+                break;
+            case END:
+                this.phaseAttackBlock.setFill(Color.valueOf("#E7E7E7"));
+                this.phaseEndBlock.setFill(Color.ORANGE);
+                // JANGAN LUPA: kalo sempet tambahin pop up kek 'your turn is up, klik next phase biar pemaen brikutny bs gerak'
+                break;
         }
-        else if (currentPhase == "ATTACK") {
-            this.phaseAttackBlock.setFill(Color.valueOf("#E7E7E7"));
-            this.phaseEndBlock.setFill(Color.ORANGE);
-            this.currentPhase = "END";
-        }
-        else if (currentPhase == "PLAN") {
-            this.phasePlanBlock.setFill(Color.valueOf("#E7E7E7"));
-            this.phaseAttackBlock.setFill(Color.ORANGE);
-            this.currentPhase = "ATTACK";
-        }
-        else {
-            this.phaseDrawBlock.setFill(Color.valueOf("#E7E7E7"));
-            this.phasePlanBlock.setFill(Color.ORANGE);
-            this.currentPhase = "PLAN";
-        }
-        // keknya disini taro kek semacam fungsi yang ngeupdate the whole board state gitu(?) kyk turnnya ato smcmnya
-    }
-
-    /* Display detailed card
-    * only summoned character can be put in the field*/
-    public void displayCard(SummonedCharacter character){
-        Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + character.getImagepath())).toString());
-        this.cardDetailName.setText(character.getName());
-        this.cardDetailImage.setImage(newImg);
-        this.cardDetailAtk.setText(Integer.toString(character.getTotalAttack()));
-        this.cardDetailHP.setText(Integer.toString(character.getTotalHealth()));
-        this.cardDetailLevel.setText(Integer.toString(character.getLevel()));
-        this.cardDetailType.setText(Objects.toString(character.getType()));
-        this.cardDetailExp.setText(Objects.toString(character.getExp()));
-        this.cardDetailDesc.setText(character.getDescription());
     }
 
     /* Display detailed card for Level*/
@@ -329,6 +235,208 @@ public class BoardController {
 
     }
 
+    /* EVENT HANDLERS */
+    /* Disable & Enabled Handlers */
+    public boolean slotEnabled(Pane slot) {
+        if (slot.getId().equals("field1") && board.getTurn() != 1) {
+            return false;
+        }
+        if (slot.getId().equals("field2") && board.getTurn() != 2) {
+            return false;
+        }
+        return true;
+    }
+    /* Hover event */
+    public void setUpHover(Pane slot) {
+        slot.setOnMouseEntered(mouseEvent -> {
+            if (slotEnabled(slot)) {
+                if (slot.getOpacity() == 1.00) { // JANGAN LUPA: ini ganti jd if slot ada card
+                    this.cardDetailName.setText(slot.getId());
+                    this.setCardDetailOpacity(1.0);
+                }
+            }
+        });
+        slot.setOnMouseExited(mouseEvent -> this.setCardDetailOpacity(0.0) );
+    }
+
+    /* Drag and Drop event */
+    public void setUpDragAndDrop(Pane slot) {
+        // CHECK IF SLOT IS EMPTY OR NOT + summoned character
+        slot.setOnDragDetected(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                System.out.print(slotEnabled(slot));
+                if (slotEnabled(slot)) {
+                    if (slot.getOpacity() == 1.00) { // JANGAN LUPA: ini ganti pake cek if slot is not empty (ada card yg bisa dipindah ke slot lain ato ngga)
+                        Dragboard db = slot.startDragAndDrop(TransferMode.MOVE);
+                        ClipboardContent content = new ClipboardContent();
+                        content.put(cardData, "MAMAMA"); // JANGAN LUPA: nanti disini yg "MAMAMA" itu diisi pake Card yg mo ditransfer
+                        db.setContent(content);
+                        event.consume();
+                    }
+                }
+            }
+        });
+        slot.setOnDragDone(new EventHandler<DragEvent>() {
+            public void handle(DragEvent event) {
+                if (slotEnabled(slot)) {
+                    if (slot.getOpacity() == 1.00) { // JANGAN LUPA: ini ganti pake cek if slot is not empty (ada card yg bisa dipindah ke slot lain ato ngga)
+                        if (event.getTransferMode() == TransferMode.MOVE) {
+                            // JANGAN LUPA: nanti di line ini kosongin Card yg udah ditransfer
+                            slot.setOnDragDetected(null);
+                            slot.setOnDragDone(null);
+                            slot.setOpacity(0.50); // JANGAN LUPA: line ini nanti diapus, skrg cm buat testing aja
+                            setUpDragAndDrop(slot);
+                        }
+                        event.consume();
+                    }
+                }
+            }
+        });
+        slot.setOnDragOver(new EventHandler<DragEvent>() {
+            public void handle(DragEvent event) {
+                if (slotEnabled(slot)) {
+                    if (slot.getOpacity() != 1.00) { // JANGAN LUPA: ini ganti pake cek if slot is not empty & yg mo dipindahin tuh character ato bkn
+                        if (event.getGestureSource() != slot && event.getDragboard().hasContent(cardData)) {
+                            Object content = event.getDragboard().getContent(cardData);
+                            // if (!(content instanceof SummonedCharacter)) return; // JANGAN LUPA: ini cek lagi critanya biar yg bs di drop ke field itu cm summoned character aaokaok :V <3
+                            event.acceptTransferModes(TransferMode.MOVE);
+                        }
+                        event.consume();
+                    }
+                }
+            }
+        });
+        slot.setOnDragDropped(new EventHandler<DragEvent>() {
+            public void handle(DragEvent event) {
+                if (slotEnabled(slot)) {
+                    if (slot.getOpacity() != 1.00) { // JANGAN LUPA: ini ganti pake cek if slot is not empty & yg mo dipindahin tuh character ato bkn
+                        boolean success = false;
+                        if (event.getDragboard().hasContent(cardData)) {
+                            success = true;
+                        }
+                        event.setDropCompleted(success);
+                        // Card content = (Card) event.getDragboard().getContent(cardData); // JANGAN LUPA: ini critanya ngambil card dari contentnya tp tunggu contentnya bener dulu hehe
+                        // JANGAN LUPA: di line ini, set slot pake Card yg ditransfer (pake content yg di line atas ini persis)
+                        slot.setOnDragOver(null);
+                        slot.setOnDragDropped(null);
+                        slot.setOpacity(1.00); // JANGAN LUPA: line ini nanti diapus, skrg cm buat testing aja
+                        setUpDragAndDrop(slot);
+                        event.consume();
+                    }
+                }
+            }
+        });
+    }
 
 
+    /* Drop event for discarding Cards only */
+    public void setUpDiscardDrop(Circle discardCard) {
+        discardCard.setOnDragOver(new EventHandler<DragEvent>() {
+            public void handle(DragEvent event) {
+                if (event.getGestureSource() != discardCard && event.getDragboard().hasContent(cardData)) {
+                    event.acceptTransferModes(TransferMode.MOVE);
+                }
+                event.consume();
+            }
+        });
+        discardCard.setOnDragDropped(new EventHandler<DragEvent>() {
+            public void handle(DragEvent event) {
+                boolean success = false;
+                if (event.getDragboard().hasContent(cardData)) {
+                    success = true;
+                }
+                event.setDropCompleted(success);
+                event.consume();
+            }
+        });
+    }
+
+    /* Sets card detail visibility */
+    public void setCardDetailOpacity(double opacity) {
+        this.cardDetail.setOpacity(opacity);
+    }
+
+    public void setUpClick(Pane slot) {
+        slot.setOnMouseClicked(mouseEvent -> {
+            // on click behavior for PLANNING phase
+            if (this.board.getPhase() == Phase.PLANNING) {
+                // corner cases
+                if ((slot.getId().equals("field1") || slot.getId().equals("field2")) && this.slotClicked == null) {
+                    return;
+                }
+                if (this.slotClicked != null && !(slot.getId().equals("field1") || slot.getId().equals("field2"))) {
+                    return;
+                }
+                if (slot.getId().equals("field1")) {
+                    if (board.getTurn() != 1){
+                        return;
+                    }
+                }
+                if (slot.getId().equals("field2")) {
+                    if (board.getTurn() != 2){
+                        return;
+                    }
+                }
+                // set on click
+                if (this.slotClicked == slot){
+                    slot.setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
+                    this.slotClicked = null;
+                }
+                else if (this.slotClicked != null) {
+                    this.slotClicked.setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
+                    // JANGAN LUPA nanti disini card yg slotclicked memengaruhi yg di slot
+                    this.slotClicked = null;
+                }
+                else {
+                    this.slotClicked = slot;
+                    slot.setBackground(new Background(new BackgroundFill(Color.GREENYELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
+                }
+            }
+            // on click behavior for ATTACK phase
+            else if (this.board.getPhase() == Phase.ATTACK) {
+                // corner cases
+                if (!(slot.getId().equals("field1") || slot.getId().equals("field2"))) {
+                    return;
+                }
+                if (slot.getId().equals("field1")) {
+                    if (this.slotClicked == null) {
+                        if (board.getTurn() != 1){
+                            return;
+                        }
+                    }
+                    else {
+                        if (this.slotClicked.getId().equals("field1") && this.slotClicked != slot){
+                            return;
+                        }
+                    }
+                }
+                if (slot.getId().equals("field2")) {
+                    if (this.slotClicked == null) {
+                        if (board.getTurn() != 2){
+                            return;
+                        }
+                    }
+                    else {
+                        if (this.slotClicked.getId().equals("field2") && this.slotClicked != slot){
+                            return;
+                        }
+                    }
+                }
+                // set on click
+                if (this.slotClicked == slot){
+                    slot.setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
+                    this.slotClicked = null;
+                }
+                else if (this.slotClicked != null) {
+                    this.slotClicked.setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
+                    // JANGAN LUPA nanti disini si card yg di this.slotclickednya ngeattack card yg ada di slot :V
+                    this.slotClicked = null;
+                }
+                else {
+                    this.slotClicked = slot;
+                    slot.setBackground(new Background(new BackgroundFill(Color.GREENYELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
+                }
+            }
+        });
+    }
 }
