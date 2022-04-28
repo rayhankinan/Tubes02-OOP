@@ -8,6 +8,7 @@ import com.aetherwars.model.card.CardDatabase;
 import com.aetherwars.model.card.spell.Applicable;
 import com.aetherwars.model.card.spell.Revertable;
 
+import java.rmi.activation.Activatable;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -181,10 +182,10 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
     @Override
     public void addActivable(Applicable s) throws CardException {
         if (s instanceof Swap) {
-            int index = -1; /* TODO: Get index by condition "instanceof Swap" */
+            Revertable currentSwap = this.revertableSpells.stream().filter((r) -> r instanceof Swap).findFirst().orElse(null);
 
-            if (index != -1) {
-                this.revertableSpells.get(index).stackDuration(s);
+            if (currentSwap != null) {
+                currentSwap.stackDuration(s);
             } else {
                 s.apply(this);
                 this.revertableSpells.add((Revertable) s);
