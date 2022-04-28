@@ -4,55 +4,45 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="382.0" prefWidth="238.0" style="-fx-border-color: BLACK;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.aetherwars.controller.CardController">
+<Pane fx:id="card" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="122.0" style="-fx-border-color: BLACK;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aetherwars.controller.CardController">
     <children>
-        <Pane layoutX="30.0" layoutY="59.0" prefHeight="176.0" prefWidth="176.0" style="-fx-border-color: #000000; -fx-border-width: 1;">
+        <Pane layoutX="13.0" layoutY="37.0" prefHeight="86.0" prefWidth="96.0" style="-fx-border-color: #000000; -fx-border-width: 1;">
             <children>
-                <HBox alignment="CENTER" prefHeight="176.0" prefWidth="176.0">
-                    <children>
-                        <ImageView fx:id="cardImage" fitHeight="174.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true">
+                <AnchorPane layoutY="-1.0" prefHeight="86.0" prefWidth="96.0">
+               <children>
+                        <ImageView fx:id="cardImage" fitHeight="58.0" fitWidth="30.0" layoutX="33.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../model/card/character/image/Creeper.png" />
                             </image>
                         </ImageView>
-                    </children>
-                </HBox>
-                <AnchorPane layoutX="-12.0" layoutY="-12.0" prefHeight="200.0" prefWidth="200.0" />
+               </children></AnchorPane>
             </children>
         </Pane>
-        <Pane layoutX="8.0" layoutY="8.0" prefHeight="38.0" prefWidth="223.0" style="-fx-border-color: BLACK;">
+        <Pane layoutX="8.0" layoutY="8.0" prefHeight="21.0" prefWidth="105.0" style="-fx-border-color: BLACK;">
             <children>
-                <Pane prefHeight="38.0" prefWidth="223.0" style="-fx-background-color: rgba(0, 0, 0, 0.2); -fx-border-color: BLACK;">
+                <Pane prefHeight="21.0" prefWidth="105.0" style="-fx-background-color: rgba(0, 0, 0, 0.2); -fx-border-color: BLACK;">
                     <children>
-                        <Text fx:id="cardName" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" textAlignment="CENTER" wrappingWidth="223.0">
+                        <Text fx:id="cardName" layoutY="14.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" textAlignment="CENTER" wrappingWidth="105.0">
                             <font>
-                                <Font name="Droid Sans" size="18.0" />
+                                <Font name="Droid Sans" size="9.0" />
                             </font>
                         </Text>
                     </children>
                 </Pane>
             </children>
         </Pane>
-        <Pane layoutX="8.0" layoutY="252.0" prefHeight="122.0" prefWidth="223.0" style="-fx-border-color: BLACK;">
+        <Pane layoutX="13.0" layoutY="129.0" prefHeight="41.0" prefWidth="96.0" style="-fx-border-color: BLACK;">
          <children>
-            <HBox alignment="CENTER" layoutX="12.0" layoutY="14.0" prefHeight="38.0" prefWidth="200.0">
-               <children>
-                  <Text fx:id="cardMana" strokeType="OUTSIDE" strokeWidth="0.0" text="Mana 0" textAlignment="CENTER" wrappingWidth="193.0">
-                     <font>
-                        <Font name="Droid Sans" size="18.0" />
-                     </font>
-                  </Text>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" layoutX="12.0" layoutY="61.0" prefHeight="38.0" prefWidth="200.0">
-               <children>
-                  <Text fx:id="cardDesc" strokeType="OUTSIDE" strokeWidth="0.0" text="Desc" textAlignment="CENTER" wrappingWidth="193.0">
-                     <font>
-                        <Font name="Droid Sans" size="18.0" />
-                     </font>
-                  </Text>
-               </children>
-            </HBox>
+            <Text fx:id="cardDesc" layoutX="-1.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Desc" textAlignment="CENTER" wrappingWidth="96.0">
+               <font>
+                  <Font name="Droid Sans" size="7.0" />
+               </font>
+            </Text>
+            <Text fx:id="cardMana" layoutX="-1.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mana 0" textAlignment="CENTER" wrappingWidth="99.0">
+               <font>
+                  <Font name="Droid Sans" size="10.0" />
+               </font>
+            </Text>
          </children>
         </Pane>
     </children>
