@@ -21,11 +21,13 @@ import javafx.event.EventHandler;
 
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.image.*;
+import jdk.nashorn.internal.codegen.FieldObjectCreator;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -50,6 +52,7 @@ public class BoardController {
     @FXML
     private Pane drawPane, handCard1, handCard2, handCard3, handCard4, handCard5, cardDetail, fieldA1, fieldB1, fieldC1, fieldD1, fieldE1, fieldA2, fieldB2, fieldC2, fieldD2, fieldE2;
 
+    private CardController handCardControl1, handCardControl2, handCardControl3, handCardControl4, handCardControl5;
     private Board board;
 
     private Pane slotClicked = null;
@@ -73,18 +76,11 @@ public class BoardController {
         this.playerOneName.setText(this.playerOne.getName());
         this.playerTwoName.setText(this.playerTwo.getName());
 
-        // JANGAN LUPA: 5 line di bawah diapus, ini cuma buat testing
-        this.fieldA1.setOpacity(0.50);
-        this.fieldB1.setOpacity(0.50);
-        this.fieldC1.setOpacity(0.50);
-        this.fieldD1.setOpacity(0.50);
-        this.fieldE1.setOpacity(0.50);
-
         Pane[] slots = { handCard1, handCard2, handCard3, handCard4, handCard5, fieldA1, fieldB1, fieldC1, fieldD1, fieldE1, fieldA2, fieldB2, fieldC2, fieldD2, fieldE2 };
         // set up mouse hover & drag-n-drop event handlers
         for (int i = 0; i < slots.length; i++){
             this.setUpHover(slots[i]);
-            this.setUpDragAndDrop(slots[i]);
+            this.setUpDrag(slots[i]);
             this.setUpClick(slots[i]);
         }
         this.setUpDiscardDrop(this.discardCard);
@@ -100,9 +96,19 @@ public class BoardController {
         // TODO : BLOM BISA INI
         // this.displayDrawCard(this.board.getCurrentPlayer());
 
-        // JANGAN LUPA: set di bawah ini
+        // JANGAN LUPA set di bawah ini
         // this.deckCapacity.setText(brapa / brapa dari punya player <33);
         // this.manaCapacity.setText(brapa / brapa dari punya player <33);
+
+        // testing aja, JANGAN LUPA apus yg di bawah ini
+        Level level;
+        try {
+            level = new Level(403, "OYA? BODO", "BAPAK KAU", "PALA KAU", 9, 3);
+            this.setHandOrFieldCard(this.handCard1, level);
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     /* Board setter */
@@ -113,7 +119,7 @@ public class BoardController {
     /* Sets next phase */
     public void setPhase(String currentPhase) {
         this.board.nextPhase();
-        // JANGAN LUPA: line di bawah ini nunggu get round dari player, karena round itu disimpennya di player (jdnya pake round bukan turn :V !!)
+        // JANGAN LUPA line di bawah ini nunggu get round dari player, karena round itu disimpennya di player (jdnya pake round bukan turn :V !!)
         // this.round.setText("Round " + Integer.toString(this.playerOne.getRound()));
         switch (this.board.getPhase()) {
             case DRAW:
@@ -145,9 +151,9 @@ public class BoardController {
 
     /* Display detailed card for Level*/
     public void displayCard(Level level) {
-        Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + level.getImagepath())).toString());
+//        Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + level.getImagepath())).toString());
         this.cardDetailName.setText(level.getName());
-        this.cardDetailImage.setImage(newImg);
+//        this.cardDetailImage.setImage(newImg);
         this.cardDetailAtk.setText("-");
         this.cardDetailHP.setText("-");
         this.cardDetailLevel.setText(Integer.toString(level.getLevel()));
@@ -158,9 +164,9 @@ public class BoardController {
 
     /* Display detailed card for Morph*/
     public void displayCard(Morph morph) {
-        Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + morph.getImagepath())).toString());
+//        Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + morph.getImagepath())).toString());
         this.cardDetailName.setText(morph.getName());
-        this.cardDetailImage.setImage(newImg);
+//        this.cardDetailImage.setImage(newImg);
         this.cardDetailAtk.setText("-");
         this.cardDetailHP.setText("-");
         this.cardDetailLevel.setText("-");
@@ -171,9 +177,9 @@ public class BoardController {
 
     /* Display detailed card for Potion*/
     public void displayCard(Potion potion) {
-        Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + potion.getImagepath())).toString());
+//        Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + potion.getImagepath())).toString());
         this.cardDetailName.setText(potion.getName());
-        this.cardDetailImage.setImage(newImg);
+//        this.cardDetailImage.setImage(newImg);
         this.cardDetailAtk.setText("+" + Integer.toString(potion.getTempAttack()));
         this.cardDetailHP.setText("+" + Integer.toString(potion.getTempHealth()));
         this.cardDetailLevel.setText("-");
@@ -182,11 +188,25 @@ public class BoardController {
         this.cardDetailDesc.setText(potion.getDescription());
     }
 
+    /* Display detailed card
+     * only summoned character can be put in the field*/
+    public void displayCard(SummonedCharacter character){
+//        Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + character.getImagepath())).toString());
+        this.cardDetailName.setText(character.getName());
+//        this.cardDetailImage.setImage(newImg);
+        this.cardDetailAtk.setText(Integer.toString(character.getTotalAttack()));
+        this.cardDetailHP.setText(Integer.toString(character.getTotalHealth()));
+        this.cardDetailLevel.setText(Integer.toString(character.getLevel()));
+        this.cardDetailType.setText(Objects.toString(character.getType()));
+        this.cardDetailExp.setText(Objects.toString(character.getExp()));
+        this.cardDetailDesc.setText(character.getDescription());
+    }
+
     /* Display detailed card for Swap*/
     public void displayCard(Swap swap) {
-        Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + swap.getImagepath())).toString());
+//        Image newImg = new Image(Objects.requireNonNull(Character.class.getResource("/image" + swap.getImagepath())).toString());
         this.cardDetailName.setText(swap.getName());
-        this.cardDetailImage.setImage(newImg);
+//        this.cardDetailImage.setImage(newImg);
         this.cardDetailAtk.setText("-");
         this.cardDetailHP.setText("-");
         this.cardDetailLevel.setText("-");
@@ -218,26 +238,40 @@ public class BoardController {
             this.drawPane = drawLoader.load();
             DrawController drawController = drawLoader.getController();
             // TODO : Draw card from player
-            // drawController.drawCard(this.player siapa yaaaa :3);
+            // drawController.drawCard(this.board.getCurrentPlayer());
 
         } catch (IOException e) {
             System.out.println(e);
         }
     }
 
-    /* Display field card */
-    public void displayFieldCard(String field, SummonedCharacter character){
-
-    }
-
-    /* Display current player hand card */
-    public void displayHandCard(Card card) {
-
+    /* Set hand/field card pane */
+    public void setHandOrFieldCard(Pane slot, Card card) throws Exception {
+        if (slot.getId().equals("field1") || slot.getId().equals("field2")) {
+            SummonedCharacter character = (SummonedCharacter) card;
+            FieldCardController fieldCardControl;
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/aetherwars/view/FieldCard.fxml"));
+            Pane newLoadedPane = loader.load();
+            slot.getChildren().add(newLoadedPane);
+            fieldCardControl = loader.getController();
+            fieldCardControl.setFieldCard(character);
+            slot.setUserData(card);
+        }
+        else {
+            CardController handCardControl;
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/aetherwars/view/Card.fxml"));
+            Pane newLoadedPane = loader.load();
+            slot.getChildren().add(newLoadedPane);
+            handCardControl = loader.getController();
+            handCardControl.setCard(card);
+            slot.setUserData(card);
+        }
     }
 
     /* EVENT HANDLERS */
     /* Disable & Enabled Handlers */
     public boolean slotEnabled(Pane slot) {
+        // make sure events only applicable to current player's buttons
         if (slot.getId().equals("field1") && board.getTurn() != 1) {
             return false;
         }
@@ -250,8 +284,8 @@ public class BoardController {
     public void setUpHover(Pane slot) {
         slot.setOnMouseEntered(mouseEvent -> {
             if (slotEnabled(slot)) {
-                if (slot.getOpacity() == 1.00) { // JANGAN LUPA: ini ganti jd if slot ada card
-                    this.cardDetailName.setText(slot.getId());
+                if (slot.getUserData() != null) {
+                    this.displayCard((Card) slot.getUserData());
                     this.setCardDetailOpacity(1.0);
                 }
             }
@@ -260,16 +294,14 @@ public class BoardController {
     }
 
     /* Drag and Drop event */
-    public void setUpDragAndDrop(Pane slot) {
-        // CHECK IF SLOT IS EMPTY OR NOT + summoned character
+    public void setUpDrag(Pane slot) {
         slot.setOnDragDetected(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                System.out.print(slotEnabled(slot));
-                if (slotEnabled(slot)) {
-                    if (slot.getOpacity() == 1.00) { // JANGAN LUPA: ini ganti pake cek if slot is not empty (ada card yg bisa dipindah ke slot lain ato ngga)
+                if (slotEnabled(slot) && board.getPhase() == Phase.PLANNING) {
+                    if (slot.getUserData() != null) {
                         Dragboard db = slot.startDragAndDrop(TransferMode.MOVE);
                         ClipboardContent content = new ClipboardContent();
-                        content.put(cardData, "MAMAMA"); // JANGAN LUPA: nanti disini yg "MAMAMA" itu diisi pake Card yg mo ditransfer
+                        content.put(cardData, "filled");
                         db.setContent(content);
                         event.consume();
                     }
@@ -278,56 +310,18 @@ public class BoardController {
         });
         slot.setOnDragDone(new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
-                if (slotEnabled(slot)) {
-                    if (slot.getOpacity() == 1.00) { // JANGAN LUPA: ini ganti pake cek if slot is not empty (ada card yg bisa dipindah ke slot lain ato ngga)
+                if (slotEnabled(slot) && board.getPhase() == Phase.PLANNING) {
+                    if (slot.getUserData() != null) {
                         if (event.getTransferMode() == TransferMode.MOVE) {
-                            // JANGAN LUPA: nanti di line ini kosongin Card yg udah ditransfer
-                            slot.setOnDragDetected(null);
-                            slot.setOnDragDone(null);
-                            slot.setOpacity(0.50); // JANGAN LUPA: line ini nanti diapus, skrg cm buat testing aja
-                            setUpDragAndDrop(slot);
+                            slot.getChildren().clear();
+                            slot.setUserData(null);
                         }
-                        event.consume();
-                    }
-                }
-            }
-        });
-        slot.setOnDragOver(new EventHandler<DragEvent>() {
-            public void handle(DragEvent event) {
-                if (slotEnabled(slot)) {
-                    if (slot.getOpacity() != 1.00) { // JANGAN LUPA: ini ganti pake cek if slot is not empty & yg mo dipindahin tuh character ato bkn
-                        if (event.getGestureSource() != slot && event.getDragboard().hasContent(cardData)) {
-                            Object content = event.getDragboard().getContent(cardData);
-                            // if (!(content instanceof SummonedCharacter)) return; // JANGAN LUPA: ini cek lagi critanya biar yg bs di drop ke field itu cm summoned character aaokaok :V <3
-                            event.acceptTransferModes(TransferMode.MOVE);
-                        }
-                        event.consume();
-                    }
-                }
-            }
-        });
-        slot.setOnDragDropped(new EventHandler<DragEvent>() {
-            public void handle(DragEvent event) {
-                if (slotEnabled(slot)) {
-                    if (slot.getOpacity() != 1.00) { // JANGAN LUPA: ini ganti pake cek if slot is not empty & yg mo dipindahin tuh character ato bkn
-                        boolean success = false;
-                        if (event.getDragboard().hasContent(cardData)) {
-                            success = true;
-                        }
-                        event.setDropCompleted(success);
-                        // Card content = (Card) event.getDragboard().getContent(cardData); // JANGAN LUPA: ini critanya ngambil card dari contentnya tp tunggu contentnya bener dulu hehe
-                        // JANGAN LUPA: di line ini, set slot pake Card yg ditransfer (pake content yg di line atas ini persis)
-                        slot.setOnDragOver(null);
-                        slot.setOnDragDropped(null);
-                        slot.setOpacity(1.00); // JANGAN LUPA: line ini nanti diapus, skrg cm buat testing aja
-                        setUpDragAndDrop(slot);
                         event.consume();
                     }
                 }
             }
         });
     }
-
 
     /* Drop event for discarding Cards only */
     public void setUpDiscardDrop(Circle discardCard) {
@@ -360,13 +354,6 @@ public class BoardController {
         slot.setOnMouseClicked(mouseEvent -> {
             // on click behavior for PLANNING phase
             if (this.board.getPhase() == Phase.PLANNING) {
-                // corner cases
-                if ((slot.getId().equals("field1") || slot.getId().equals("field2")) && this.slotClicked == null) {
-                    return;
-                }
-                if (this.slotClicked != null && !(slot.getId().equals("field1") || slot.getId().equals("field2"))) {
-                    return;
-                }
                 if (slot.getId().equals("field1")) {
                     if (board.getTurn() != 1){
                         return;
@@ -377,24 +364,43 @@ public class BoardController {
                         return;
                     }
                 }
-                // set on click
-                if (this.slotClicked == slot){
-                    slot.setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
-                    this.slotClicked = null;
-                }
-                else if (this.slotClicked != null) {
-                    this.slotClicked.setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
-                    // JANGAN LUPA nanti disini card yg slotclicked memengaruhi yg di slot
-                    this.slotClicked = null;
+                if (this.slotClicked != null) {
+                    if (slot != this.slotClicked && !(slot.getId().equals("field1") || slot.getId().equals("field2"))) {
+                        return;
+                    }
+                    // set on click
+                    if (this.slotClicked == slot){
+                        slot.setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
+                        this.slotClicked = null;
+                    }
+                    else if (slot.getUserData() == null) {
+                        try {
+                            this.slotClicked.setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
+                            this.setHandOrFieldCard(slot, (Card) this.slotClicked.getUserData());
+                            this.slotClicked.getChildren().clear();
+                            this.slotClicked.setUserData(null);
+                            this.slotClicked = null;
+                        }
+                        catch (Exception e) {
+                            System.out.println(e);
+                        }
+                    }
+                    else {
+                        System.out.println("berhasil");
+                        // TODO : taro efek kartu ke karakter di board disini
+                    }
                 }
                 else {
+                    if ((slot.getId().equals("field1")) || (slot.getId().equals("field2"))) {
+                        return;
+                    }
                     this.slotClicked = slot;
                     slot.setBackground(new Background(new BackgroundFill(Color.GREENYELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
                 }
+
             }
             // on click behavior for ATTACK phase
             else if (this.board.getPhase() == Phase.ATTACK) {
-                // corner cases
                 if (!(slot.getId().equals("field1") || slot.getId().equals("field2"))) {
                     return;
                 }
@@ -429,7 +435,7 @@ public class BoardController {
                 }
                 else if (this.slotClicked != null) {
                     this.slotClicked.setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
-                    // JANGAN LUPA nanti disini si card yg di this.slotclickednya ngeattack card yg ada di slot :V
+                    // TODO : attack function taro disini
                     this.slotClicked = null;
                 }
                 else {
