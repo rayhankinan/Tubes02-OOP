@@ -33,6 +33,7 @@ import jdk.nashorn.internal.codegen.FieldObjectCreator;
 import javax.sound.midi.SysexMessage;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Objects;
 
 public class BoardController {
@@ -583,4 +584,11 @@ public class BoardController {
 
         });
     }
+
+    public void updateCharacterFieldCardAttackAvailability(List<SummonedCharacter> fieldCards){
+        for (SummonedCharacter characterFieldCard : fieldCards){
+            characterFieldCard.setBattleAvailability(1);
+        }
+    }
+
 }
