@@ -194,11 +194,9 @@ public class BoardController {
                 SummonedCharacter[] field2 = playerOne.getCharacterFieldCards();
                 for (int i = 0; i < 5; i++) {
                     if (field1[i] != null) {
-                        System.out.println(field1[i].getTemporary());
                         field1[i].decrementTemporaryDuration();
                     }
                     if (field2[i] != null) {
-                        System.out.println(field2[i].getTemporary());
                         field2[i].decrementTemporaryDuration();
                     }
                 }
@@ -525,16 +523,22 @@ public class BoardController {
                 if (slot.getId().equals("playerImage")) {
                     return;
                 }
+
                 if (slot.getId().equals("field1")) {
                     if (board.getTurn() != 1) {
-                        return;
+                        if (! (this.getCard(this.slotClicked) instanceof Spell)){
+                            return;
+                        }
                     }
                 }
                 if (slot.getId().equals("field2")) {
                     if (board.getTurn() != 2) {
-                        return;
+                        if (! (this.getCard(this.slotClicked) instanceof Spell)){
+                            return;
+                        }
                     }
                 }
+
                 if (this.slotClicked != null) {
                     if (slot != this.slotClicked && !slot.getId().equals("field1") && !slot.getId().equals("field2")) {
                         return;
@@ -556,16 +560,22 @@ public class BoardController {
                         }
                     } else {
                         try {
-                            // CEK SLOT TUJUAN KOSONG GAK
                             Player curPlayer = this.board.getCurrentPlayer();
+                            Player oppPlayer = this.board.getOppositePlayer();
                             if (this.getCard(slot) != null) {
                                 if (getCard(this.slotClicked) instanceof Spell) {
-                                    curPlayer.addToField(getSlotNum(slot), getCard(this.slotClicked));
+                                    // PLAYER 1 NARO SPELL KE FIELD 1 ato PLAYER 2 NARO SPELL KE FIELD 2
+                                    if ((this.board.getTurn() == 1 && slot.getId().equals("field1")) || (this.board.getTurn() == 2 && slot.getId().equals("field2"))){
+                                        curPlayer.addToField(getSlotNum(slot), getCard(this.slotClicked));
+                                        // CUR PLAYER NARO SPELL KE OPP PLAYER
+                                    } else {
+                                        oppPlayer.addToField(getSlotNum(slot), getCard(this.slotClicked));
+                                    }
+                                    reloadField();
+                                    reloadHand(this.board.getCurrentPlayer());
                                     this.slotClicked.setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
                                     this.slotClicked.getChildren().clear();
                                     this.slotClicked = null;
-                                    reloadField();
-                                    reloadHand(this.board.getCurrentPlayer());
                                 }
                             }
                         } catch (Exception e) {
