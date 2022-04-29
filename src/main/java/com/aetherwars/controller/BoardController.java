@@ -56,7 +56,7 @@ public class BoardController {
     private Circle discardCard;
 
     @FXML
-    private Pane drawPane, handCard1, handCard2, handCard3, handCard4, handCard5, cardDetail, fieldA1, fieldB1, fieldC1, fieldD1, fieldE1, fieldA2, fieldB2, fieldC2, fieldD2, fieldE2, playerOneImage, playerTwoImage;
+    private Pane drawPane, handCard1, handCard2, handCard3, handCard4, handCard5, cardDetail, fieldA1, fieldB1, fieldC1, fieldD1, fieldE1, fieldA2, fieldB2, fieldC2, fieldD2, fieldE2, playerOneImage, playerTwoImage, mana;
 
     private Pane[] handSlots;
     private Pane[] field1Slots;
@@ -81,11 +81,12 @@ public class BoardController {
         // initial set up
         try {
             CardDatabase.initialize();
-            this.board = new Board("yaya", "YOYO", "deck_2.csv", "deck_2.csv");
+            this.board = new Board("yaya", "YOYO", "deck_1.csv", "deck_1.csv");
         }
         catch (Exception e) {
             System.out.println(e);
         }
+
         this.playerOne = this.board.getPlayer1();
         this.playerTwo = this.board.getPlayer2();
         this.playerOneName.setText(this.playerOne.getName());
@@ -100,6 +101,7 @@ public class BoardController {
         this.field2Slots = new Pane[]{fieldA2, fieldB2, fieldC2, fieldD2, fieldE2};
 
         // set up mouse hover & drag-n-drop event handlers
+        this.setUpClick(this.mana);
         this.setUpClick(this.playerOneImage);
         this.setUpClick(this.playerTwoImage);
         this.setEventHandlers(this.handSlots);
@@ -155,14 +157,31 @@ public class BoardController {
         }
     }
 
+    public void reloadMana() throws Exception {
+        this.manaCapacity.setText("Mana: " + this.board.getCurrentPlayer().getMana() + "/10");
+    }
+
     /* Sets next phase */
     public void setPhase() {
         this.board.nextPhase();
+        this.slotClicked = null;
+        for (int i = 0; i < 5; i++){
+            this.handSlots[i].setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
+            this.field1Slots[i].setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
+            this.field2Slots[i].setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
+        }
         Player curPlayer = this.board.getCurrentPlayer();
         this.updateCharacterFieldCardAttackAvailability(curPlayer.getCharacterFieldCards());
         this.deckCapacity.setText("Deck: " + curPlayer.getDeck().getSize() + "/" + curPlayer.getDeck().getMaxCapacity());
         this.manaCapacity.setText("Mana: " + curPlayer.getMana() + "/10");
         this.round.setText("Round " + curPlayer.getRound());
+        if (this.board.getTurn() == 1){
+            this.playerOneName.setFill(Color.GREEN);
+            this.playerTwoName.setFill(Color.BLACK);
+        } else {
+            this.playerOneName.setFill(Color.BLACK);
+            this.playerTwoName.setFill(Color.GREEN);;
+        }
         switch (this.board.getPhase()) {
             case DRAW:
                 this.phaseEndBlock.setFill(Color.valueOf("#E7E7E7"));
@@ -170,6 +189,7 @@ public class BoardController {
                 try {
                     this.reloadHand(curPlayer);
                     this.displayDrawCard();
+                    reloadMana();
                 }
                 catch (Exception e) {
                     System.out.println(e);
@@ -517,6 +537,18 @@ public class BoardController {
         slot.setOnMouseClicked(mouseEvent -> {
             // on click behavior for PLANNING phase
             if (this.board.getPhase() == Phase.PLANNING) {
+                if (slot.getId().equals("mana") && this.board.getCurrentPlayer().getMana() > 0){
+                    if (this.slotClicked != null) {
+                        if (this.slotClicked == slot) {
+                            slot.setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
+                        }
+                        return;
+                    }
+                    this.slotClicked = slot;
+                    slot.setBackground(new Background(new BackgroundFill(Color.GREENYELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
+                    return;
+                }
+
                 if (slot.getId().equals("playerImage")) {
                     return;
                 }
@@ -528,6 +560,7 @@ public class BoardController {
                         }
                     }
                 }
+
                 if (slot.getId().equals("field2")) {
                     if (board.getTurn() != 2) {
                         if (! (this.getCard(this.slotClicked) instanceof Spell)){
@@ -537,6 +570,22 @@ public class BoardController {
                 }
 
                 if (this.slotClicked != null) {
+                    if (this.slotClicked.getId().equals("mana")){
+                        if (slot.getId().equals("field1") || slot.getId().equals("field2")) {
+                            if (this.getCard(slot) != null){
+                                // TODO: nambahin exp dari mana
+                                try {
+                                    this.board.getCurrentPlayer().useManaForExp(getSlotNum(slot), 1);
+                                    reloadField();
+                                    reloadMana();
+                                    this.slotClicked.setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
+                                } catch (Exception e){
+                                    System.out.println(e);
+                                }
+                            }
+                        }
+                    }
+
                     if (slot != this.slotClicked && !slot.getId().equals("field1") && !slot.getId().equals("field2")) {
                         return;
                     }
@@ -552,8 +601,10 @@ public class BoardController {
                             this.slotClicked = null;
                             this.setFieldCard(slot, (SummonedCharacter) this.getCard(slot));
                             reloadHand(this.board.getCurrentPlayer());
+                            reloadField();
+                            reloadMana();
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            System.out.println(e);
                         }
                     } else {
                         try {
@@ -566,17 +617,18 @@ public class BoardController {
                                         curPlayer.addToField(getSlotNum(slot), getCard(this.slotClicked));
                                         // CUR PLAYER NARO SPELL KE OPP PLAYER
                                     } else {
-                                        oppPlayer.addToField(getSlotNum(slot), getCard(this.slotClicked));
+                                        curPlayer.addToFieldOpponent(oppPlayer, getSlotNum(slot), getCard(this.slotClicked));
                                     }
-                                    reloadField();
-                                    reloadHand(this.board.getCurrentPlayer());
                                     this.slotClicked.setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
                                     this.slotClicked.getChildren().clear();
                                     this.slotClicked = null;
+                                    reloadField();
+                                    reloadHand(curPlayer);
+                                    reloadMana();
                                 }
                             }
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            System.out.println(e);
                         }
                     }
                 } else {

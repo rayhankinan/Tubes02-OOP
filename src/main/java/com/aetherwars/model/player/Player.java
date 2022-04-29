@@ -136,18 +136,52 @@ public class Player {
         return null;
     }
 
-    public void addToField(int field, Card card) throws CardException {
-        if (card instanceof Character) {
-            SummonedCharacter fieldCard = new SummonedCharacter((Character) card, field);
-            characterFieldCards[field] = fieldCard;
-            discardCardOnHand(card);
+    public void addToField(int field, Card card) throws CardException, PlayerException {
+        if (this.getMana() >= card.getMana()){
+            if (card instanceof Character) {
+                SummonedCharacter fieldCard = new SummonedCharacter((Character) card, field);
+                characterFieldCards[field] = fieldCard;
+                discardCardOnHand(card);
+                this.useMana(card.getMana());
 
-        } else if (card instanceof Spell) {
-            characterFieldCards[field].addActivable((Applicable) card);
-            discardCardOnHand(card);
+            } else if (card instanceof Spell) {
+                characterFieldCards[field].addActivable((Applicable) card);
+                // ILANGIN KLO ABIS KENA SPELL MALAH MODAR
+                if (characterFieldCards[field].getTotalHealth() <= 0){
+                    discardCharacterFieldCards(field);
+                }
+                discardCardOnHand(card);
+                this.useMana(card.getMana());
 
+            } else {
+                throw new CardException("Class is not recognized!");
+            }
         } else {
-            throw new CardException("Class is not recognized!");
+            throw new CardException("Mana tidak cukup!");
+        }
+    }
+
+    public void addToFieldOpponent(Player opponent, int field, Card card) throws CardException, PlayerException {
+        if (this.getMana() >= card.getMana()){
+            if (card instanceof Spell) {
+                System.out.println(field);
+                for (int i=0; i < 5; i++){
+                    System.out.println(opponent.characterFieldCards[i]);
+                }
+                opponent.characterFieldCards[field].addActivable((Applicable) card);
+                System.out.println("YOYOYO");
+                // ILANGIN KLO ABIS KENA SPELL MALAH MODAR
+                if (opponent.characterFieldCards[field].getTotalHealth() <= 0){
+                    opponent.discardCharacterFieldCards(field);
+                }
+                this.discardCardOnHand(card);
+                this.useMana(card.getMana());
+
+            } else {
+                throw new CardException("Class is not recognized!");
+            }
+        } else {
+            throw new CardException("Mana tidak cukup!");
         }
     }
 
@@ -160,8 +194,6 @@ public class Player {
     }
 
     public void useManaForExp(int field, int mana) throws CardException, PlayerException {
-        /* CATATAN KINAN: INI UNTUK APA YA?  */
-
         this.characterFieldCards[field].addExp(mana);
         this.useMana(mana);
     }
@@ -197,6 +229,9 @@ public class Player {
             //discard opponent card
             characterFieldCard.addExp(opponentCharacterFieldCard.getLevel());
             opponentPlayer.discardCharacterFieldCards(opponentCharacterFieldCard.getField());
+        }
+        if (characterFieldCard.getTotalHealth() <= 0){
+            this.discardCharacterFieldCards(characterFieldCard.getField());
         }
         characterFieldCard.setBattleAvailability(0);
     }

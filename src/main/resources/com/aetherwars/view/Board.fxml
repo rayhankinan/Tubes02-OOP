@@ -97,11 +97,11 @@
             <Font name="Arial" size="12.0" />
          </font>
       </Button>
-      <Group layoutX="34.0" layoutY="250.0"/>
+      <Group layoutX="34.0" layoutY="250.0" />
       <Group layoutX="34.0" layoutY="78.0" />
       <Pane id="field2" fx:id="fieldD2" layoutX="815.0" layoutY="234.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7e7;" />
-      <ProgressBar fx:id="progressBar1" layoutX="34.0" layoutY="26.0" prefHeight="36.0" prefWidth="472.0" progress="1.0"/>
-      <ProgressBar fx:id="progressBar2" layoutX="694.0" layoutY="26.0" prefHeight="36.0" prefWidth="472.0" progress="1.0"/>
+      <ProgressBar fx:id="progressBar1" layoutX="34.0" layoutY="26.0" prefHeight="36.0" prefWidth="472.0" progress="1.0" />
+      <ProgressBar fx:id="progressBar2" layoutX="694.0" layoutY="26.0" prefHeight="36.0" prefWidth="472.0" progress="1.0" />
       <Group layoutX="578.0" layoutY="29.0">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7e7e7" height="42.0" layoutX="-27.0" layoutY="-10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="102.0" />
@@ -189,7 +189,7 @@
             <Font name="Arial" size="12.0" />
          </font>
       </Text>
-      <Rectangle fill="#e7e7e7" height="28.0" layoutX="197.0" layoutY="529.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="114.0" />
+      <Pane fx:id="mana" style="-fx-background-color: #e7e7e7;" prefHeight="28.0" layoutX="197.0" layoutY="529.0"  prefWidth="114.0" />
       <Text fx:id="manaCapacity" layoutX="224.0" layoutY="547.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mana: 9/10">
          <font>
             <Font name="Arial" size="12.0" />
