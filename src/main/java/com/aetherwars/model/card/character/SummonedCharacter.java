@@ -112,8 +112,8 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
             if (this.exp + exp < this.getExpForNextLevel()) {
                 this.exp += exp;
             } else {
-                this.levelUp();
                 this.exp += (exp - this.getExpForNextLevel());
+                this.levelUp();
             }
 
         } else {
