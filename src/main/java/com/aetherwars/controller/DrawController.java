@@ -1,6 +1,5 @@
 package com.aetherwars.controller;
 
-import com.aetherwars.model.board.Phase;
 import com.aetherwars.model.card.*;
 import com.aetherwars.model.deck.DeckException;
 import com.aetherwars.model.player.Player;
@@ -8,13 +7,8 @@ import com.aetherwars.model.deck.Deck;
 import javafx.fxml.FXML;
 
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.util.ArrayList;

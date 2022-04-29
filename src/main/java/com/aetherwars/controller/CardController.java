@@ -86,7 +86,7 @@ public class CardController {
     /*
      * Display character card information for potion swap card*/
     public void setCard(Swap swap){
-        Image newImg = new Image("/com/aetherwars/model/card/spell/level/image/" + swap.getImagepath().toString());
+        Image newImg = new Image("/com/aetherwars/model/card/spell/swap/image/" + swap.getImagepath().toString());
         String dur = Integer.toString(swap.getDuration());
         String desc = "SWAP " + dur;
 
