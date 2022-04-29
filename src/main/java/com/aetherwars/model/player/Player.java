@@ -1,7 +1,6 @@
 package com.aetherwars.model.player;
 
 import com.aetherwars.model.card.Card;
-import com.aetherwars.model.card.CardDatabase;
 import com.aetherwars.model.card.CardException;
 
 import com.aetherwars.model.card.spell.Applicable;
@@ -114,7 +113,9 @@ public class Player {
         this.deck.returnCardsToDeck(remain);
     }
 
-    public SummonedCharacter[] getCharacterFieldCards() { return this.characterFieldCards; }
+    public SummonedCharacter[] getCharacterFieldCards() {
+        return this.characterFieldCards;
+    }
 
     public Card getField(int field) {
         return characterFieldCards[field];
@@ -228,7 +229,7 @@ public class Player {
     public void attackOpponentCard(SummonedCharacter characterFieldCard, SummonedCharacter opponentCharacterFieldCard, Player opponentPlayer) throws CardException {
         characterFieldCard.attackCharacter(opponentCharacterFieldCard);
         if (opponentCharacterFieldCard.getTotalHealth() <= 0) {
-            //discard opponent card
+            /* discard opponent card */
             characterFieldCard.addExp(opponentCharacterFieldCard.getLevel());
             opponentPlayer.discardCharacterFieldCards(opponentCharacterFieldCard.getField());
         }

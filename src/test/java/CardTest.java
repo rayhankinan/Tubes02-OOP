@@ -107,7 +107,7 @@ public class CardTest {
         Level l = CardDatabase.getLevel(401);
         summonedCharacter.addActivable(l);
 
-        assertEquals(initialCurrentHealth + 5 * summonedCharacter.getHealthup(), summonedCharacter.getCurrentHealth(), 0.0);
-        assertEquals(initialCurrentAttack + 5 * summonedCharacter.getAttackup(), summonedCharacter.getCurrentAttack(), 0.0);
+        assertEquals(initialCurrentHealth + summonedCharacter.getHealthup(), summonedCharacter.getCurrentHealth(), 0.0);
+        assertEquals(initialCurrentAttack + summonedCharacter.getAttackup(), summonedCharacter.getCurrentAttack(), 0.0);
     }
 }
