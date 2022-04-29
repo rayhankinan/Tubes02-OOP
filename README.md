@@ -238,10 +238,10 @@ HP dapat berkurang apabila terkena serangan dari kartu karakter yang diletakkan 
 ## Setup
 1. Pastikan komputer anda telah melakukan instalasi seluruh _built_ dan _testing tools_ yang digunakan pada aplikasi ini.
 2. Lakukan _clone_ terhadap repository ini pada komputer anda.
-3. Anda dapat menjalankan perintah `./gradlew build` pada _command prompt_ pada komputer Anda. Perintah tersebut akan membangun program dengan _built tools_ gradle.
+3. Anda dapat menjalankan perintah `./gradlew build` pada Linux dan macOS atau `.\gradlew build` pada Windows _command prompt_ pada komputer Anda. Perintah tersebut akan membangun program dengan _built tools_ gradle.
 
 ## Usage
-1. Anda dapat menjalankan program ini dengan menggunakan perintah `./gradlew run` pada _command prompt_ pada komputer Anda. Jika berhasil, maka akan muncul _window_ aplikasi AetherWars.
+1. Anda dapat menjalankan program ini dengan menggunakan perintah `./gradlew run` pada Linux dan macOS atau `.\gradlew run` pada Windows _command prompt_ pada komputer Anda. Jika berhasil, maka akan muncul _window_ aplikasi AetherWars.
 2. Selamat bermain!
 
 ## Screenshots
