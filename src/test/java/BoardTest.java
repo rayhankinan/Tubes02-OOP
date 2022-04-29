@@ -26,6 +26,7 @@ public class BoardTest {
         assertEquals(2, board.getTurn());
     }
 
+    @Test
     public void nextPhase() throws IOException, URISyntaxException, CardException, DeckException {
         Board board = new Board("yaya", "YOYO", "deck_1.csv", "deck_1.csv");
         board.nextPhase();

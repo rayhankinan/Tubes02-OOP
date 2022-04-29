@@ -236,10 +236,17 @@ HP dapat berkurang apabila terkena serangan dari kartu karakter yang diletakkan 
 * JUnit version 4.13.2
 
 ## Setup
+1. Pastikan komputer anda telah melakukan instalasi seluruh _built_ dan _testing tools_ yang digunakan pada aplikasi ini.
+2. Lakukan _clone_ terhadap repository ini pada komputer anda.
+3. Anda dapat menjalankan perintah `./gradlew build` pada _command prompt_ pada komputer Anda. Perintah tersebut akan membangun program dengan _built tools_ gradle.
 
 ## Usage
+1. Anda dapat menjalankan program ini dengan menggunakan perintah `./gradlew run` pada _command prompt_ pada komputer Anda. Jika berhasil, maka akan muncul _window_ aplikasi AetherWars.
+2. Selamat bermain!
 
 ## Screenshots
+![Choose Card](screenshots/1.jpeg)
+![Gameplay](screenshots/2.jpeg)
 
 ## Contacts
 Created by:

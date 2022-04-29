@@ -1,7 +1,5 @@
 import com.aetherwars.model.card.CardDatabase;
 import com.aetherwars.model.card.CardException;
-import com.aetherwars.model.card.character.Character;
-import com.aetherwars.model.card.character.SummonedCharacter;
 import com.aetherwars.model.player.Player;
 import com.aetherwars.model.player.PlayerException;
 
@@ -12,7 +10,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 public class PlayerTest {
     @BeforeClass
