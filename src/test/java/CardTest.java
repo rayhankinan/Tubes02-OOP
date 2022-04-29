@@ -22,14 +22,11 @@ public class CardTest {
 
     @Test
     public void characterTest() throws CardException {
-        Character character_1 = CardDatabase.getCharacter(3);
+        Character character_1 = CardDatabase.getCharacter(7);
         SummonedCharacter summonedCharacter_1 = new SummonedCharacter(character_1);
 
-        Character character_2 = CardDatabase.getCharacter(4);
+        Character character_2 = CardDatabase.getCharacter(7);
         SummonedCharacter summonedCharacter_2 = new SummonedCharacter(character_2);
-
-        Potion p = CardDatabase.getPotion(101);
-        summonedCharacter_1.addActivable(p);
 
         int initialTotalHealth = summonedCharacter_1.getTotalHealth();
 
