@@ -99,20 +99,9 @@ HP dapat berkurang apabila terkena serangan dari kartu karakter yang diletakkan 
     │           └───aetherwars
     │               ├───material
     │               │       att.png
-    │               │       attack.png
     │               │       att_2.png
     │               │       att_3.png
-    │               │       BelweBoldBT.ttf
-    │               │       bg-gvg.png
-    │               │       card.png
-    │               │       health.png
     │               │       hp.png
-    │               │       mana.png
-    │               │       material-design.css
-    │               │       piloted.png
-    │               │       race.png
-    │               │       rarity-common.png
-    │               │       title.png
     │               │
     │               ├───model
     │               │   ├───card
