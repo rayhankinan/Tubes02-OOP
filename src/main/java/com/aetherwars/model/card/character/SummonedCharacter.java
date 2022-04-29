@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class SummonedCharacter extends Character implements Summonable, Attackable, Affectable {
     private int level;
     private int exp;
-    private int currentHealth;
-    private int currentAttack;
+    private double currentHealth;
+    private double currentAttack;
     private final List<Potion> potionSpells;
     private Swap swapSpell;
 
@@ -35,7 +35,7 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
         this.isAvailableAttack = 0;
     }
 
-    public SummonedCharacter(int id, String name, Type type, String description, String imagepath, int baseAttack, int baseHealth, int mana, int attackup, int healthup) throws CardException {
+    public SummonedCharacter(int id, String name, Type type, String description, String imagepath, double baseAttack, double baseHealth, int mana, double attackup, double healthup) throws CardException {
         super(id, name, type, description, imagepath, baseAttack, baseHealth, mana, attackup, healthup);
 
         this.field = -1;
@@ -99,12 +99,12 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
     }
 
     @Override
-    public int getCurrentHealth() {
+    public double getCurrentHealth() {
         return this.currentHealth;
     }
 
     @Override
-    public int getCurrentAttack() {
+    public double getCurrentAttack() {
         return this.currentAttack;
     }
 
@@ -195,13 +195,13 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
 
     @Override
     public void attackPlayer(Player p) {
-        p.takeDamage(Math.max(this.currentAttack + this.getTempAttack(), 0));
+        p.takeDamage(Math.max(this.currentAttack + this.getTempAttack(), 0.0));
     }
 
     @Override
-    public void takeDamage(int damage) {
+    public void takeDamage(double damage) {
         for (Potion p : this.potionSpells) {
-            int initialTempHealth = p.getTempHealth();
+            double initialTempHealth = p.getTempHealth();
             p.setTempHealth(Math.max(initialTempHealth - damage, 0));
             damage = Math.max(damage - initialTempHealth, 0);
         }
@@ -210,8 +210,8 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
     }
 
     @Override
-    public int getTempHealth() {
-        int result = 0;
+    public double getTempHealth() {
+        double result = 0;
 
         for (Potion p : this.potionSpells) {
             result += p.getTempHealth();
@@ -221,8 +221,8 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
     }
 
     @Override
-    public int getTempAttack() {
-        int result = 0;
+    public double getTempAttack() {
+        double result = 0;
 
         for (Potion p : this.potionSpells) {
             result += p.getTempAttack();
@@ -232,12 +232,12 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
     }
 
     @Override
-    public int getTotalHealth() {
+    public double getTotalHealth() {
         return Math.max(this.currentHealth + this.getTempHealth(), 0);
     }
 
     @Override
-    public int getTotalAttack() {
+    public double getTotalAttack() {
         return Math.max(this.currentAttack + this.getTempAttack(), 0);
     }
 
@@ -300,7 +300,7 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
     }
 
     public void swapHealthAttack() {
-        int temp;
+        double temp;
 
         temp = this.currentHealth;
         this.currentHealth = this.currentAttack;
@@ -346,7 +346,7 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder(String.format("Id: %d\nName: %s\nType: %s\nDescription: %s\nImagepath: %s\nAttack: %d\nHealth: %d\nMana: %d\nAttack Up: %d\nHealth Up: %d\nLevel: %d\nExp: %d\nCurrent Attack: %d\nCurrent Health: %d\nTemp Attack: %d\nTemp Health: %d", this.id, this.name, this.type, this.description, this.imagepath, this.baseAttack, this.baseHealth, this.mana, this.attackup, this.healthup, this.level, this.exp, this.currentAttack, this.currentHealth, this.getTempAttack(), this.getTempHealth()));
+        StringBuilder stringBuilder = new StringBuilder(String.format("Id: %d\nName: %s\nType: %s\nDescription: %s\nImagepath: %s\nAttack: %.1f\nHealth: %.1f\nMana: %d\nAttack Up: %.1f\nHealth Up: %.1f\nLevel: %d\nExp: %d\nCurrent Attack: %.1f\nCurrent Health: %.1f\nTemp Attack: %.1f\nTemp Health: %.1f", this.id, this.name, this.type, this.description, this.imagepath, this.baseAttack, this.baseHealth, this.mana, this.attackup, this.healthup, this.level, this.exp, this.currentAttack, this.currentHealth, this.getTempAttack(), this.getTempHealth()));
 
         if (this.potionSpells.size() > 0) {
             stringBuilder.append("\nACTIVE POTIONS:");

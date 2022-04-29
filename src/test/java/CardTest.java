@@ -9,6 +9,7 @@ import com.aetherwars.model.card.spell.swap.Swap;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
@@ -28,11 +29,11 @@ public class CardTest {
         Character character_2 = CardDatabase.getCharacter(7);
         SummonedCharacter summonedCharacter_2 = new SummonedCharacter(character_2);
 
-        int initialTotalHealth = summonedCharacter_1.getTotalHealth();
+        double initialTotalHealth = summonedCharacter_1.getTotalHealth();
 
         summonedCharacter_2.attackCharacter(summonedCharacter_1);
 
-        assertEquals(initialTotalHealth, summonedCharacter_1.getTotalHealth() + summonedCharacter_2.getTotalAttack());
+        assertEquals(initialTotalHealth, summonedCharacter_1.getTotalHealth() + summonedCharacter_2.getTotalAttack(), 0.0);
     }
 
     @Test
@@ -40,8 +41,8 @@ public class CardTest {
         Character character = CardDatabase.getCharacter(1);
         SummonedCharacter summonedCharacter = new SummonedCharacter(character);
 
-        int initialCurrentHealth = summonedCharacter.getCurrentHealth();
-        int initialCurrentAttack = summonedCharacter.getCurrentAttack();
+        double initialCurrentHealth = summonedCharacter.getCurrentHealth();
+        double initialCurrentAttack = summonedCharacter.getCurrentAttack();
 
         Swap s = CardDatabase.getSwap(203);
         summonedCharacter.addActivable(s);
@@ -52,8 +53,8 @@ public class CardTest {
         summonedCharacter.decrementTemporaryDuration();
         summonedCharacter.decrementTemporaryDuration();
 
-        assertEquals(initialCurrentAttack, summonedCharacter.getCurrentHealth());
-        assertEquals(initialCurrentHealth, summonedCharacter.getCurrentAttack());
+        assertEquals(initialCurrentAttack, summonedCharacter.getCurrentHealth(), 0.0);
+        assertEquals(initialCurrentHealth, summonedCharacter.getCurrentAttack(), 0.0);
     }
 
     @Test
@@ -61,8 +62,8 @@ public class CardTest {
         Character character = CardDatabase.getCharacter(1);
         SummonedCharacter summonedCharacter = new SummonedCharacter(character);
 
-        int initialCurrentHealth = summonedCharacter.getCurrentHealth();
-        int initialCurrentAttack = summonedCharacter.getCurrentAttack();
+        double initialCurrentHealth = summonedCharacter.getCurrentHealth();
+        double initialCurrentAttack = summonedCharacter.getCurrentAttack();
 
         Swap s = CardDatabase.getSwap(201);
         summonedCharacter.addActivable(s);
@@ -73,8 +74,8 @@ public class CardTest {
         summonedCharacter.decrementTemporaryDuration();
         summonedCharacter.decrementTemporaryDuration();
 
-        assertEquals(initialCurrentHealth, summonedCharacter.getCurrentHealth());
-        assertEquals(initialCurrentAttack, summonedCharacter.getCurrentAttack());
+        assertEquals(initialCurrentHealth, summonedCharacter.getCurrentHealth(), 0.0);
+        assertEquals(initialCurrentAttack, summonedCharacter.getCurrentAttack(), 0.0);
     }
 
     @Test
@@ -100,13 +101,13 @@ public class CardTest {
         Character character = CardDatabase.getCharacter(1);
         SummonedCharacter summonedCharacter = new SummonedCharacter(character);
 
-        int initialCurrentHealth = summonedCharacter.getCurrentHealth();
-        int initialCurrentAttack = summonedCharacter.getCurrentAttack();
+        double initialCurrentHealth = summonedCharacter.getCurrentHealth();
+        double initialCurrentAttack = summonedCharacter.getCurrentAttack();
 
         Level l = CardDatabase.getLevel(401);
         summonedCharacter.addActivable(l);
 
-        assertEquals(initialCurrentHealth + summonedCharacter.getHealthup(), summonedCharacter.getCurrentHealth());
-        assertEquals(initialCurrentAttack + summonedCharacter.getAttackup(), summonedCharacter.getCurrentAttack());
+        assertEquals(initialCurrentHealth + 5 * summonedCharacter.getHealthup(), summonedCharacter.getCurrentHealth(), 0.0);
+        assertEquals(initialCurrentAttack + 5 * summonedCharacter.getAttackup(), summonedCharacter.getCurrentAttack(), 0.0);
     }
 }

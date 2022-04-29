@@ -14,14 +14,13 @@ import com.aetherwars.model.deck.DeckException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 public class Player {
-    private static final int MAX_HP = 80;
+    private static final double MAX_HP = 80;
     private static final int MAX_MANA = 10;
-    private static final int MIN_HP = 0;
+    private static final double MIN_HP = 0;
     private static final int MIN_MANA = 0;
     private static final int MAX_CARD_IN_HAND = 5;
     private static final int MAX_CARD_IN_BOARD = 5;
@@ -31,7 +30,7 @@ public class Player {
     private final Deck deck;
     private final String name;
 
-    private int health;
+    private double health;
     private int mana;
     private int round;
 
@@ -42,6 +41,7 @@ public class Player {
         this.round = 1;
         this.onHand = new ArrayList<>(MAX_CARD_IN_HAND);
         this.deck = new Deck(deckFilename);
+
         for (int i = 0; i < 5; i++) {
             this.characterFieldCards[i] = null;
         }
@@ -51,11 +51,13 @@ public class Player {
         return this.name;
     }
 
-    public int getHealth() {
+    public double getHealth() {
         return this.health;
     }
 
-    public int getMaxHp() { return this.MAX_HP; }
+    public double getMaxHp() {
+        return this.MAX_HP;
+    }
 
     public int getMana() {
         return this.mana;
@@ -77,11 +79,15 @@ public class Player {
         }
     }
 
-    public int getRound() { return this.round; }
+    public int getRound() {
+        return this.round;
+    }
 
-    public void addRound(){ this.round++; }
+    public void addRound() {
+        this.round++;
+    }
 
-    public void takeDamage(int damage) {
+    public void takeDamage(double damage) {
         if (this.health - damage < MIN_HP) {
             this.health = 0;
         } else {
@@ -112,15 +118,17 @@ public class Player {
         return characterFieldCards[field];
     }
 
-    public boolean isFieldEmpty(){
-        for (int i=0; i < this.characterFieldCards.length; i++){
-            if (characterFieldCards[i] != null){
+    public boolean isFieldEmpty() {
+
+        for (SummonedCharacter characterFieldCard : this.characterFieldCards) {
+            if (characterFieldCard != null) {
                 return false;
             }
         }
 
         return true;
     }
+
     public Card getHand(int hand) {
         if (hand < this.onHand.size()) {
             return onHand.get(hand);

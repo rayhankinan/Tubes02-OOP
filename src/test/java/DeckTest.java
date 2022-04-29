@@ -32,6 +32,6 @@ public class DeckTest {
             }
         }
 
-        assertEquals(53, N);
+        assertEquals(54, N);
     }
 }

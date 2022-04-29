@@ -253,8 +253,8 @@ public class BoardController {
         Image newImg = new Image("/com/aetherwars/model/card/spell/potion/image/" + potion.getImagepath().toString());
         this.cardDetailName.setText(potion.getName());
         this.cardDetailImage.setImage(newImg);
-        this.cardDetailAtk.setText("+" + Integer.toString(potion.getTempAttack()));
-        this.cardDetailHP.setText("+" + Integer.toString(potion.getTempHealth()));
+        this.cardDetailAtk.setText("+" + potion.getTempAttack());
+        this.cardDetailHP.setText("+" + potion.getTempHealth());
         this.cardDetailLevel.setText("-");
         this.cardDetailType.setText("Spell");
         this.cardDetailExp.setText("-");
@@ -267,8 +267,8 @@ public class BoardController {
         Image newImg = new Image("/com/aetherwars/model/card/character/image/" + character.getImagepath().toString());
         this.cardDetailName.setText(character.getName());
         this.cardDetailImage.setImage(newImg);
-        this.cardDetailAtk.setText(Integer.toString(character.getBaseAttack()));
-        this.cardDetailHP.setText(Integer.toString(character.getBaseHealth()));
+        this.cardDetailAtk.setText(Double.toString(character.getBaseAttack()));
+        this.cardDetailHP.setText(Double.toString(character.getBaseHealth()));
         this.cardDetailLevel.setText("1");
         this.cardDetailType.setText(Objects.toString(character.getType()));
         this.cardDetailExp.setText("0");
@@ -283,9 +283,9 @@ public class BoardController {
         this.cardDetailImage.setImage(newImg);
 //        String atkText = "+" + Integer.toString(character.getCurrentAttack());
 //        String hpText = "+" + Integer.toString(character.getCurrentHealth());
-        this.cardDetailAtk.setText(Integer.toString(character.getTotalAttack()));
-        this.cardDetailHP.setText(Integer.toString(character.getTotalHealth()));
-        this.cardDetailLevel.setText(Integer.toString(character.getLevel()));
+        this.cardDetailAtk.setText(Double.toString(character.getTotalAttack()));
+        this.cardDetailHP.setText(Double.toString(character.getTotalHealth()));
+        this.cardDetailLevel.setText(Double.toString(character.getLevel()));
         this.cardDetailType.setText(Objects.toString(character.getType()));
         this.cardDetailExp.setText(Objects.toString(character.getExp()));
         this.cardDetailDesc.setText(character.getDescription());
@@ -501,10 +501,7 @@ public class BoardController {
         });
         discardCard.setOnDragDropped(new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
-                boolean success = false;
-                if (event.getDragboard().hasContent(cardData)) {
-                    success = true;
-                }
+                boolean success = event.getDragboard().hasContent(cardData);
                 event.setDropCompleted(success);
                 event.consume();
             }
@@ -556,7 +553,7 @@ public class BoardController {
                             this.setFieldCard(slot, (SummonedCharacter) this.getCard(slot));
                             reloadHand(this.board.getCurrentPlayer());
                         } catch (Exception e) {
-                            System.out.println(e);
+                            e.printStackTrace();
                         }
                     } else {
                         try {
@@ -579,7 +576,7 @@ public class BoardController {
                                 }
                             }
                         } catch (Exception e) {
-                            System.out.println(e);
+                            e.printStackTrace();
                         }
                     }
                 } else {
@@ -609,9 +606,9 @@ public class BoardController {
                         Player curPlayer = this.board.getCurrentPlayer();
                         curPlayer.attackOpponentPlayer(card, this.board.getOppositePlayer());
 //                        card.attackPlayer(this.board.getOppositePlayer());
-                        int curHealth = this.board.getOppositePlayer().getHealth();
-                        int maxHealth = this.board.getOppositePlayer().getMaxHp();
-                        double healthBar = (double) curHealth / (double) maxHealth;
+                        double curHealth = this.board.getOppositePlayer().getHealth();
+                        double maxHealth = this.board.getOppositePlayer().getMaxHp();
+                        double healthBar = curHealth / maxHealth;
                         System.out.println(maxHealth);
                         System.out.println(healthBar);
                         if (this.board.getOppositePlayer() == playerTwo) {
@@ -666,7 +663,7 @@ public class BoardController {
                         try {
                             this.reloadField();
                         } catch (Exception e) {
-                            System.out.println(e);
+                            e.printStackTrace();
                         }
                     }
                 } else {

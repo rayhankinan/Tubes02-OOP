@@ -37,8 +37,8 @@ public class FieldCardController {
         String desc = xp + "/" + nextXp + " [" + level + "]";
 
         cardImage.setImage(newImg);
-        cardAtt.setText(Integer.toString(character.getTotalAttack()));
-        cardHp.setText(Integer.toString(character.getTotalHealth()));
+        cardAtt.setText(Double.toString(character.getTotalAttack()));
+        cardHp.setText(Double.toString(character.getTotalHealth()));
         cardLevel.setText(desc);
     }
 }

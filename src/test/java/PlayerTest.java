@@ -31,7 +31,7 @@ public class PlayerTest {
     public void takeDamageTest() throws IOException, URISyntaxException, CardException, PlayerException {
         Player player = new Player("Rayhan", "deck_1.csv");
         player.takeDamage(1);
-        assertEquals(79, player.getHealth());
+        assertEquals(79, player.getHealth(), 0.0);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class PlayerTest {
         Character character_1 = CardDatabase.getCharacter(3);
         player_1.addToField(0, character_1);
         player_1.attackOpponentPlayer((SummonedCharacter) player_1.getField(0), player_2);
-        assertEquals(77, player_2.getHealth());
+        assertEquals(77, player_2.getHealth(), 0.0);
     }
 
     @Test

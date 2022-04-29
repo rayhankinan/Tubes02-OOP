@@ -8,10 +8,10 @@ import com.aetherwars.model.card.spell.swap.Swap;
 import java.util.List;
 
 public interface Affectable {
-    int getTempHealth();
-    int getTempAttack();
-    int getTotalHealth();
-    int getTotalAttack();
+    double getTempHealth();
+    double getTempAttack();
+    double getTotalHealth();
+    double getTotalAttack();
     List<Potion> getTemporary();
     void addPotion(Potion p) throws CardException;
     void deletePotion(Potion p) throws CardException;

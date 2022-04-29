@@ -7,8 +7,8 @@ public interface Summonable {
     int getLevel();
     int getExp();
     int getExpForNextLevel() throws CardException;
-    int getCurrentHealth();
-    int getCurrentAttack();
+    double getCurrentHealth();
+    double getCurrentAttack();
     void addExp(int exp) throws CardException;
     void resetExp();
     void levelUp() throws CardException;

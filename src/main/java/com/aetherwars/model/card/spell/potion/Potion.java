@@ -10,8 +10,8 @@ public class Potion extends Spell implements Revertible, Cloneable {
     public static final int MIN_ID = 101;
     public static final int MAX_ID = 199;
 
-    private int tempAttack;
-    private int tempHealth;
+    private double tempAttack;
+    private double tempHealth;
     private int duration;
 
     public Potion(int id) throws CardException {
@@ -26,7 +26,7 @@ public class Potion extends Spell implements Revertible, Cloneable {
         }
     }
 
-    public Potion(int id, String name, String description, String imagepath, int tempAttack, int tempHealth, int mana, int duration) throws CardException {
+    public Potion(int id, String name, String description, String imagepath, double tempAttack, double tempHealth, int mana, int duration) throws CardException {
         super(id, name, description, imagepath, mana);
 
         if (id < Potion.MIN_ID || id > Potion.MAX_ID) {
@@ -38,24 +38,24 @@ public class Potion extends Spell implements Revertible, Cloneable {
         }
     }
 
-    public int getTempAttack() {
+    public double getTempAttack() {
         return this.tempAttack;
     }
 
-    public void setTempAttack(int tempAttack) {
+    public void setTempAttack(double tempAttack) {
         this.tempAttack = tempAttack;
     }
 
-    public int getTempHealth() {
+    public double getTempHealth() {
         return this.tempHealth;
     }
 
-    public void setTempHealth(int tempHealth) {
+    public void setTempHealth(double tempHealth) {
         this.tempHealth = tempHealth;
     }
 
     public void swapAttackHealth() {
-        int temp;
+        double temp;
 
         temp = this.tempAttack;
         this.tempAttack = this.tempHealth;
@@ -92,7 +92,7 @@ public class Potion extends Spell implements Revertible, Cloneable {
 
     @Override
     public String toString() {
-        return String.format("Id: %d\nName: %s\nDescription: %s\nImagepath: %s\nAttack: %d\nHealth: %d\nMana: %d\nDuration: %d", this.id, this.name, this.description, this.imagepath, this.tempAttack, this.tempHealth, this.mana, this.duration);
+        return String.format("Id: %d\nName: %s\nDescription: %s\nImagepath: %s\nAttack: %.1f\nHealth: %.1f\nMana: %d\nDuration: %d", this.id, this.name, this.description, this.imagepath, this.tempAttack, this.tempHealth, this.mana, this.duration);
     }
 
     @Override
