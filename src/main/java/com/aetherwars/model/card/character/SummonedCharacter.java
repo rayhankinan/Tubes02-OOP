@@ -165,7 +165,7 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
     }
 
     @Override
-    public void attackCharacter(SummonedCharacter c) {
+    public void attackCharacter(SummonedCharacter c) throws CardException {
         TypeComparator typeComparator = new TypeComparator();
 
         if (typeComparator.compare(this.type, c.getType()) > 0) {
@@ -174,6 +174,22 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
             c.takeDamage(Math.max(this.currentAttack + this.getTempAttack(), 0) / 2);
         } else {
             c.takeDamage(Math.max(this.currentAttack + this.getTempAttack(), 0));
+        }
+
+        if (typeComparator.compare(c.getType(), this.type) > 0) {
+            this.takeDamage(Math.max(c.currentAttack + c.getTempAttack(), 0) * 2);
+        } else if (typeComparator.compare(this.type, c.getType()) < 0) {
+            this.takeDamage(Math.max(c.currentAttack + c.getTempAttack(), 0) / 2);
+        } else {
+            this.takeDamage(Math.max(c.currentAttack + c.getTempAttack(), 0));
+        }
+
+        if (c.getTotalHealth() <= 0) {
+            this.addExp(c.getLevel());
+        }
+
+        if (this.getTotalHealth() <= 0) {
+            c.addExp(this.getLevel());
         }
     }
 
