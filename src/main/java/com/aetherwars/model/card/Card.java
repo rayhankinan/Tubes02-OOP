@@ -2,7 +2,6 @@ package com.aetherwars.model.card;
 
 import com.aetherwars.model.card.character.Character;
 import com.aetherwars.model.card.character.SummonedCharacter;
-import com.aetherwars.model.card.spell.potion.Potion;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -71,5 +70,14 @@ public class Card {
 
     public static void main(String[] args) throws CardException, IOException, URISyntaxException {
         CardDatabase.initialize();
+
+        Character character = CardDatabase.getCharacter(1);
+        SummonedCharacter summonedCharacter = new SummonedCharacter(character);
+
+        summonedCharacter.addExp(1);
+        System.out.println(summonedCharacter);
+
+        summonedCharacter.addExp(10);
+        System.out.println(summonedCharacter);
     }
 }

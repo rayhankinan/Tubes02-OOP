@@ -42,12 +42,14 @@ public class Level extends Spell implements Applicable, Cloneable {
         if (this.level >= 0) {
             int N = this.level;
             while (N > 0) {
+                c.resetExp();
                 c.levelUp();
                 N--;
             }
         } else {
             int N = this.level;
             while (N < 0) {
+                c.resetExp();
                 c.levelDown();
                 N++;
             }
