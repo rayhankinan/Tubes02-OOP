@@ -1,5 +1,6 @@
 package com.aetherwars.model.board;
 
+import com.aetherwars.model.card.CardDatabase;
 import com.aetherwars.model.card.CardException;
 import com.aetherwars.model.deck.DeckException;
 import com.aetherwars.model.player.Player;
@@ -82,4 +83,26 @@ public class Board implements TakeTurns {
             this.phase = Phase.DRAW;
         }
     }
+
+//    @Override
+//    public String toString() {
+//        return String.format("Turn: %d", this.turn);
+//    }
+
+//    public static void main(String[] args) throws IOException, URISyntaxException, CardException, DeckException {
+//        CardDatabase.initialize();
+//        Board board = new Board("yaya", "YOYO", "deck_1.csv", "deck_1.csv");
+//        System.out.println("Nama pemain 1 :" + board.player1.getName());
+//        System.out.println("Turn sekarang :" + board.getTurn());
+//        System.out.println("Phase sekarang :" + board.getPhase());
+//        System.out.println("Nama pemain 2 :" + board.player2.getName());
+//        System.out.println("Switch Turn");
+//        board.switchTurn();
+//        System.out.println("Turn Sekarang : "+board.getTurn());
+//        System.out.println("Next phase");
+//        board.nextPhase();
+//        board.toString();
+//        System.out.println("Phase Sekarang : "+ board.getPhase());
+//    }
 }
+
