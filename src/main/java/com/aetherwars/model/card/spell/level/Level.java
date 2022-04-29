@@ -21,7 +21,7 @@ public class Level extends Spell implements Applicable, Cloneable {
         }
     }
 
-    public Level(int id, String name, String description, String imagepath, int mana, int level) throws CardException {
+    public Level(int id, String name, String description, String imagepath, int level, int mana) throws CardException {
         super(id, name, description, imagepath, mana);
 
         if (id < Level.MIN_ID || id > Level.MAX_ID) {
