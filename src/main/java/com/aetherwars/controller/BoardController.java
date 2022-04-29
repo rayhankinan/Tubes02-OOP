@@ -13,6 +13,7 @@ import com.aetherwars.model.card.spell.swap.Swap;
 import com.aetherwars.model.deck.*;
 import com.aetherwars.model.board.Board;
 import javafx.geometry.Insets;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.input.*;
 import javafx.event.ActionEvent;
 
@@ -43,6 +44,8 @@ public class BoardController {
     @FXML
     private Text cardDetailName, cardDetailAtk, cardDetailHP, cardDetailLevel, cardDetailExp, cardDetailType, cardDetailDesc, deckCapacity, manaCapacity, round, playerOneName, playerTwoName;
 
+    @FXML
+    private ProgressBar progressBar1, progressBar2;
     @FXML
     private ImageView cardDetailImage;
 
@@ -78,7 +81,7 @@ public class BoardController {
         // initial set up
         try {
             CardDatabase.initialize();
-            this.board = new Board("yaya", "YOYO", "deck_1.csv", "deck_1.csv");
+            this.board = new Board("yaya", "YOYO", "deck_2.csv", "deck_2.csv");
         }
         catch (Exception e) {
             System.out.println(e);
@@ -87,6 +90,10 @@ public class BoardController {
         this.playerTwo = this.board.getPlayer2();
         this.playerOneName.setText(this.playerOne.getName());
         this.playerTwoName.setText(this.playerTwo.getName());
+
+        Player curPlayer = this.board.getCurrentPlayer();
+        this.deckCapacity.setText("Deck: " + curPlayer.getDeck().getSize() + "/" + curPlayer.getDeck().getMaxCapacity());
+        this.manaCapacity.setText("Mana: " + curPlayer.getMana() + "/10");
 
         this.handSlots = new Pane[]{handCard1, handCard2, handCard3, handCard4, handCard5};
         this.field1Slots = new Pane[]{fieldA1, fieldB1, fieldC1, fieldD1, fieldE1};
@@ -111,16 +118,11 @@ public class BoardController {
 
         this.displayDrawCard();
         try {
-         this.reloadHand(this.board.getCurrentPlayer());
+         this.reloadHand(curPlayer);
         }
         catch (Exception e){
          System.out.println(e);
         }
-
-        // JANGAN LUPA set di bawah ini
-        // this.deckCapacity.setText(brapa / brapa dari punya player <33);
-        // this.manaCapacity.setText(brapa / brapa dari punya player <33);
-
     }
 
     /* Board setter */
@@ -156,14 +158,17 @@ public class BoardController {
     /* Sets next phase */
     public void setPhase() {
         this.board.nextPhase();
-        // JANGAN LUPA line di bawah ini nunggu get round dari player, karena round itu disimpennya di player (jdnya pake round bukan turn :V !!)
-        // this.round.setText("Round " + Integer.toString(this.playerOne.getRound()));
+        Player curPlayer = this.board.getCurrentPlayer();
+        this.updateCharacterFieldCardAttackAvailability(curPlayer.getCharacterFieldCards());
+        this.deckCapacity.setText("Deck: " + curPlayer.getDeck().getSize() + "/" + curPlayer.getDeck().getMaxCapacity());
+        this.manaCapacity.setText("Mana: " + curPlayer.getMana() + "/10");
+        this.round.setText("Round " + curPlayer.getRound());
         switch (this.board.getPhase()) {
             case DRAW:
                 this.phaseEndBlock.setFill(Color.valueOf("#E7E7E7"));
                 this.phaseDrawBlock.setFill(Color.ORANGE);
                 try {
-                    this.reloadHand(this.board.getCurrentPlayer());
+                    this.reloadHand(curPlayer);
                     this.displayDrawCard();
                 }
                 catch (Exception e) {
@@ -172,7 +177,7 @@ public class BoardController {
                 break;
             case PLANNING:
                 try {
-                    this.reloadHand(this.board.getCurrentPlayer());
+                    this.reloadHand(curPlayer);
                 }
                 catch (Exception e) {
                     System.out.println(e);
@@ -185,8 +190,29 @@ public class BoardController {
                 this.phaseAttackBlock.setFill(Color.ORANGE);
                 break;
             case END:
+                SummonedCharacter[] field1 = playerOne.getCharacterFieldCards();
+                SummonedCharacter[] field2 = playerOne.getCharacterFieldCards();
+                for (int i = 0; i < 5; i++) {
+                    if (field1[i] != null) {
+                        System.out.println(field1[i].getTemporary());
+                        field1[i].decrementTemporaryDuration();
+                    }
+                    if (field2[i] != null) {
+                        System.out.println(field2[i].getTemporary());
+                        field2[i].decrementTemporaryDuration();
+                    }
+                }
+                try {
+                    reloadField();
+                }
+                catch (Exception e) {
+                    System.out.println(e);
+                }
                 this.phaseAttackBlock.setFill(Color.valueOf("#E7E7E7"));
                 this.phaseEndBlock.setFill(Color.ORANGE);
+                if (checkEndGame() != null) {
+                    this.displayEndGame(checkEndGame());
+                }
                 try {
                     this.board.switchTurn();
                 }
@@ -237,12 +263,28 @@ public class BoardController {
         this.cardDetailDesc.setText(potion.getDescription());
     }
 
+    /*
+    * Display detail character from hand */
+    public void displayCard(Character character){
+        Image newImg = new Image("/com/aetherwars/model/card/character/image/" + character.getImagepath().toString());
+        this.cardDetailName.setText(character.getName());
+        this.cardDetailImage.setImage(newImg);
+        this.cardDetailAtk.setText(Integer.toString(character.getBaseAttack()));
+        this.cardDetailHP.setText(Integer.toString(character.getBaseHealth()));
+        this.cardDetailLevel.setText("1");
+        this.cardDetailType.setText(Objects.toString(character.getType()));
+        this.cardDetailExp.setText("0");
+        this.cardDetailDesc.setText(character.getDescription());
+    }
+
     /* Display detailed card
      * only summoned character can be put in the field*/
     public void displayCard(SummonedCharacter character){
         Image newImg = new Image("/com/aetherwars/model/card/character/image/" + character.getImagepath().toString());
         this.cardDetailName.setText(character.getName());
         this.cardDetailImage.setImage(newImg);
+//        String atkText = "+" + Integer.toString(character.getCurrentAttack());
+//        String hpText = "+" + Integer.toString(character.getCurrentHealth());
         this.cardDetailAtk.setText(Integer.toString(character.getTotalAttack()));
         this.cardDetailHP.setText(Integer.toString(character.getTotalHealth()));
         this.cardDetailLevel.setText(Integer.toString(character.getLevel()));
@@ -267,13 +309,10 @@ public class BoardController {
     /*
      * Call the relevance method based on the instance of card */
     public void displayCard(Card card) {
-        if (card instanceof Character){
-            try {
-                this.displayCard(new SummonedCharacter((Character) card));
-            }
-            catch (CardException e) {
-                System.out.println(e);
-            }
+        if (card instanceof SummonedCharacter){
+            this.displayCard((SummonedCharacter) card);
+        } else if (card instanceof Character) {
+            this.displayCard((Character) card);
         } else if (card instanceof Level){
             this.displayCard((Level) card);
         } else if (card instanceof Potion){
@@ -285,6 +324,17 @@ public class BoardController {
         }
     }
 
+    public void displayEndGame(Player player){
+        try {
+            FXMLLoader drawLoader = new FXMLLoader(getClass().getResource("/com/aetherwars/view/End.fxml"));
+            Pane newLoadedPane = drawLoader.load();
+            drawPane.getChildren().add(newLoadedPane);
+            EndController endController = drawLoader.getController();
+            endController.showWinner(player);
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+    }
     /* Display draw card */
     public void displayDrawCard(){
         try {
@@ -359,11 +409,15 @@ public class BoardController {
         return false;
     }
 
-    public Card getCard (Pane slot) {
+    public Card getCard(Pane slot) {
         int field = this.getSlotNum(slot);
-        if (slot.getId().equals("field1") || slot.getId().equals("field2")) {
-            if (this.board.getCurrentPlayer().getField(field) != null) {
-                return this.board.getCurrentPlayer().getField(field);
+        if (slot.getId().equals("field1")) {
+            if (this.playerOne.getField(field) != null) {
+                return this.playerOne.getField(field);
+            }
+        } else if (slot.getId().equals("field2")) {
+            if (this.playerTwo.getField(field) != null) {
+                return this.playerTwo.getField(field);
             }
         } else {
             if (this.board.getCurrentPlayer().getHand(field) != null) {
@@ -383,14 +437,24 @@ public class BoardController {
         }
     }
 
+    public Player checkEndGame(){
+        Player player1 = this.board.getCurrentPlayer();
+        Player player2 = this.board.getOppositePlayer();
+        if (player1.getHealth() <= 0 || player1.getDeck().getSize() <= 0 ){
+            return player2;
+        } else if (player2.getDeck().getSize() <= 0|| player2.getHealth() <= 0 ){
+            return player1;
+        } else {
+            return null;
+        }
+    }
+
     /* Hover event */
     public void setUpHover(Pane slot) {
         slot.setOnMouseEntered(mouseEvent -> {
-            if (slotEnabled(slot)) {
-                if (this.getCard(slot) != null) {
-                    this.displayCard(this.getCard(slot));
-                    this.setCardDetailOpacity(1.0);
-                }
+            if (this.getCard(slot) != null) {
+                this.displayCard(this.getCard(slot));
+                this.setCardDetailOpacity(1.0);
             }
         });
         slot.setOnMouseExited(mouseEvent -> this.setCardDetailOpacity(0.0) );
@@ -462,12 +526,12 @@ public class BoardController {
                     return;
                 }
                 if (slot.getId().equals("field1")) {
-                    if (board.getTurn() != 1){
+                    if (board.getTurn() != 1) {
                         return;
                     }
                 }
                 if (slot.getId().equals("field2")) {
-                    if (board.getTurn() != 2){
+                    if (board.getTurn() != 2) {
                         return;
                     }
                 }
@@ -479,35 +543,36 @@ public class BoardController {
                     if (this.slotClicked == slot) {
                         slot.setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
                         this.slotClicked = null;
-                    }
-                    else if (this.getCard(slot) == null) {
+                    } else if (this.getCard(slot) == null && !(this.getCard(this.slotClicked) instanceof Spell)) {
                         try {
+                            this.board.getCurrentPlayer().addToField(this.getSlotNum(slot), this.getCard(this.slotClicked));
                             this.slotClicked.setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
                             this.slotClicked.getChildren().clear();
-                            this.board.getCurrentPlayer().addToField(this.getSlotNum(slot), this.getCard(this.slotClicked));
                             this.slotClicked = null;
                             this.setFieldCard(slot, (SummonedCharacter) this.getCard(slot));
-                        }
-                        catch (Exception e) {
+                            reloadHand(this.board.getCurrentPlayer());
+                        } catch (Exception e) {
                             System.out.println(e);
                         }
-                    }
-                    else {
+                    } else {
                         try {
-                            // TODO : taro efek kartu ke karakter di board disini
                             // CEK SLOT TUJUAN KOSONG GAK
                             Player curPlayer = this.board.getCurrentPlayer();
-                            if (!slotEmpty(slot)){
-                                if (getCard(this.slotClicked) instanceof Spell){
+                            if (this.getCard(slot) != null) {
+                                if (getCard(this.slotClicked) instanceof Spell) {
                                     curPlayer.addToField(getSlotNum(slot), getCard(this.slotClicked));
+                                    this.slotClicked.setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
+                                    this.slotClicked.getChildren().clear();
+                                    this.slotClicked = null;
+                                    reloadField();
+                                    reloadHand(this.board.getCurrentPlayer());
                                 }
                             }
                         } catch (Exception e) {
                             System.out.println(e);
                         }
                     }
-                }
-                else {
+                } else {
                     if ((slot.getId().equals("field1")) || (slot.getId().equals("field2")) || this.getCard(slot) == null) {
                         return;
                     }
@@ -518,13 +583,32 @@ public class BoardController {
 
             // on click behavior for ATTACK phase
             else if (this.board.getPhase() == Phase.ATTACK) {
-                if (slot.getId().equals("playerImage")) {
-                    if (this.slotClicked == null || this.board.getOppositePlayer().getCharacterFieldCards().length > 0) {
+                if (this.slotClicked == null) {
+                    if (((SummonedCharacter) getCard(slot)).getBattleAvailability() == 0) {
                         return;
                     }
-                    else {
-                        // TODO : implement health character + ATTACK CHARACTER
+                }
+                if (slot.getId().equals("playerImage")) {
+                    if (this.slotClicked == null || !this.board.getOppositePlayer().isFieldEmpty()) {
+                        return;
+                    } else {
+                        // TODO : implement health player + ATTACK PLAYER
                         this.slotClicked.setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
+                        // CEK KARTU YANG DIPEGANG SEKARANG
+                        SummonedCharacter card = (SummonedCharacter) getCard(this.slotClicked);
+                        Player curPlayer = this.board.getCurrentPlayer();
+                        curPlayer.attackOpponentPlayer(card, this.board.getOppositePlayer());
+//                        card.attackPlayer(this.board.getOppositePlayer());
+                        int curHealth = this.board.getOppositePlayer().getHealth();
+                        int maxHealth = this.board.getOppositePlayer().getMaxHp();
+                        double healthBar = (double) curHealth / (double) maxHealth;
+                        System.out.println(maxHealth);
+                        System.out.println(healthBar);
+                        if (this.board.getOppositePlayer() == playerTwo) {
+                            progressBar2.setProgress(healthBar);
+                        } else {
+                            progressBar1.setProgress(healthBar);
+                        }
                         this.slotClicked = null;
                     }
                 }
@@ -533,38 +617,35 @@ public class BoardController {
                 }
                 if (slot.getId().equals("field1")) {
                     if (this.slotClicked == null) {
-                        if (board.getTurn() != 1){
+                        if (board.getTurn() != 1) {
                             return;
                         }
-                    }
-                    else {
-                        if (this.slotClicked.getId().equals("field1") && this.slotClicked != slot){
+                    } else {
+                        if (this.slotClicked.getId().equals("field1") && this.slotClicked != slot) {
                             return;
                         }
                     }
                 }
                 if (slot.getId().equals("field2")) {
                     if (this.slotClicked == null) {
-                        if (board.getTurn() != 2){
+                        if (board.getTurn() != 2) {
                             return;
                         }
-                    }
-                    else {
-                        if (this.slotClicked.getId().equals("field2") && this.slotClicked != slot){
+                    } else {
+                        if (this.slotClicked.getId().equals("field2") && this.slotClicked != slot) {
                             return;
                         }
                     }
                 }
                 // set on click
-                if (this.slotClicked == slot){
+                if (this.slotClicked == slot) {
                     slot.setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
                     this.slotClicked = null;
-                }
-                else if (this.slotClicked != null) {
+                } else if (this.slotClicked != null) {
                     // cek kartu musuh ada gak
                     Player curPlayer = this.board.getCurrentPlayer();
                     Player oppPlayer = this.board.getOppositePlayer();
-                    if (oppPlayer.getField(getSlotNum(slot)) != null){
+                    if (oppPlayer.getField(getSlotNum(slot)) != null) {
                         this.slotClicked.setBackground(new Background(new BackgroundFill(Color.valueOf("E7E7E7"), CornerRadii.EMPTY, Insets.EMPTY)));
                         try {
                             curPlayer.attackOpponentCard((SummonedCharacter) getCard(this.slotClicked), (SummonedCharacter) oppPlayer.getField(getSlotNum(slot)), this.board.getOppositePlayer());
@@ -574,13 +655,11 @@ public class BoardController {
                         this.slotClicked = null;
                         try {
                             this.reloadField();
-                        }
-                        catch (Exception e) {
+                        } catch (Exception e) {
                             System.out.println(e);
                         }
                     }
-                }
-                else {
+                } else {
                     this.slotClicked = slot;
                     slot.setBackground(new Background(new BackgroundFill(Color.GREENYELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
                 }
@@ -589,9 +668,11 @@ public class BoardController {
         });
     }
 
-    public void updateCharacterFieldCardAttackAvailability(List<SummonedCharacter> fieldCards){
+    public void updateCharacterFieldCardAttackAvailability(SummonedCharacter[] fieldCards){
         for (SummonedCharacter characterFieldCard : fieldCards){
-            characterFieldCard.setBattleAvailability(1);
+            if (characterFieldCard != null) {
+                characterFieldCard.setBattleAvailability(1);
+            }
         }
     }
 

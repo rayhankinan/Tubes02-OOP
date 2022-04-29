@@ -62,9 +62,9 @@ public class Board implements TakeTurns {
             this.turn = 2;
         } else {
             this.turn = 1;
+            this.player1.addRound();
+            this.player2.addRound();
         }
-
-        this.getCurrentPlayer().addRound();
         this.getCurrentPlayer().resetMana();
     }
 

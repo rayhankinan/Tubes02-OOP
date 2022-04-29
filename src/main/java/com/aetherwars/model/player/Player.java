@@ -53,6 +53,8 @@ public class Player {
         return this.health;
     }
 
+    public int getMaxHp() { return this.MAX_HP; }
+
     public int getMana() {
         return this.mana;
     }
@@ -73,9 +75,9 @@ public class Player {
         }
     }
 
-    public void addRound(){
-        this.round++;
-    }
+    public int getRound() { return this.round; }
+
+    public void addRound(){ this.round++; }
 
     public void takeDamage(int damage) {
         if (this.health - damage < MIN_HP) {
@@ -102,14 +104,21 @@ public class Player {
         this.deck.returnCardsToDeck(remain);
     }
 
-    public SummonedCharacter[] getCharacterFieldCards() {
-        return this.characterFieldCards;
+    public SummonedCharacter[] getCharacterFieldCards() { return this.characterFieldCards; }
+
+    public Card getField(int field) {
+        return characterFieldCards[field];
     }
 
-    public SummonedCharacter getField(int field) {
-        return this.characterFieldCards[field];
-    }
+    public boolean isFieldEmpty(){
+        for (int i=0; i < this.characterFieldCards.length; i++){
+            if (characterFieldCards[i] != null){
+                return false;
+            }
+        }
 
+        return true;
+    }
     public Card getHand(int hand) {
         if (hand < this.onHand.size()) {
             return onHand.get(hand);

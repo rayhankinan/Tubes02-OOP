@@ -92,17 +92,17 @@
                </font>
             </Text>
          </children></Pane>
-      <Button fx:id="nextPhase" layoutX="965.0" layoutY="435.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="156.0" text="Next Phase" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="965.0" AnchorPane.topAnchor="435.0">
+      <Button fx:id="nextPhase" layoutX="965.0" layoutY="435.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="156.0" text="Next Phase" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Arial" size="12.0" />
          </font>
       </Button>
-      <Group layoutX="34.0" layoutY="250.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="240.0" />
-      <Group layoutX="34.0" layoutY="78.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="75.0" />
+      <Group layoutX="34.0" layoutY="250.0"/>
+      <Group layoutX="34.0" layoutY="78.0" />
       <Pane id="field2" fx:id="fieldD2" layoutX="815.0" layoutY="234.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7e7;" />
-      <ProgressBar layoutX="34.0" layoutY="26.0" prefHeight="36.0" prefWidth="472.0" progress="1.0" AnchorPane.bottomAnchor="357.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="23.0" />
-      <ProgressBar layoutX="694.0" layoutY="26.0" prefHeight="36.0" prefWidth="472.0" progress="1.0" AnchorPane.bottomAnchor="746.0" AnchorPane.leftAnchor="714.0" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="26.0" />
-      <Group layoutX="578.0" layoutY="29.0" AnchorPane.bottomAnchor="725.0" AnchorPane.leftAnchor="576.0" AnchorPane.rightAnchor="575.0" AnchorPane.topAnchor="33.0">
+      <ProgressBar fx:id="progressBar1" layoutX="34.0" layoutY="26.0" prefHeight="36.0" prefWidth="472.0" progress="1.0"/>
+      <ProgressBar fx:id="progressBar2" layoutX="694.0" layoutY="26.0" prefHeight="36.0" prefWidth="472.0" progress="1.0"/>
+      <Group layoutX="578.0" layoutY="29.0">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7e7e7" height="42.0" layoutX="-27.0" layoutY="-10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.2" width="102.0" />
             <Text fx:id="round" layoutX="-21.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Round 1" textAlignment="CENTER" wrappingWidth="90.49658203125">
@@ -112,12 +112,12 @@
             </Text>
          </children>
       </Group>
-      <Text fx:id="playerOneName" layoutX="39.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 1" wrappingWidth="66.99999999999994" AnchorPane.leftAnchor="39.0" AnchorPane.topAnchor="71.2314453125">
+      <Text fx:id="playerOneName" layoutX="39.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 1" wrappingWidth="66.99999999999994">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
       </Text>
-      <Text fx:id="playerTwoName" layoutX="1094.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 2" textAlignment="RIGHT" wrappingWidth="66.99999999999994" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="71.2314453125">
+      <Text fx:id="playerTwoName" layoutX="1094.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 2" textAlignment="RIGHT" wrappingWidth="66.99999999999994">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
@@ -130,7 +130,11 @@
       <Group layoutX="58.0" layoutY="191.0">
          <children>
             <Pane id="field1" fx:id="fieldA1" layoutX="109.0" layoutY="-75.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
-            <Pane fx:id="playerOneImage" id="playerImage" layoutX="-18.0" layoutY="1.0" prefHeight="100.0" prefWidth="107.0">
+            <Pane id="field1" fx:id="fieldC1" layoutX="109.0" layoutY="43.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+            <Pane id="field1" fx:id="fieldD1" layoutX="227.0" layoutY="43.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+            <Pane id="field1" fx:id="fieldE1" layoutX="344.0" layoutY="-17.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+            <Pane id="field1" fx:id="fieldB1" layoutX="227.0" layoutY="-75.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+            <Pane id="playerImage" fx:id="playerOneImage" layoutX="-18.0" layoutY="1.0" prefHeight="100.0" prefWidth="107.0">
                <children>
                   <ImageView fitHeight="100.0" fitWidth="106.0" pickOnBounds="true" scaleX="-1">
                      <image>
@@ -139,13 +143,9 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane id="field1" fx:id="fieldC1" layoutX="109.0" layoutY="43.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
-            <Pane id="field1" fx:id="fieldD1" layoutX="227.0" layoutY="43.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
-            <Pane id="field1" fx:id="fieldE1" layoutX="344.0" layoutY="-17.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
-            <Pane id="field1" fx:id="fieldB1" layoutX="227.0" layoutY="-75.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
          </children>
       </Group>
-      <Circle fx:id="discardCard" layoutX="602.0" layoutY="230.0" radius="48.0" strokeType="INSIDE" strokeWidth="0.2" AnchorPane.leftAnchor="554.0" AnchorPane.rightAnchor="550.0" AnchorPane.topAnchor="182.0">
+      <Circle fx:id="discardCard" layoutX="602.0" layoutY="230.0" radius="48.0" strokeType="INSIDE" strokeWidth="0.2">
          <stroke>
             <RadialGradient centerX="0.5311111026340061" centerY="0.5" radius="0.5">
                <stops>
@@ -178,7 +178,7 @@
                </stops>
             </RadialGradient>
          </fill></Circle>
-      <Text layoutX="549.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Discard Card" textAlignment="CENTER" wrappingWidth="106.0" AnchorPane.leftAnchor="549.0" AnchorPane.rightAnchor="545.0" AnchorPane.topAnchor="280.751953125">
+      <Text layoutX="549.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Discard Card" textAlignment="CENTER" wrappingWidth="106.0">
          <font>
             <Font name="Arial Rounded MT Bold" size="14.0" />
          </font>
@@ -220,7 +220,11 @@
             <Font name="Arial" size="12.0" />
          </font>
       </Text>
-      <Pane fx:id="playerTwoImage" id="playerImage" layoutX="1059.0" layoutY="193.0">
+      <Pane id="field2" fx:id="fieldB2" layoutX="815.0" layoutY="116.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+      <Pane id="field2" fx:id="fieldA2" layoutX="933.0" layoutY="117.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+      <Pane id="field2" fx:id="fieldC2" layoutX="932.0" layoutY="235.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
+      <Pane fx:id="drawPane" prefHeight="800.0" prefWidth="1200.0" />
+      <Pane id="playerImage" fx:id="playerTwoImage" layoutX="1059.0" layoutY="193.0">
          <children>
             <ImageView fitHeight="100.0" fitWidth="106.0" pickOnBounds="true">
                <image>
@@ -229,10 +233,6 @@
             </ImageView>
          </children>
       </Pane>
-      <Pane id="field2" fx:id="fieldB2" layoutX="815.0" layoutY="116.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
-      <Pane id="field2" fx:id="fieldA2" layoutX="933.0" layoutY="117.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
-      <Pane id="field2" fx:id="fieldC2" layoutX="932.0" layoutY="235.0" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #e7e7e7;" />
-      <Pane fx:id="drawPane" prefHeight="800.0" prefWidth="1200.0" />
    </children>
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

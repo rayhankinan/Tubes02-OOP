@@ -4,11 +4,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="110.0" prefWidth="110.0" style="-fx-border-color: BLACK;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.aetherwars.controller.FieldCardController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="110.0" prefWidth="110.0" style="-fx-border-color: BLACK;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aetherwars.controller.FieldCardController">
     <children>
         <Pane layoutX="7.0" layoutY="7.0" prefHeight="96.0" prefWidth="96.0" style="-fx-border-color: BLACK; -fx-border-width: 1;">
             <children>
-            <Pane layoutX="7.0" layoutY="5.0" prefHeight="79.0" prefWidth="41.0">
+            <Pane layoutX="7.0" layoutY="5.0" prefHeight="29.0" prefWidth="13.0">
                <children>
                   <ImageView fitHeight="23.0" fitWidth="25.0" layoutX="-3.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -17,10 +17,6 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane layoutX="68.0" layoutY="206.0" prefHeight="36.0" prefWidth="112.0">
-               <children>
-                  <HBox alignment="CENTER" prefHeight="36.0" prefWidth="112.0" />
-               </children></Pane>
             <Text fx:id="cardAtt" layoutX="3.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="19.13671875">
                <font>
                   <Font name="Droid Sans" size="10.0" />

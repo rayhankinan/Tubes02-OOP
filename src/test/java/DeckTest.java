@@ -1,34 +1,41 @@
 import com.aetherwars.model.card.CardDatabase;
 import com.aetherwars.model.card.CardException;
 
-import org.junit.Before;
+import com.aetherwars.model.deck.Deck;
+import com.aetherwars.model.deck.DeckException;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 
 public class DeckTest {
-    @Before
-    public void initialize() throws CardException, IOException, URISyntaxException {
+    @BeforeClass
+    public static void initialize() throws CardException, IOException, URISyntaxException {
         CardDatabase.initialize();
     }
 
     @Test
-    public void createDeck() {
+    public void createDeck() throws IOException, URISyntaxException, CardException {
+        Deck deck = new Deck("deck_1.csv");
+        int N = 0;
+        boolean isEmpty = false;
 
-    }
+        while (!isEmpty) {
+            try {
+                deck.getCard();
+                N++;
 
-    @Test
-    public void transactionDeck() {
+            } catch (DeckException e) {
+                isEmpty = true;
+            }
+        }
 
-    }
-
-    @Test
-    public void threeCardsDeck() {
-
+        assertEquals(53, N);
     }
 
     public static void main(String[] args) {

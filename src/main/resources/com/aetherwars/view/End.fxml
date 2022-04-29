@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane fx:id="main" opacity="1.00" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aetherwars.controller.EndController">
+    <children>
+        <Pane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: GREENYELLOW;">
+         <children>
+            <Text layoutX="-1.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BUAT" textAlignment="CENTER" wrappingWidth="1200.0">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="17.0" />
+               </font>
+            </Text>
+            <Text fx:id="winnerName" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BUAT" textAlignment="CENTER" wrappingWidth="1200.0">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="71.0" />
+               </font>
+            </Text>
+            <Text layoutX="-1.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selamat dan terima kasih karena sudah berjuang sampai hari ini :)" textAlignment="CENTER" wrappingWidth="1200.0">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="17.0" />
+               </font>
+            </Text>
+            <Text layoutX="-1.0" layoutY="763.0" strokeType="OUTSIDE" strokeWidth="0.0" text="buat yang kalah, tetap menyerah dan jangan semangat!" textAlignment="CENTER" wrappingWidth="1200.0">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="17.0" />
+               </font>
+            </Text>
+            <Text layoutX="-1.0" layoutY="434.0" strokeType="OUTSIDE" strokeWidth="0.0" text="#kamuJUARA" textAlignment="CENTER" wrappingWidth="1200.0">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="27.0" />
+               </font>
+            </Text>
+         </children></Pane>
+    </children>
+</Pane>
