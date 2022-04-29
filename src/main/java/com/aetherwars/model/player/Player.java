@@ -42,7 +42,7 @@ public class Player {
         this.onHand = new ArrayList<>(MAX_CARD_IN_HAND);
         this.deck = new Deck(deckFilename);
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < MAX_CARD_IN_BOARD; i++) {
             this.characterFieldCards[i] = null;
         }
     }
