@@ -6,10 +6,11 @@ public interface Summonable {
     int getField();
     int getLevel();
     int getExp();
-    int getExpForNextLevel();
+    int getExpForNextLevel() throws CardException;
     int getCurrentHealth();
     int getCurrentAttack();
     void addExp(int exp) throws CardException;
+    void resetExp();
     void levelUp() throws CardException;
     void levelDown() throws CardException;
     int getBattleAvailability();

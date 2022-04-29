@@ -71,5 +71,12 @@ public class Card {
 
     public static void main(String[] args) throws CardException, IOException, URISyntaxException {
         CardDatabase.initialize();
+
+        Character character = CardDatabase.getCharacter(1);
+        SummonedCharacter summonedCharacter = new SummonedCharacter(character);
+
+        summonedCharacter.addExp(10);
+
+        System.out.println(summonedCharacter);
     }
 }

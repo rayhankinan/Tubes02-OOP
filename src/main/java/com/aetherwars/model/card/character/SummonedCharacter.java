@@ -90,8 +90,12 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
     }
 
     @Override
-    public int getExpForNextLevel() {
-        return this.level * 2 - 1;
+    public int getExpForNextLevel() throws CardException {
+        if (this.level < 10) {
+            return this.level * 2 - 1;
+        } else {
+            throw new CardException("Character level is already maxed out!");
+        }
     }
 
     @Override
@@ -104,29 +108,27 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
         return this.currentAttack;
     }
 
-    public int getSwapDuration() { if (this.swapSpell != null) { return this.swapSpell.getDuration(); } else { return 0; } }
-
     @Override
     public void addExp(int exp) throws CardException {
-        if (level < 10) {
-            if (this.exp + exp < this.getExpForNextLevel()) {
-                this.exp += exp;
-            } else {
-                int expTaken = this.getExpForNextLevel();
-                this.levelUp();
-                this.exp += (exp - expTaken);
-            }
+        int totalExp = this.exp + exp;
 
-        } else {
-            throw new CardException("Character level is already maxed out!");
+        while (totalExp >= this.getExpForNextLevel()) {
+            totalExp -= this.getExpForNextLevel();
+            this.levelUp();
         }
+
+        this.exp = totalExp;
+    }
+
+    @Override
+    public void resetExp() {
+        this.exp = 0;
     }
 
     @Override
     public void levelUp() throws CardException {
         if (level < 10) {
             this.level++;
-            this.exp = 0;
             this.baseHealth += this.healthup;
             this.baseAttack += this.attackup;
             this.currentHealth = this.baseHealth;
