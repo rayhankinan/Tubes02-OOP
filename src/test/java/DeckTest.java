@@ -5,9 +5,6 @@ import com.aetherwars.model.deck.Deck;
 import com.aetherwars.model.deck.DeckException;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.JUnitCore;
-import org.junit.runner.Result;
-import org.junit.runner.notification.Failure;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
@@ -36,15 +33,5 @@ public class DeckTest {
         }
 
         assertEquals(53, N);
-    }
-
-    public static void main(String[] args) {
-        Result result = JUnitCore.runClasses(DeckTest.class);
-
-        for (Failure failure : result.getFailures()) {
-            System.out.println(failure);
-        }
-
-        System.out.println(result.wasSuccessful());
     }
 }
