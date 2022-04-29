@@ -4,7 +4,6 @@ import com.aetherwars.model.board.Board;
 
 import com.aetherwars.model.deck.DeckException;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
@@ -16,9 +15,11 @@ import java.net.URISyntaxException;
 import static org.junit.Assert.assertEquals;
 
 public class BoardTest {
-    @BeforeClass
-    public static void initialize() throws CardException, IOException, URISyntaxException {
+
+    @Before
+    public void setUp() throws CardException, IOException, URISyntaxException, DeckException {
         CardDatabase.initialize();
+        Board board = new Board("yaya", "YOYO", "deck_1.csv", "deck_1.csv");
     }
 
     @Test
@@ -32,9 +33,23 @@ public class BoardTest {
 
     @Test
     public void switchTurn() throws IOException, URISyntaxException, CardException, DeckException {
+        CardDatabase.initialize();
         Board board = new Board("yaya", "YOYO", "deck_1.csv", "deck_1.csv");
         board.switchTurn();
         System.out.println(board.getTurn());
         assertEquals(1, board.getTurn());
     }
+
+    //    create main
+    public static void main(String[] args) {
+        Result result = JUnitCore.runClasses(BoardTest.class);
+
+        for (Failure failure : result.getFailures()) {
+            System.out.println(failure);
+        }
+
+        System.out.println(result.wasSuccessful());
+    }
+
+
 }
