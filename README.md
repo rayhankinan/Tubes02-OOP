@@ -1,6 +1,5 @@
 # Minecraft: Aether Realm Wars
-> Tugas Besar 2 Mata Kuliah IF2210 Pemrograman Berorientasi Objek
-> Built by Kelompok 8 - FAAAK
+> Tugas Besar 2 Mata Kuliah IF2210 Pemrograman Berorientasi Objek. Built by Kelompok 8 - FAAAK
 
 ## Table of Contents
 * [General Information](#general-information)
