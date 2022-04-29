@@ -32,11 +32,10 @@ public class BoardTest {
     }
 
     @Test
-    public void switchTurn() throws IOException, URISyntaxException, CardException, DeckException {
+    public void switchTurnTest() throws IOException, URISyntaxException, CardException, DeckException {
         CardDatabase.initialize();
         Board board = new Board("yaya", "YOYO", "deck_1.csv", "deck_1.csv");
-        board.switchTurn();
-        System.out.println(board.getTurn());
+        board.toString();
         assertEquals(1, board.getTurn());
     }
 
