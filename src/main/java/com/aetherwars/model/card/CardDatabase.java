@@ -29,6 +29,12 @@ public class CardDatabase {
     private static final List<Swap> swapList = new ArrayList<>();
 
     public static void initialize() throws IOException, URISyntaxException, CardException {
+        CardDatabase.characterList.clear();
+        CardDatabase.potionList.clear();
+        CardDatabase.levelList.clear();
+        CardDatabase.morphList.clear();
+        CardDatabase.swapList.clear();
+
         File characterCSVFile = new File(Objects.requireNonNull(Character.class.getResource(CHARACTER_CSV_FILE_PATH)).toURI());
         CSVReader characterReader = new CSVReader(characterCSVFile, "\t");
         characterReader.setSkipHeader(true);

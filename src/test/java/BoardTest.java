@@ -1,11 +1,9 @@
-import com.aetherwars.model.board.Phase;
 import com.aetherwars.model.card.CardDatabase;
 import com.aetherwars.model.card.CardException;
 import com.aetherwars.model.board.Board;
 
 import com.aetherwars.model.deck.DeckException;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
@@ -18,31 +16,28 @@ import static org.junit.Assert.assertEquals;
 
 public class BoardTest {
 
-    Board board;
-
-    @BeforeClass
-    public static void initialize() throws CardException, IOException, URISyntaxException, DeckException {
-        // Initialize the board
+    @Before
+    public void setUp() throws CardException, IOException, URISyntaxException, DeckException {
         CardDatabase.initialize();
-
+        Board board = new Board("yaya", "YOYO", "deck_1.csv", "deck_1.csv");
     }
 
     @Test
-    public void switchTurnTest() throws IOException, URISyntaxException, CardException, DeckException {
+    public void testBoard() throws CardException, IOException, URISyntaxException {
+        JUnitCore junit = new JUnitCore();
+        Result result = junit.run(BoardTest.class);
+        for (Failure failure : result.getFailures()) {
+            System.out.println(failure.toString());
+        }
+    }
+
+    @Test
+    public void switchTurn() throws IOException, URISyntaxException, CardException, DeckException {
+        CardDatabase.initialize();
         Board board = new Board("yaya", "YOYO", "deck_1.csv", "deck_1.csv");
         board.switchTurn();
-        assertEquals(2, board.getTurn());
-    }
-
-    @Test
-    public void nextPhaseTest() throws IOException, URISyntaxException, CardException, DeckException {
-        Board board = new Board("yaya", "YOYO", "deck_1.csv", "deck_1.csv");
-        long status = 0;
-        board.nextPhase();
-        if (board.getPhase() == Phase.PLANNING) {
-            status = 1;
-        }
-        assertEquals(1, status);
+        System.out.println(board.getTurn());
+        assertEquals(1, board.getTurn());
     }
 
     //    create main
@@ -55,5 +50,6 @@ public class BoardTest {
 //
 //        System.out.println(result.wasSuccessful());
 //    }
+
 
 }
