@@ -11,10 +11,11 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Collections;
 
 public class Deck {
     private final List<Card> buffer;
-    private int maxCapacity;
+    private final int maxCapacity;
 
     public Deck(String deckFilename) throws IOException, URISyntaxException, CardException {
         this.buffer = new ArrayList<>();
@@ -29,11 +30,18 @@ public class Deck {
             this.addCard(CardDatabase.getCard(id));
         }
 
+        Collections.shuffle(this.buffer);
+
         this.maxCapacity = this.buffer.size();
     }
 
-    public int getSize() { return this.buffer.size(); }
-    public int getMaxCapacity() { return this.maxCapacity; }
+    public int getSize() {
+        return this.buffer.size();
+    }
+
+    public int getMaxCapacity() {
+        return this.maxCapacity;
+    }
 
     public void addCard(Card c) {
         this.buffer.add(c);
@@ -56,24 +64,4 @@ public class Deck {
             System.out.println(c);
         }
     }
-
-    /*public List<Card> getThreeCards() throws DeckException {
-        List<Card> threeCards = new ArrayList<>();
-
-        if (this.buffer.size() >= 3) {
-            for (int i = 0; i < 3; i++) {
-                threeCards.add(this.buffer.remove(0));
-            }
-
-        } else if (this.buffer.size() == 0) {
-            throw new DeckException("Deck is empty!");
-
-        } else {
-            for (int i = 0; i < this.buffer.size(); i++) {
-                threeCards.add(this.buffer.remove(0));
-            }
-        }
-
-        return threeCards;
-    }*/
 }
