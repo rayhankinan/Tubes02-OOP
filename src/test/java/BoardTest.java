@@ -46,14 +46,14 @@ public class BoardTest {
     }
 
     //    create main
-    public static void main(String[] args) {
-        Result result = JUnitCore.runClasses(BoardTest.class);
-
-        for (Failure failure : result.getFailures()) {
-            System.out.println(failure);
-        }
-
-        System.out.println(result.wasSuccessful());
-    }
+//    public static void main(String[] args) {
+//        Result result = JUnitCore.runClasses(BoardTest.class);
+//
+//        for (Failure failure : result.getFailures()) {
+//            System.out.println(failure);
+//        }
+//
+//        System.out.println(result.wasSuccessful());
+//    }
 
 }

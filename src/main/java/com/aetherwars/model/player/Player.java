@@ -1,6 +1,7 @@
 package com.aetherwars.model.player;
 
 import com.aetherwars.model.card.Card;
+import com.aetherwars.model.card.CardDatabase;
 import com.aetherwars.model.card.CardException;
 
 import com.aetherwars.model.card.spell.Applicable;
@@ -13,6 +14,7 @@ import com.aetherwars.model.deck.DeckException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -190,4 +192,37 @@ public class Player {
         }
         characterFieldCard.setBattleAvailability(0);
     }
+
+//    public static void main(String[] args) throws IOException, URISyntaxException, CardException, PlayerException {
+//        System.out.println("Hello");
+//        CardDatabase.initialize();
+//        Player player_1 = new Player("Rayhan", "deck_1.csv");
+//        System.out.println("Nama : "+player_1.getName());
+//        System.out.println("Mana : "+player_1.getMana());
+//        player_1.useMana(1);
+//        System.out.println("Mana Setelah Use Mana : "+player_1.getMana());
+//        Character character_1 = CardDatabase.getCharacter(3);
+//        player_1.addToField(1, character_1);
+//        SummonedCharacter[] fieldCards = player_1.getCharacterFieldCards();
+//        System.out.println("Field Card 1 : "+fieldCards[1].getName());
+//
+//        Player player_2 = new Player("Adiya", "deck_1.csv");
+//        System.out.println("Nama : "+player_2.getName());
+//        System.out.println("Mana : "+player_2.getMana());
+//        Character character_2 = CardDatabase.getCharacter(4);
+//        player_2.addToField(2, character_2);
+//        SummonedCharacter[] fieldCards2 = player_2.getCharacterFieldCards();
+//        System.out.println("Field Card 2 : "+fieldCards2[2].getName());
+//
+//        System.out.println("Health character player 2: "+ fieldCards2[2].getTotalHealth());
+//        player_1.attackOpponentCard(fieldCards[1], fieldCards2[2], player_2);
+//        System.out.println("Health character player 2 setelah diserang: "+ fieldCards2[2].getTotalHealth());
+//        player_1.attackOpponentCard(fieldCards[1], fieldCards2[2], player_2);
+//        if (fieldCards2[2] == null) {
+//            System.out.println("kosong");
+//        }
+//
+//
+//
+//    }
 }
