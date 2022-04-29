@@ -104,6 +104,8 @@ public class SummonedCharacter extends Character implements Summonable, Attackab
         return this.currentAttack;
     }
 
+    public int getSwapDuration() { if (this.swapSpell != null) { return this.swapSpell.getDuration(); } else { return 0; } }
+
     @Override
     public void addExp(int exp) throws CardException {
         if (level < 10) {

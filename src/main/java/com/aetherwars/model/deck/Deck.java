@@ -14,6 +14,7 @@ import java.util.Objects;
 
 public class Deck {
     private final List<Card> buffer;
+    private int maxCapacity;
 
     public Deck(String deckFilename) throws IOException, URISyntaxException, CardException {
         this.buffer = new ArrayList<>();
@@ -27,7 +28,12 @@ public class Deck {
             int id = Integer.parseInt(row[0]);
             this.addCard(CardDatabase.getCard(id));
         }
+
+        this.maxCapacity = this.buffer.size();
     }
+
+    public int getSize() { return this.buffer.size(); }
+    public int getMaxCapacity() { return this.maxCapacity; }
 
     public void addCard(Card c) {
         this.buffer.add(c);
