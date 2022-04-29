@@ -64,15 +64,4 @@ public class Deck {
             System.out.println(c);
         }
     }
-
-    public static void main(String[] args) {
-        try {
-            CardDatabase.initialize();
-            Deck deck = new Deck("deck_1.csv");
-            deck.printAll();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

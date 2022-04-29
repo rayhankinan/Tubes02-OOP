@@ -35,7 +35,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void addToFieldTest() throws IOException, URISyntaxException, CardException {
+    public void addToFieldTest() throws IOException, URISyntaxException, CardException, PlayerException {
         Player player_1 = new Player("Rayhan", "deck_1.csv");
         Character character_1 = CardDatabase.getCharacter(3);
         player_1.addToField(0, character_1);
@@ -48,7 +48,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void attackOpponentPlayerTest() throws IOException, URISyntaxException, CardException {
+    public void attackOpponentPlayerTest() throws IOException, URISyntaxException, CardException, PlayerException {
         Player player_1 = new Player("Rayhan", "deck_1.csv");
         Player player_2 = new Player("Munna", "deck_1.csv");
         Character character_1 = CardDatabase.getCharacter(3);
@@ -58,7 +58,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void attackOpponentCardTest() throws IOException, URISyntaxException, CardException {
+    public void attackOpponentCardTest() throws IOException, URISyntaxException, CardException, PlayerException {
         Player player_1 = new Player("Rayhan", "deck_1.csv");
         Player player_2 = new Player("Munna", "deck_1.csv");
         Character character_1 = CardDatabase.getCharacter(3);

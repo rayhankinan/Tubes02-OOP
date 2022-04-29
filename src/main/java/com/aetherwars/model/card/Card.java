@@ -1,8 +1,5 @@
 package com.aetherwars.model.card;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-
 public class Card {
     protected int id;
     protected String name;
@@ -63,9 +60,5 @@ public class Card {
         } else {
             return false;
         }
-    }
-
-    public static void main(String[] args) throws CardException, IOException, URISyntaxException {
-        CardDatabase.initialize();
     }
 }
